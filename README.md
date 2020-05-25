@@ -6,7 +6,7 @@
 ## Set up
 
 To begin:
-`npm init`
+`npm install`
 
 And then:
 Windows: `set DEBUG=myapp:* & npm start`
