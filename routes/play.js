@@ -3,12 +3,11 @@ const router = express.Router();
 const db = require("../db");
 
 router.get('/', function(req, res, next) {
-  db.getOnlineSpecific(res, (openrsc, cabbage) => {
+    const online = db.getOnline(res);
     res.render('play', {
-      openrsc: openrsc,
-      cabbage: cabbage
+        openrsc: online.openrsc !== undefined ? online.openrsc : 0,
+        cabbage: online.cabbage !== undefined ? online.cabbage : 0
     });
-  });
 });
 
 module.exports = router;

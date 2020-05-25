@@ -40,12 +40,3 @@ exports.hiscoresSkillQuery = (skill, rank, name) => {
     }
     return query;
 }
-
-exports.statisticsQuery = () => {
-    let query= 'SELECT COUNT(*) FROM `openrsc_players` WHERE `online`=1; ';
-    query += 'SELECT COUNT(*) FROM `openrsc_players` WHERE `creation_date` > ' + (Math.round(Date.now() / 1000) - 86400) + '; ';
-    query += 'SELECT COUNT(*) FROM `openrsc_players` WHERE `creation_date` > ' + (Math.round(Date.now() / 1000) - 172800) + '; ';
-    query += 'SELECT COUNT(DISTINCT `creation_ip`) FROM `openrsc_players`; ';
-    query += 'SELECT COUNT(*) FROM `openrsc_players`;';
-    return query;
-}

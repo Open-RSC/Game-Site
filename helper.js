@@ -17,7 +17,7 @@ exports.validateRank = (rank) => {
             rank = undefined;
         }
     }
-    return rank;
+    return parseInt(rank);
 };
 
 exports.validateName = (name) => {
@@ -28,4 +28,16 @@ exports.validateName = (name) => {
         }
     }
     return name;
-}
+};
+
+exports.joinById = ( ...lists ) => {
+    return Object.values(lists.reduce((idx, list) => {
+        list.forEach( (record) => {
+            if( idx[record.id] )
+                idx[record.id] = Object.assign( idx[record.id], record )
+            else
+                idx[record.id] = record
+        })
+        return idx
+    }, {}))
+};

@@ -17,7 +17,7 @@ router.post('/hiscores', (req, res, next) => {
     let skill = helper.validateSkill(req.query.skill);
     let rank = helper.validateRank(req.body.rank);
     let name = helper.validateName(req.body.name);
-    if (rank !== undefined && name !== undefined) {
+    if (!isNaN(rank) && name !== undefined) {
         name = undefined;
     }
     db.getHiscores(res, constant.OPENRSC, skill, rank, name);
