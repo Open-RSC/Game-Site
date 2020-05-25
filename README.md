@@ -1,7 +1,7 @@
 # Open RuneScape Classic Website
 ## Requirements
-* nodejs & npm
-* mysql
+* nodejs & npm (https://www.npmjs.com/get-npm)
+* mysql (or XAMPP: https://www.apachefriends.org/index.html)
 
 ## Set up
 
