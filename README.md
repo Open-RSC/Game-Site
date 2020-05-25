@@ -9,5 +9,5 @@ To begin:
 `npm install`
 
 And then:
-Windows: `set DEBUG=myapp:* & npm start`
-Linux: `DEBUG=myapp:* npm start`
+Windows: `set DEBUG=site:* & npm start`
+Linux: `DEBUG=site:* npm start`
