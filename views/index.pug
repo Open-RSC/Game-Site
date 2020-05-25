@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div.middle-content
+    div.logo
+    p.online There #{online} playing!
+
+    div.home-buttons
+      a.button.wiki(href="https://classic.runescape.wiki") Wiki
+      a.button.discord(href="https://discord.gg/mTBXvu2") Discord
+      a.button.rules-button(href="rules") Rules
+      a.large-button.play(href="play") Play Game
+      a.button.code(href="https://orsc.dev") Source
+        br
+        | Code
+      a.button.single-player(href="singleplayer") Single
+        br
+        | Player
+      a.button.faqs(href="faq") FAQ
+      a.button.rscplus(href="https://rsc.plus") RSC+
+

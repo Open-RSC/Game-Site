@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  div.middle-content-hiscores
+    div.title.hiscores-panel
+      h2.hiscores-title #{page_name} Hiscores
+      a.hiscores-link(href=server) Return to main menu
+    
+    div.hiscores
+      div.hiscore-links
+        h4 Select hiscore table
+        div.hiscores-panel
+          a.hiscores-link(href="hiscores?skill=overall") Overall
+          a.hiscores-link(href="hiscores?skill=hits") Fighting
+          a.hiscores-link(href="hiscores?skill=ranged") Ranged
+          a.hiscores-link(href="hiscores?skill=prayer") Prayer
+          a.hiscores-link(href="hiscores?skill=magic") Magic
+          a.hiscores-link(href="hiscores?skill=cooking") Cooking
+          a.hiscores-link(href="hiscores?skill=woodcut") Woodcutting
+          a.hiscores-link(href="hiscores?skill=fletching") Fletching
+          a.hiscores-link(href="hiscores?skill=fishing") Fishing
+          a.hiscores-link(href="hiscores?skill=firemaking") Firemaking
+          a.hiscores-link(href="hiscores?skill=crafting") Crafting
+          a.hiscores-link(href="hiscores?skill=smithing") Smithing
+          a.hiscores-link(href="hiscores?skill=mining") Mining
+          a.hiscores-link(href="hiscores?skill=herblaw") Herblaw
+          a.hiscores-link(href="hiscores?skill=agility") Agility
+          a.hiscores-link(href="hiscores?skill=thieving") Thieving
+          if page_name==='RSC Cabbage'
+            a.hiscores-link(href="hiscores?skill=runecraft") Runecraft
+            a.hiscores-link(href="hiscores?skill=harvesting") Harvesting
+      div.hiscore-table
+        h4 #{skill} Hiscores
+        div.hiscores-panel
+          table
+            thead
+              th Rank
+              th Name
+              th Level
+              th XP
+            tbody
+              each row in hiscores
+                tr
+                  each column in row
+                    td= column
+    div.hiscore-search
+      div.search-box.search-rank
+        - let actionTextRank = "hiscores?skill=" + skill.toLowerCase();
+        form(method="POST", action=actionTextRank)
+          label(for="rank") Search by rank
+          input#rank(name="rank", type="text")
+          input(type="submit", value="Search")
+      div.search-box.search-name
+        - let actionTextName = "hiscores?skill=" + skill.toLowerCase();
+        form(method="POST", action=actionTextName)
+          label(for="name") Search by name
+          input#name(name="name", type="text")
+          input(type="submit", value="Search")

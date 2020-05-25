@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      a(href="/") Open RuneScape Classic
+      nav
+        ul
+          li
+            a(href="https://classic.runescape.wiki") Wiki
+          li
+            a(href="https://discord.gg/mTBXvu2") Discord
+          li
+            a(href="https://orsc.dev") Code
+          li
+            a(href="rules") Rules
+          li
+            a(href="faq") FAQ
+          li
+            a(href="https://orsc.dev/open-rsc/Single-Player#open-runescape-classic-single-player") Single Player
+          li
+            a(href="https://rsc.plus") RSC+
+    main
+      section.top-border
+        div.top-left-border
+        div.top-middle-border
+        div.top-right-border
+
+      section.middle
+        div.mid-left-border
+
+        block content
+
+        div.mid-right-border
+
+      section.bottom-border
+        div.bottom-left-border
+        div.bottom-middle
+          div.copyright
+            | This webpage is maintained by Open RuneScape Classic.
+            br
+            | We are not affiliated with RuneScape Classic or JaGeX in any way.
+          div.bottom-middle-border
+        div.bottom-right-border

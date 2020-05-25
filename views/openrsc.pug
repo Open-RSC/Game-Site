@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  div.middle-content-server
+    div.logo
+    p.subtitle An authentic client with minor quality of life features.
+    div.orsc-buttons
+      a.button(href="downloads/OpenRSC.jar") Windows
+        br
+        | Download
+      a.button(href="downloads/openrsc.apk") Android
+        br
+        | Download
+      a.button(href="openrsc/hiscores") Hiscores
+
+    hr
+
+    div.statistics
+      h3 Statistics
+      div
+        dl
+          dt Players Online:
+          dd #{online}
+          dt Players Created Today:
+          dd #{created}
+          dt Online Last 48 Hours:
+          dd #{last}
+          dt Unique Players:
+          dd #{unique}
+          dt Total Players:
+          dd #{total}
+          dt Cumulative Play:
+          dd #{cumulative}
