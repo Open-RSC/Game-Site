@@ -5,9 +5,12 @@
 
 ## Set up
 
-To begin:
-`npm install`
+1. To begin:
+    `npm install`
 
-And then:
-Windows: `set DEBUG=site:* & npm start`
-Linux: `DEBUG=site:* npm start`
+2. And then:
+    Windows: `set DEBUG=site:* & npm start`
+    Linux: `DEBUG=site:* npm start`
+
+3. Finally,
+    Browse to `localhost:3000`
