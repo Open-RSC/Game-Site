@@ -384,7 +384,7 @@ a.hiscores-link {
 
 .hiscore-table {
   width: 290px;
-  height: 312px;
+  min-height: 312px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -485,6 +485,7 @@ a.hiscores-link {
   .hiscore-links, .hiscore-table, .hiscore-table .hiscores-panel {
     max-width: 50vw;
     width: auto;
+    height: auto;
   }
 
   div.hiscore-search {
