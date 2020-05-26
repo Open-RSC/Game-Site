@@ -27,7 +27,7 @@ router.post('/hiscores', async (req, res, next) => {
 
 router.get('/player/:username', async (req, res, next) => {
     const username = helper.validateName(req.params.username);
-    const result = await db.getPlayerByName(req, constant.OPENRSC, username);
+    const result = await db.getPlayerByName(req, constant.CABBAGE, username);
     if (result === undefined) {
         res.redirect('../hiscores');
     }
