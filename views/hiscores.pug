@@ -50,15 +50,15 @@ block content
     div.hiscore-search
       div.search-box.search-rank
         - let actionTextRank = "hiscores?skill=" + skill.toLowerCase();
-        form(method="POST", action=actionTextRank)
+        form(method="POST", action=actionTextRank, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="rank") Search by rank
           input#rank(name="rank", type="text")
-          input(type="submit", value="Search")
+          input(type="submit", value="Search", aria-label="Search by rank")
       div.search-box.search-name
         - let actionTextName = "hiscores?skill=" + skill.toLowerCase();
-        form(method="POST", action=actionTextName)
+        form(method="POST", action=actionTextName, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="name") Search by name
           input#name(name="name", type="text")
-          input(type="submit", value="Search")
+          input(type="submit", value="Search", aria-label="Search by username")
