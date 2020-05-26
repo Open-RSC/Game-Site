@@ -15,13 +15,16 @@ router.get('/', (req, res, next) => {
         online = servers.cabbage;
     }
     let onlineString = "";
-    if (online === 1) {
-      onlineString = "is currently " + online + " person";
-    }
-    else {
-      onlineString = "are currently " + online + " people";
+    if (online !== 0) {
+      if (online === 1) {
+        onlineString = "is currently " + online + " person";
+      }
+      else {
+        onlineString = "are currently " + online + " people";
+      }
     }
     res.render('index', {
+      page_name: "Open RuneScape Classic: Striving for a replica RSC game and more",
       online: onlineString
     });
 });

@@ -3,7 +3,7 @@ extends layout
 block content
   div.middle-content-hiscores
     div.title.hiscores-panel
-      h2.hiscores-title #{page_name} Hiscores
+      h2.hiscores-title #{server_name} Hiscores
       a.hiscores-link(href=server) Return to main menu
     
     div.hiscores
@@ -26,7 +26,7 @@ block content
           a.hiscores-link(href="hiscores?skill=herblaw") Herblaw
           a.hiscores-link(href="hiscores?skill=agility") Agility
           a.hiscores-link(href="hiscores?skill=thieving") Thieving
-          if page_name==='RSC Cabbage'
+          if server_name==='RSC Cabbage'
             a.hiscores-link(href="hiscores?skill=runecraft") Runecraft
             a.hiscores-link(href="hiscores?skill=harvesting") Harvesting
       div.hiscore-table

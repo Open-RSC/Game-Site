@@ -129,7 +129,7 @@ const getOverall = async (req, res, type, rank, name) => {
         csrfToken: req.csrfToken(),
         server: "/" + type,
         skill: 'Overall',
-        page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         hiscores: hiscores
     };
 }
@@ -177,7 +177,7 @@ const getSkill = async (req, res, type, skill, rank, name) => {
     return {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         skill: skill[0].toUpperCase() + skill.substr(1),
         hiscores: hiscores
     };
