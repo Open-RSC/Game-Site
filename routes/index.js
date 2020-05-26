@@ -17,10 +17,10 @@ router.get('/', (req, res, next) => {
     let onlineString = "";
     if (online !== 0) {
       if (online === 1) {
-        onlineString = "is currently " + online + " person";
+        onlineString = "There is currently " + online + " person playing!";
       }
       else {
-        onlineString = "are currently " + online + " people";
+        onlineString = "There are currently " + online + " people playing!";
       }
     }
     res.render('index', {
