@@ -449,14 +449,31 @@ a.hiscores-link {
     display: none;
   }
 
+  main {
+    flex-direction: column;
+    flex-flow: column;
+    height: auto;
+    min-height: auto;
+  }
+
   .subtitle {
     text-align: center;
   }
+
   main, section.middle,
   div.middle-content, div.middle-play,
   div.middle-content-server, div.middle-content-hiscores,
   .orsc-buttons, .cabbage-buttons {
     width: 100vw !important;
+  }
+
+  section.middle {
+    flex: 1;
+    overflow: auto;
+    min-height: auto;
+  }
+  div.middle-content {
+    min-height: auto;
   }
 
   .hiscores {
@@ -472,7 +489,8 @@ a.hiscores-link {
 
   div.hiscore-search {
     width: 100vw;
-    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
   }
 
   .search-box.search-rank {
@@ -525,20 +543,21 @@ a.hiscores-link {
 
   section.top-border {
     z-index: 1;
+    width: 100vw;
   }
 
   div.top-left-border {
-    width: 100px;
+    width: 0;
     height: 0;
     background-image: none;
   }
   div.top-middle-border {
-    width: 400px;
+    width: 100vw;
     height: 0;
     background-image: none;
   }
   div.top-right-border {
-    width: 100px;
+    width: 0;
     height: 0;
     background-image: none;
   }
@@ -555,6 +574,11 @@ a.hiscores-link {
     background-image: none;
   }
 
+  section.bottom-border {
+    width: 100vw;
+    min-height: 20px;
+  }
+
   section>div.bottom-left-border {
     width: 0;
     height: 0;
@@ -562,7 +586,7 @@ a.hiscores-link {
   }
   section>div.bottom-middle {
     width: 100vw;
-    height: 82px;
+    min-height: 20px;
     display: flex;
     flex-direction: column;
     background: url('/images/background.jpg');
