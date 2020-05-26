@@ -109,6 +109,7 @@ div.middle-content-server, div.middle-content-hiscores {
   align-items: center;
   background-image: url("/images/background.jpg");
 }
+
 div.middle-play .buttons {
   width: 519px;
   display: flex;
@@ -427,4 +428,161 @@ a.hiscores-link {
 }
 .search-box:first-child {
   margin-right: 25px;
+}
+
+@media (max-width: 576px) {
+
+  header {
+    flex-direction: column;
+    z-index: 2;
+  }
+
+  header ul {
+    padding-top: 10px;
+  }
+
+  header li:nth-child(6) {
+    display: none;
+  }
+
+  header li:nth-child(7) {
+    display: none;
+  }
+
+  .subtitle {
+    text-align: center;
+  }
+  main, section.middle,
+  div.middle-content, div.middle-play,
+  div.middle-content-server, div.middle-content-hiscores,
+  .orsc-buttons, .cabbage-buttons {
+    width: 100vw !important;
+  }
+
+  .hiscores {
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .hiscore-links, .hiscore-table, .hiscore-table .hiscores-panel {
+    max-width: 50vw;
+    width: auto;
+  }
+
+  div.hiscore-search {
+    width: 100vw;
+    justify-content: space-around;
+  }
+
+  .search-box.search-rank {
+    margin: 0;
+  }
+
+  div.home-buttons {
+    display: flex;
+    width: 100vw;
+    min-height: 280px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .large-button.play {
+    order: 1;
+    flex-basis: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .button.wiki {
+    order: 2;
+  }
+  .button.discord {
+    order: 2;
+  }
+  .button.rules-button {
+    order: 2;
+  }
+  .button.code {
+    order: 2;
+  }
+  .button.single-player {
+    display: none;
+  }
+  .button.faqs {
+    order: 2;
+  }
+  .button.rscplus {
+    display: none;
+  }
+
+  div.middle-play .buttons {
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  section.top-border {
+    z-index: 1;
+  }
+
+  div.top-left-border {
+    width: 100px;
+    height: 0;
+    background-image: none;
+  }
+  div.top-middle-border {
+    width: 400px;
+    height: 0;
+    background-image: none;
+  }
+  div.top-right-border {
+    width: 100px;
+    height: 0;
+    background-image: none;
+  }
+  
+
+  div.mid-left-border {
+    width: 0;
+    min-height: 488px;
+    background-image: none;
+  }
+  div.mid-right-border {
+    width: 0;
+    min-height: 488px;
+    background-image: none;
+  }
+
+  section>div.bottom-left-border {
+    width: 0;
+    height: 0;
+    background-image: none;
+  }
+  section>div.bottom-middle {
+    width: 100vw;
+    height: 82px;
+    display: flex;
+    flex-direction: column;
+    background: url('/images/background.jpg');
+  }
+  section>div.bottom-middle>div.copyright {
+    width: 100vw;
+    height: 39px;
+    padding-top: 10px;
+    font-size: 11px;
+    text-align: center;
+  }
+  section>div.bottom-middle>div.bottom-middle-border {
+    width: 400px;
+    height: 0;
+    background-image: none;
+  }
+  section>div.bottom-right-border {
+    width: 0;
+    height: 0;
+    background-image: none;
+  }
+  
 }
