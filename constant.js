@@ -46,7 +46,7 @@ exports.getExperience = () => {
         }
     };
     exports.possibleSkills.slice(2).forEach((element) => {
-        experience['exp_' + element] = {
+        experience[element] = {
             type: DataTypes.INTEGER,
             allowNull: false
         };
@@ -57,11 +57,11 @@ exports.getExperience = () => {
 exports.totalExperienceString = (type) => {
     let str = '';
     exports.possibleSkills.slice(2).forEach((element) => {
-        str += "exp_" + element + "+";
+        str += element + "+";
     });
     if (type == exports.CABBAGE) {
-        str += "exp_runecraft+";
-        str += "exp_harvesting+";
+        str += "runecraft+";
+        str += "harvesting+";
     }
     return str.slice(0, str.length - 1);
 }

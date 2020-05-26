@@ -50,23 +50,23 @@ const cabbage = new Sequelize(
 
 // Set up Player model(s) for querying
 const players = {
-    openrsc: openrsc.define('openrsc_players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('openrsc_players', constant.playerDetails, { freezeTableName: true })
+    openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
 }
 
 // Set up experience models for querying
 let customExperience = constant.getExperience();
-customExperience.exp_runecraft = {
+customExperience.runecraft = {
     type: DataTypes.INTEGER,
     allowNull: false
 }
-customExperience.exp_harvesting = {
+customExperience.harvesting = {
     type: DataTypes.INTEGER,
     allowNull: false
 }
 const experience = {
-    openrsc: openrsc.define('openrsc_experience', constant.getExperience(), { freezeTableName: true }),
-    cabbage: cabbage.define('openrsc_experience', customExperience, { freezeTableName: true })
+    openrsc: openrsc.define('experience', constant.getExperience(), { freezeTableName: true }),
+    cabbage: cabbage.define('experience', customExperience, { freezeTableName: true })
 }
 
 const pool = {
@@ -141,7 +141,7 @@ const getSkill = async (res, type, skill, rank, name) => {
         raw: true,
     });
     const exps = await experience[type].findAll({ raw: true,
-        attributes: [[pool[type].literal('playerID AS id, ' + 'exp_' + skill), 'totals']]
+        attributes: [[pool[type].literal('playerID AS id, ' + skill), 'totals']]
     });
     let combined = helper.joinById(playerData, exps);
     combined = Object.keys(combined).sort((a, b) => {
