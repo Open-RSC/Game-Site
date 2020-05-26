@@ -125,13 +125,13 @@ const getOverall = async (req, res, type, rank, name) => {
         hiscores.push(thisHiscore);
         i++;
     });
-    res.render('hiscores', {
+    return {
         csrfToken: req.csrfToken(),
         server: "/" + type,
         skill: 'Overall',
         page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         hiscores: hiscores
-    });
+    };
 }
 
 const getSkill = async (req, res, type, skill, rank, name) => {
@@ -174,16 +174,16 @@ const getSkill = async (req, res, type, skill, rank, name) => {
         hiscores.push(thisHiscore);
         i++;
     });
-    res.render('hiscores', {
+    return {
         csrfToken: req.csrfToken(),
         server: "/" + type,
         page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         skill: skill[0].toUpperCase() + skill.substr(1),
         hiscores: hiscores
-    });
+    };
 }
 
-exports.getHiscores = (req, res, type, skill, rank, name) => {
+exports.getHiscores = async (req, res, type, skill, rank, name) => {
     let skills = constant.possibleSkills.slice();
     if (type === constant.CABBAGE) {
         skills = skills.concat(['runecraft', 'harvesting']);
@@ -193,10 +193,10 @@ exports.getHiscores = (req, res, type, skill, rank, name) => {
     }
     try {
         if (skill === undefined || skill === '' || skill === 'overall') {
-            getOverall(req, res, type, rank, name);
+            return await getOverall(req, res, type, rank, name);
         }
         else {
-            getSkill(req, res, type, skill, rank, name);
+            return await getSkill(req, res, type, skill, rank, name);
         }
     }
     catch (err) {
@@ -205,13 +205,54 @@ exports.getHiscores = (req, res, type, skill, rank, name) => {
     }
 }
 
-exports.getOnline = async (res, callback) => {
+exports.getOnline = async () => {
     let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
     let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
     return {
         openrsc: openrsc,
         cabbage: cabbage
     };
+}
+
+exports.getPlayerByName = async (req, type, username) => {
+    let player = await players[type].findOne({
+        raw: true,
+        // attributes: ['id', 'username', 'skill_total'],
+        where: {
+            username: username
+        }
+    });
+    if (player === undefined || player === null) {
+        return undefined;
+    }
+
+    let skills = await experience[type].findOne({
+        raw: true,
+        attributes: {exclude: ['id', 'playerID']},
+        where: {
+            playerID: player.id
+        }
+    })
+
+    let hiscores = [['Skill Total', player.skill_total]];
+    let total = 0;
+    Object.keys(skills).forEach((element) => {
+        total += parseInt(skills[element]);
+        hiscores.push([
+            element[0].toUpperCase() + element.substr(1),
+            constant.experienceToLevel(skills[element]),
+            (parseInt(skills[element]) / 4)
+        ]);
+    });
+
+    hiscores[0].push(total / 4);
+
+    return {
+        csrfToken: req.csrfToken(),
+        server: "/" + type,
+        username: player.username,
+        hiscores: hiscores
+    }
 }
 
 exports.pool = pool;

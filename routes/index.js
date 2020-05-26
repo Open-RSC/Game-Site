@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db')
 
 router.get('/', (req, res, next) => {
-    const servers = db.getOnline(res);
+    const servers = db.getOnline();
     let online = 0;
     if (!isNaN(servers.openrsc) && !isNaN(servers.cabbage)) {
         online = servers.openrsc + servers.cabbage;

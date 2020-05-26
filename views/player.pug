@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  div.middle-content-hiscores
+    div.title.hiscores-panel
+      h2.hiscores-title User #{username}
+      a.hiscores-link(href=server) Return to main menu
+    
+    div.hiscores
+      div.hiscore-links
+        h4 Player Menu
+        div.hiscores-panel
+          a.hiscores-link(href="#") Skills
+          a.hiscores-link(href="../hiscores") Back to all
+      div.hiscore-table
+        h4 Skills of #{username}
+        div.hiscores-panel
+          table
+            thead
+              th Skill
+              th Level
+              th XP
+            tbody
+              each row in hiscores
+                tr
+                  each column in row
+                    td= column
+    div.hiscore-search
+        div.search-box.search-name
+            form(method="POST", action="../hiscores")
+                input(type="hidden", name="_csrf", value=csrfToken)
+                label(for="name") Search by name
+                input#name(name="name", type="text")
+                input(type="submit", value="Search")

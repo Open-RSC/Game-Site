@@ -41,8 +41,12 @@ block content
             tbody
               each row in hiscores
                 tr
-                  each column in row
-                    td= column
+                  each column, index in row
+                    if index == 'username'
+                      td
+                        a(href="player/" + column) #{column}
+                    else
+                      td= column
     div.hiscore-search
       div.search-box.search-rank
         - let actionTextRank = "hiscores?skill=" + skill.toLowerCase();
@@ -53,7 +57,7 @@ block content
           input(type="submit", value="Search")
       div.search-box.search-name
         - let actionTextName = "hiscores?skill=" + skill.toLowerCase();
-        form(method="POST", action="hiscores")
+        form(method="POST", action=actionTextName)
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="name") Search by name
           input#name(name="name", type="text")

@@ -8,19 +8,32 @@ router.get('/', (req, res, next) => {
     db.homepageStatistics(res, constant.CABBAGE, 'cabbage');
 });
 
-router.get('/hiscores', (req, res, next) => {
-    let skill = helper.validateSkill(req.query.skill);
-    db.getHiscores(req, res, constant.CABBAGE, skill);
+router.get('/hiscores', async (req, res, next) => {
+    const skill = helper.validateSkill(req.query.skill);
+    const result = await db.getHiscores(req, res, constant.CABBAGE, skill);
+    res.render('hiscores', result);
 });
 
-router.post('/hiscores', (req, res, next) => {
-    let skill = helper.validateSkill(req.query.skill);
-    let rank = helper.validateRank(req.body.rank);
+router.post('/hiscores', async (req, res, next) => {
+    const skill = helper.validateSkill(req.query.skill);
+    const rank = helper.validateRank(req.body.rank);
     let name = helper.validateName(req.body.name);
     if (!isNaN(rank) && name !== undefined) {
         name = undefined;
     }
-    db.getHiscores(req, res, constant.CABBAGE, skill, rank, name);
+    const result = await db.getHiscores(req, res, constant.CABBAGE, skill, rank, name);
+    res.render('hiscores', result);
+});
+
+router.get('/player/:username', async (req, res, next) => {
+    const username = helper.validateName(req.params.username);
+    const result = await db.getPlayerByName(req, constant.OPENRSC, username);
+    if (result === undefined) {
+        res.redirect('../hiscores');
+    }
+    else {
+        res.render('player', result);
+    }
 });
 
 module.exports = router;
