@@ -85,7 +85,7 @@ exports.homepageStatistics = async (res, type, page) => {
     });
 }
 
-const getOverall = async (res, type, rank, name) => {
+const getOverall = async (req, res, type, rank, name) => {
     if (rank === undefined || isNaN(rank) || rank < 8) {
         rank = 8;
     }
@@ -126,6 +126,7 @@ const getOverall = async (res, type, rank, name) => {
         i++;
     });
     res.render('hiscores', {
+        csrfToken: req.csrfToken(),
         server: "/" + type,
         skill: 'Overall',
         page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
@@ -133,7 +134,7 @@ const getOverall = async (res, type, rank, name) => {
     });
 }
 
-const getSkill = async (res, type, skill, rank, name) => {
+const getSkill = async (req, res, type, skill, rank, name) => {
     if (rank === undefined || isNaN(rank) || rank < 8) {
         rank = 8;
     }
@@ -174,6 +175,7 @@ const getSkill = async (res, type, skill, rank, name) => {
         i++;
     });
     res.render('hiscores', {
+        csrfToken: req.csrfToken(),
         server: "/" + type,
         page_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         skill: skill[0].toUpperCase() + skill.substr(1),
@@ -181,7 +183,7 @@ const getSkill = async (res, type, skill, rank, name) => {
     });
 }
 
-exports.getHiscores = (res, type, skill, rank, name) => {
+exports.getHiscores = (req, res, type, skill, rank, name) => {
     let skills = constant.possibleSkills.slice();
     if (type === constant.CABBAGE) {
         skills = skills.concat(['runecraft', 'harvesting']);
@@ -191,10 +193,10 @@ exports.getHiscores = (res, type, skill, rank, name) => {
     }
     try {
         if (skill === undefined || skill === '' || skill === 'overall') {
-            getOverall(res, type, rank, name);
+            getOverall(req, res, type, rank, name);
         }
         else {
-            getSkill(res, type, skill, rank, name);
+            getSkill(req, res, type, skill, rank, name);
         }
     }
     catch (err) {

@@ -7,9 +7,11 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "csurf": "^1.11.0",
     "db": "^2.0.0",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql2": "^2.1.0",

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 /* GET rules page. */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('rules', {});
 });
 

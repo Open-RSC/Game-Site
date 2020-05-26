@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/hiscores', (req, res, next) => {
     let skill = helper.validateSkill(req.query.skill);
-    db.getHiscores(res, constant.OPENRSC, skill);
+    db.getHiscores(req, res, constant.OPENRSC, skill);
 });
 
 router.post('/hiscores', (req, res, next) => {
@@ -20,7 +20,7 @@ router.post('/hiscores', (req, res, next) => {
     if (!isNaN(rank) && name !== undefined) {
         name = undefined;
     }
-    db.getHiscores(res, constant.OPENRSC, skill, rank, name);
+    db.getHiscores(req, res, constant.OPENRSC, skill, rank, name);
 });
 
 module.exports = router;
