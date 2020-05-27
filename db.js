@@ -85,11 +85,11 @@ exports.homepageStatistics = async (res, type, page) => {
     catch (err) {
         console.log(err);
         res.render(page, {
-            online: -1,
-            created: -1,
-            last: -1,
-            unique: -1,
-            total: -1
+            online: 'Database Offline',
+            created: 'Database Offline',
+            last: 'Database Offline',
+            unique: 'Database Offline',
+            total: 'Database Offline'
         });
     }
 }
@@ -144,6 +144,14 @@ const getOverall = async (req, res, type, rank, name) => {
     }
     catch (err) {
         console.log(err);
+        pageContent.hiscores = [
+            {
+                rank: 1,
+                username: 'fake_user',
+                skill: 99,
+                experience: 200000000
+            }
+        ];
     }
 
     return pageContent;
@@ -205,7 +213,14 @@ const getSkill = async (req, res, type, skill, rank, name) => {
     }
     catch (err) {
         console.log(err);
-        pageContent.hiscores = [];
+        pageContent.hiscores = [
+            {
+                rank: 1,
+                username: 'fake_user',
+                skill: 99,
+                experience: 200000000
+            }
+        ];
     }
 
     return pageContent;
@@ -245,8 +260,8 @@ exports.getOnline = async () => {
     catch (err) {
         console.log(err);
         return {
-            openrsc: -1,
-            cabbage: -1
+            openrsc: 'Database Offline',
+            cabbage: 'Database Offline'
         };
     }
 }
@@ -319,8 +334,8 @@ exports.getPlayerByName = async (req, type, username) => {
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
-            username: player.username,
-            hiscores: []
+            username: 'fake_user',
+            hiscores: [['Awesomeness', 99, 200000000, 1]]
         }
     }
 }
