@@ -10,25 +10,9 @@ block content
       div.hiscore-links
         h4 Select hiscore table
         div.hiscores-panel
-          a.hiscores-link(href="hiscores?skill=overall") Overall
-          a.hiscores-link(href="hiscores?skill=hits") Fighting
-          a.hiscores-link(href="hiscores?skill=ranged") Ranged
-          a.hiscores-link(href="hiscores?skill=prayer") Prayer
-          a.hiscores-link(href="hiscores?skill=magic") Magic
-          a.hiscores-link(href="hiscores?skill=cooking") Cooking
-          a.hiscores-link(href="hiscores?skill=woodcut") Woodcutting
-          a.hiscores-link(href="hiscores?skill=fletching") Fletching
-          a.hiscores-link(href="hiscores?skill=fishing") Fishing
-          a.hiscores-link(href="hiscores?skill=firemaking") Firemaking
-          a.hiscores-link(href="hiscores?skill=crafting") Crafting
-          a.hiscores-link(href="hiscores?skill=smithing") Smithing
-          a.hiscores-link(href="hiscores?skill=mining") Mining
-          a.hiscores-link(href="hiscores?skill=herblaw") Herblaw
-          a.hiscores-link(href="hiscores?skill=agility") Agility
-          a.hiscores-link(href="hiscores?skill=thieving") Thieving
-          if server_name==='RSC Cabbage'
-            a.hiscores-link(href="hiscores?skill=runecraft") Runecraft
-            a.hiscores-link(href="hiscores?skill=harvesting") Harvesting
+          each skillName in skills
+            - let skillLink = "hiscores?skill=" + skillName
+            a.hiscores-link(href=skillLink) #{skillName[0].toUpperCase() + skillName.substr(1)}
       div.hiscore-table
         h4 #{skill} Hiscores
         div.hiscores-panel

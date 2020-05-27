@@ -55,18 +55,15 @@ const players = {
 }
 
 // Set up experience models for querying
-let customExperience = constant.getExperience();
-customExperience.runecraft = {
-    type: DataTypes.INTEGER,
-    allowNull: false
-}
-customExperience.harvesting = {
-    type: DataTypes.INTEGER,
-    allowNull: false
-}
 const experience = {
-    openrsc: openrsc.define('experience', constant.getExperience(), { freezeTableName: true }),
-    cabbage: cabbage.define('experience', customExperience, { freezeTableName: true })
+    openrsc: openrsc.define('experience',
+        constant.getExperience(constant.OPENRSC),
+        { freezeTableName: true }
+    ),
+    cabbage: cabbage.define('experience',
+        constant.getExperience(constant.CABBAGE),
+        { freezeTableName: true }
+    )
 }
 
 const pool = {
@@ -86,6 +83,7 @@ exports.homepageStatistics = async (res, type, page) => {
         });
     }
     catch (err) {
+        console.log(err);
         res.render(page, {
             online: -1,
             created: -1,
@@ -97,6 +95,12 @@ exports.homepageStatistics = async (res, type, page) => {
 }
 
 const getOverall = async (req, res, type, rank, name) => {
+    let pageContent = {
+        csrfToken: req.csrfToken(),
+        server: "/" + type,
+        skill: 'Overall',
+        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+    };
     try {
         if (rank === undefined || isNaN(rank) || rank < 8) {
             rank = 8;
@@ -113,7 +117,7 @@ const getOverall = async (req, res, type, rank, name) => {
         }).map(key => combined[key]);
         if (name !== undefined) {
             for (let x in combined) {
-                if(combined[x].username === name) {
+                if (combined[x].username === name) {
                     rank = parseInt(x) + 1;
                     break;
                 }
@@ -122,7 +126,7 @@ const getOverall = async (req, res, type, rank, name) => {
 
         combined = combined.slice(rank-8,rank+8)
 
-        let hiscores = [];
+        pageContent.hiscores = [];
         let i = 1;
         if (rank !== undefined && rank > 7) {
             i = rank - 7;
@@ -134,29 +138,24 @@ const getOverall = async (req, res, type, rank, name) => {
                 skill: element.skill_total,
                 experience: Math.floor(element.totals / 4)
             }
-            hiscores.push(thisHiscore);
+            pageContent.hiscores.push(thisHiscore);
             i++;
         });
-        return {
-            csrfToken: req.csrfToken(),
-            server: "/" + type,
-            skill: 'Overall',
-            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-            hiscores: hiscores
-        };
     }
     catch (err) {
-        return {
-            csrfToken: req.csrfToken(),
-            server: "/" + type,
-            skill: 'Overall',
-            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-            hiscores: []
-        };
+        console.log(err);
     }
+
+    return pageContent;
 }
 
 const getSkill = async (req, res, type, skill, rank, name) => {
+    let pageContent = {
+        csrfToken: req.csrfToken(),
+        server: "/" + type,
+        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+        skill: skill[0].toUpperCase() + skill.substr(1)
+    };
     try {
         if (rank === undefined || isNaN(rank) || rank < 8) {
             rank = 8;
@@ -180,9 +179,15 @@ const getSkill = async (req, res, type, skill, rank, name) => {
             }
         }
 
-        combined = combined.slice(rank-8,rank+8)
+        if (type === constant.CABBAGE) {
+            combined = combined.slice(rank-10,rank+10)
+        }
+        else {
+            combined = combined.slice(rank-8,rank+8)
+        }
 
-        let hiscores = [];
+
+        pageContent.hiscores = [];
         let i = 1;
         if (rank !== undefined && rank > 7) {
             i = rank - 7;
@@ -194,37 +199,27 @@ const getSkill = async (req, res, type, skill, rank, name) => {
                 skill: constant.experienceToLevel(parseInt(element.totals)),
                 experience: Math.floor(parseInt(element.totals) / 4)
             }
-            hiscores.push(thisHiscore);
+            pageContent.hiscores.push(thisHiscore);
             i++;
         });
-        return {
-            csrfToken: req.csrfToken(),
-            server: "/" + type,
-            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-            skill: skill[0].toUpperCase() + skill.substr(1),
-            hiscores: hiscores
-        };
     }
     catch (err) {
-        return {
-            csrfToken: req.csrfToken(),
-            server: "/" + type,
-            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-            skill: skill[0].toUpperCase() + skill.substr(1),
-            hiscores: []
-        };
+        console.log(err);
+        pageContent.hiscores = [];
     }
+
+    return pageContent;
 }
 
 exports.getHiscores = async (req, res, type, skill, rank, name) => {
-    let skills = constant.possibleSkills.slice();
-    if (type === constant.CABBAGE) {
-        skills = skills.concat(['runecraft', 'harvesting']);
-    }
-    if (!skills.includes(skill)) {
-        skill = 'overall';
-    }
     try {
+        let skills = constant.getSkills(type);
+        if (skill === 'fighting') {
+            skill = 'hits';
+        }
+        if (!skills.includes(skill)) {
+            skill = 'overall';
+        }
         if (skill === undefined || skill === '' || skill === 'overall') {
             return await getOverall(req, res, type, rank, name);
         }
@@ -248,6 +243,7 @@ exports.getOnline = async () => {
         };
     }
     catch (err) {
+        console.log(err);
         return {
             openrsc: -1,
             cabbage: -1
@@ -319,6 +315,7 @@ exports.getPlayerByName = async (req, type, username) => {
         }
     }
     catch (err) {
+        console.log(err);
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,

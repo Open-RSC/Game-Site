@@ -4,13 +4,18 @@ const db = require('../db');
 const constant = require('../constant');
 const helper = require('../helper');
 
+let server = constant.OPENRSC;
+
 router.get('/', (req, res, next) => {
-    db.homepageStatistics(res, constant.OPENRSC, 'openrsc');
+    db.homepageStatistics(res, server, 'openrsc');
 });
 
 router.get('/hiscores', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, constant.OPENRSC, skill);
+    const result = await db.getHiscores(req, res, server, skill);
+    result.skills = constant.getSkills(server);
+    result.skills.unshift('overall');
+    result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
     res.render('hiscores', result);
 });
@@ -22,14 +27,17 @@ router.post('/hiscores', async (req, res, next) => {
     if (!isNaN(rank) && name !== undefined) {
         name = undefined;
     }
-    const result = await db.getHiscores(req, res, constant.OPENRSC, skill, rank, name);
+    const result = await db.getHiscores(req, res, server, skill, rank, name);
+    result.skills = constant.getSkills(server);
+    result.skills.unshift('overall');
+    result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
     res.render('hiscores', result);
 });
 
 router.get('/player/:username', async (req, res, next) => {
     const username = helper.validateName(req.params.username);
-    const result = await db.getPlayerByName(req, constant.OPENRSC, username);
+    const result = await db.getPlayerByName(req, server, username);
     if (result === undefined) {
         res.redirect('../hiscores');
     }

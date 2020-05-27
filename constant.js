@@ -9,8 +9,9 @@ exports.OPENRSC = 'openrsc';
 exports.CABBAGE = 'cabbage';
 
 
-exports.possibleSkills = ['',
-    'overall', 'hits', 'ranged',
+exports.possibleSkills = [
+    'overall', 'attack', 'defense',
+    'strength', 'hits', 'ranged',
     'prayer', 'magic', 'cooking',
     'woodcut', 'fletching', 'fishing',
     'firemaking', 'crafting', 'smithing',
@@ -33,7 +34,7 @@ exports.playerDetails = {
     }
 }
 
-exports.getExperience = () => {
+exports.getExperience = (type) => {
     let experience = {
         id: {
             primaryKey: true,
@@ -45,25 +46,48 @@ exports.getExperience = () => {
             allowNull: false
         }
     };
-    exports.possibleSkills.slice(2).forEach((element) => {
+
+    // Add authentic skills.
+    exports.possibleSkills.slice(1).forEach((element) => {
         experience[element] = {
             type: DataTypes.INTEGER,
             allowNull: false
         };
     });
+
+    // Add Runecraft and Harvesting for custom loads.
+    if (type === exports.CABBAGE) {
+        experience.runecraft = {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+        experience.harvesting = {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    }
     return experience;
+}
+
+exports.getSkills = (type) => {
+    let listOfSkills;
+    if (type === exports.CABBAGE) {
+        listOfSkills = exports.possibleSkills.slice(1)
+            .concat(['runecraft', 'harvesting']);
+    }
+    else {
+        listOfSkills = exports.possibleSkills.slice(4);
+    }
+    return listOfSkills;
 }
 
 exports.totalExperienceString = (type) => {
     let str = '';
-    exports.possibleSkills.slice(2).forEach((element) => {
+    let listOfSkills = exports.getSkills(type).slice();
+    listOfSkills.forEach((element) => {
         str += element + "+";
     });
-    if (type == exports.CABBAGE) {
-        str += "runecraft+";
-        str += "harvesting+";
-    }
-    return str.slice(0, str.length - 1);
+    return str.slice(0, str.length - 1); // We don't want a trailing +
 }
 
 exports.experienceToLevel = (exp) => {
