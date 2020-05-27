@@ -75,111 +75,145 @@ const pool = {
 }
 
 exports.homepageStatistics = async (res, type, page) => {
-    res.render(page, {
-        online: await players[type].count({ where: { online: 1 } }),
-        created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
-        last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
-        unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
-        total: await players[type].count()
-    });
+    try {
+        // await pool[type].authenticate();
+        res.render(page, {
+            online: await players[type].count({ where: { online: 1 } }),
+            created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
+            last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
+            unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
+            total: await players[type].count()
+        });
+    }
+    catch (err) {
+        res.render(page, {
+            online: -1,
+            created: -1,
+            last: -1,
+            unique: -1,
+            total: -1
+        });
+    }
 }
 
 const getOverall = async (req, res, type, rank, name) => {
-    if (rank === undefined || isNaN(rank) || rank < 8) {
-        rank = 8;
-    }
-    const totals = await players[type].findAll({
-        raw: true,
-    });
-    const exps = await experience[type].findAll({ raw: true,
-        attributes: [[pool[type].literal('playerID AS id, ' + constant.totalExperienceString(type)), 'totals']]
-    });
-    let combined = helper.joinById(totals, exps);
-    combined = Object.keys(combined).sort((a, b) => {
-        return combined[b].totals - combined[a].totals;
-    }).map(key => combined[key]);
-    if (name !== undefined) {
-        for (let x in combined) {
-            if(combined[x].username === name) {
-                rank = parseInt(x) + 1;
-                break;
+    try {
+        if (rank === undefined || isNaN(rank) || rank < 8) {
+            rank = 8;
+        }
+        const totals = await players[type].findAll({
+            raw: true,
+        });
+        const exps = await experience[type].findAll({ raw: true,
+            attributes: [[pool[type].literal('playerID AS id, ' + constant.totalExperienceString(type)), 'totals']]
+        });
+        let combined = helper.joinById(totals, exps);
+        combined = Object.keys(combined).sort((a, b) => {
+            return combined[b].totals - combined[a].totals;
+        }).map(key => combined[key]);
+        if (name !== undefined) {
+            for (let x in combined) {
+                if(combined[x].username === name) {
+                    rank = parseInt(x) + 1;
+                    break;
+                }
             }
         }
-    }
 
-    combined = combined.slice(rank-8,rank+8)
+        combined = combined.slice(rank-8,rank+8)
 
-    let hiscores = [];
-    let i = 1;
-    if (rank !== undefined && rank > 7) {
-        i = rank - 7;
-    }
-    combined.forEach((element) => {
-        thisHiscore = {
-            rank: i,
-            username: element.username,
-            skill: element.skill_total,
-            experience: Math.floor(element.totals / 4)
+        let hiscores = [];
+        let i = 1;
+        if (rank !== undefined && rank > 7) {
+            i = rank - 7;
         }
-        hiscores.push(thisHiscore);
-        i++;
-    });
-    return {
-        csrfToken: req.csrfToken(),
-        server: "/" + type,
-        skill: 'Overall',
-        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-        hiscores: hiscores
-    };
+        combined.forEach((element) => {
+            thisHiscore = {
+                rank: i,
+                username: element.username,
+                skill: element.skill_total,
+                experience: Math.floor(element.totals / 4)
+            }
+            hiscores.push(thisHiscore);
+            i++;
+        });
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            skill: 'Overall',
+            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+            hiscores: hiscores
+        };
+    }
+    catch (err) {
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            skill: 'Overall',
+            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+            hiscores: []
+        };
+    }
 }
 
 const getSkill = async (req, res, type, skill, rank, name) => {
-    if (rank === undefined || isNaN(rank) || rank < 8) {
-        rank = 8;
-    }
-    const playerData = await players[type].findAll({
-        raw: true,
-    });
-    const exps = await experience[type].findAll({ raw: true,
-        attributes: [[pool[type].literal('playerID AS id, ' + skill), 'totals']]
-    });
-    let combined = helper.joinById(playerData, exps);
-    combined = Object.keys(combined).sort((a, b) => {
-        return combined[b].totals - combined[a].totals;
-    }).map(key => combined[key]);
-    if (name !== undefined) {
-        for (let x in combined) {
-            if(combined[x].username === name) {
-                rank = parseInt(x) + 1;
-                break;
+    try {
+        if (rank === undefined || isNaN(rank) || rank < 8) {
+            rank = 8;
+        }
+        const playerData = await players[type].findAll({
+            raw: true,
+        });
+        const exps = await experience[type].findAll({ raw: true,
+            attributes: [[pool[type].literal('playerID AS id, ' + skill), 'totals']]
+        });
+        let combined = helper.joinById(playerData, exps);
+        combined = Object.keys(combined).sort((a, b) => {
+            return combined[b].totals - combined[a].totals;
+        }).map(key => combined[key]);
+        if (name !== undefined) {
+            for (let x in combined) {
+                if(combined[x].username === name) {
+                    rank = parseInt(x) + 1;
+                    break;
+                }
             }
         }
-    }
 
-    combined = combined.slice(rank-8,rank+8)
+        combined = combined.slice(rank-8,rank+8)
 
-    let hiscores = [];
-    let i = 1;
-    if (rank !== undefined && rank > 7) {
-        i = rank - 7;
-    }
-    combined.forEach(element => {
-        thisHiscore = {
-            rank: i,
-            username: element.username,
-            skill: constant.experienceToLevel(parseInt(element.totals)),
-            experience: Math.floor(parseInt(element.totals) / 4)
+        let hiscores = [];
+        let i = 1;
+        if (rank !== undefined && rank > 7) {
+            i = rank - 7;
         }
-        hiscores.push(thisHiscore);
-        i++;
-    });
-    return {
-        csrfToken: req.csrfToken(),
-        server: "/" + type,
-        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
-        skill: skill[0].toUpperCase() + skill.substr(1),
-        hiscores: hiscores
-    };
+        combined.forEach(element => {
+            thisHiscore = {
+                rank: i,
+                username: element.username,
+                skill: constant.experienceToLevel(parseInt(element.totals)),
+                experience: Math.floor(parseInt(element.totals) / 4)
+            }
+            hiscores.push(thisHiscore);
+            i++;
+        });
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+            skill: skill[0].toUpperCase() + skill.substr(1),
+            hiscores: hiscores
+        };
+    }
+    catch (err) {
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+            skill: skill[0].toUpperCase() + skill.substr(1),
+            hiscores: []
+        };
+    }
 }
 
 exports.getHiscores = async (req, res, type, skill, rank, name) => {
@@ -205,74 +239,92 @@ exports.getHiscores = async (req, res, type, skill, rank, name) => {
 }
 
 exports.getOnline = async () => {
-    let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
-    let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
-    return {
-        openrsc: openrsc,
-        cabbage: cabbage
-    };
+    try {
+        let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
+        let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
+        return {
+            openrsc: openrsc,
+            cabbage: cabbage
+        };
+    }
+    catch (err) {
+        return {
+            openrsc: -1,
+            cabbage: -1
+        };
+    }
 }
 
 exports.getPlayerByName = async (req, type, username) => {
-    let player = await players[type].findOne({
-        raw: true,
-        where: {
-            username: username
+    try {
+        let player = await players[type].findOne({
+            raw: true,
+            where: {
+                username: username
+            }
+        });
+        if (player === undefined || player === null) {
+            return undefined;
         }
-    });
-    if (player === undefined || player === null) {
-        return undefined;
-    }
 
-    let skills = await experience[type].findOne({
-        raw: true,
-        attributes: {exclude: ['id', 'playerID']},
-        where: {
-            playerID: player.id
-        }
-    });
-    let total = Object.values(skills).reduce((a, b) => a + b, 0);
-    let totalRank = 0;
-    let exps = await experience[type].findAll({
-        raw: true,
-        attributes: {exclude: ['id']}
-    });
+        let skills = await experience[type].findOne({
+            raw: true,
+            attributes: {exclude: ['id', 'playerID']},
+            where: {
+                playerID: player.id
+            }
+        });
+        let total = Object.values(skills).reduce((a, b) => a + b, 0);
+        let totalRank = 0;
+        let exps = await experience[type].findAll({
+            raw: true,
+            attributes: {exclude: ['id']}
+        });
 
-    for (let x in exps) {
-        if (Object.values(exps[x]).reduce((a, b) => a + b, 0) > total) {
-            totalRank++;
-        }
-    }
-
-    let hiscores = [['Skill Total', player.skill_total]];
-    Object.keys(skills).forEach((element) => {
-        let rank = 1;
-        exps = Object.keys(exps).sort((a, b) => {
-            return exps[b][element] - exps[a][element];
-        }).map(key => exps[key]);
         for (let x in exps) {
-            if(exps[x].playerID === player.id) {
-                rank = parseInt(x) + 1;
-                break;
+            if (Object.values(exps[x]).reduce((a, b) => a + b, 0) > total) {
+                totalRank++;
             }
         }
 
-        hiscores.push([
-            element[0].toUpperCase() + element.substr(1),
-            constant.experienceToLevel(skills[element]),
-            Math.floor(parseInt(skills[element]) / 4),
-            rank
-        ]);
-    });
+        let hiscores = [['Skill Total', player.skill_total]];
+        Object.keys(skills).forEach((element) => {
+            let rank = 1;
+            exps = Object.keys(exps).sort((a, b) => {
+                return exps[b][element] - exps[a][element];
+            }).map(key => exps[key]);
+            for (let x in exps) {
+                if(exps[x].playerID === player.id) {
+                    rank = parseInt(x) + 1;
+                    break;
+                }
+            }
 
-    hiscores[0].push(Math.floor(total / 4));
-    hiscores[0].push(totalRank);
+            hiscores.push([
+                element[0].toUpperCase() + element.substr(1),
+                constant.experienceToLevel(skills[element]),
+                Math.floor(parseInt(skills[element]) / 4),
+                rank
+            ]);
+        });
 
-    return {
-        csrfToken: req.csrfToken(),
-        server: "/" + type,
-        username: player.username,
-        hiscores: hiscores
+        hiscores[0].push(Math.floor(total / 4));
+        hiscores[0].push(totalRank);
+
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            username: player.username,
+            hiscores: hiscores
+        }
+    }
+    catch (err) {
+        return {
+            csrfToken: req.csrfToken(),
+            server: "/" + type,
+            username: player.username,
+            hiscores: []
+        }
     }
 }
 
