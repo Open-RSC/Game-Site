@@ -145,6 +145,16 @@ div.logo {
   background-position-y: bottom;
   background-size: 309px 106px;
 }
+div.logo2 {
+  width: 309px;
+  height: 106px;
+  padding-top: 28px;
+  background-image: url("/images/logo2.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-size: 309px 106px;
+}
 
 p.online {
   width: 309px;
