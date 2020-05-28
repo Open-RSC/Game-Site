@@ -8,7 +8,8 @@ block content
     
     div.hiscores
       div.hiscore-links
-        h4 Select hiscore table
+        h4
+          span Select hiscore table
         div.hiscores-panel
           each skillName in skills
             - let skillLink = "hiscores?skill=" + skillName

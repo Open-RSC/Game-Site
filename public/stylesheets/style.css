@@ -498,6 +498,22 @@ a.hiscores-link {
     max-width: 50vw;
     width: auto;
     height: auto;
+    max-width: 80vw;
+  }
+
+  .hiscore-links h4 span {
+    display: block;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+  .hiscore-links h4:after {
+    text-align: center;
+    content: 'Select'
+  }
+
+  .hiscore-links, .hiscore-links .hiscores-panel {
+    width: auto;
   }
 
   div.hiscore-search {
