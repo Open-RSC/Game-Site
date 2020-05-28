@@ -31,6 +31,21 @@ exports.playerDetails = {
     skill_total: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    group_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    banned: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}
+
+exports.playerDetailsCabbage = { ...exports.playerDetails,
+    iron_man: {
+        type: DataTypes.TINYINT,
+        allowNull: false
     }
 }
 

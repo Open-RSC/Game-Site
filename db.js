@@ -51,7 +51,7 @@ const cabbage = new Sequelize(
 // Set up Player model(s) for querying
 const players = {
     openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
+    cabbage: cabbage.define('players', constant.playerDetailsCabbage, { freezeTableName: true })
 }
 
 // Set up experience models for querying
@@ -111,10 +111,19 @@ const getOverall = async (req, res, type, rank, name) => {
         const exps = await experience[type].findAll({ raw: true,
             attributes: [[pool[type].literal('playerID AS id, ' + constant.totalExperienceString(type)), 'totals']]
         });
+
+        // Combine the lists
         let combined = helper.joinById(totals, exps);
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].totals - combined[a].totals;
-        }).map(key => combined[key]);
+        })
+        .map(key => combined[key])
+        .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
+        if (type === constant.CABBAGE) {
+            combined = combined.filter(user => user.iron_man !== 4);
+        }
+
+        // Find the rank
         if (name !== undefined) {
             for (let x in combined) {
                 if (combined[x].username === name) {
@@ -169,15 +178,25 @@ const getSkill = async (req, res, type, skill, rank, name) => {
             rank = 8;
         }
         const playerData = await players[type].findAll({
-            raw: true,
+            raw: true
         });
         const exps = await experience[type].findAll({ raw: true,
             attributes: [[pool[type].literal('playerID AS id, ' + skill), 'totals']]
         });
+
+        // Combine the experience and player lists.
         let combined = helper.joinById(playerData, exps);
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].totals - combined[a].totals;
-        }).map(key => combined[key]);
+            return combined[b].totals - combined[a].totals; })
+        .map(key => combined[key])
+        .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
+
+        if (type === constant.CABBAGE) {
+
+            combined = combined.filter(user => user.iron_man !== 4);
+        }
+
+        // Find the rank.
         if (name !== undefined) {
             for (let x in combined) {
                 if(combined[x].username === name) {
