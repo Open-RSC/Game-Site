@@ -7,7 +7,9 @@ const helper = require('../helper');
 const server = constant.CABBAGE;
 
 router.get('/', (req, res, next) => {
-    db.homepageStatistics(res, server, 'cabbage');
+    let result = db.homepageStatistics(res, server);
+    result.page_name = "RSC Cabbage - Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    res.render(constant.CABBAGE, result);
 });
 
 router.get('/hiscores', async (req, res, next) => {
@@ -27,22 +29,28 @@ router.post('/hiscores', async (req, res, next) => {
         name = undefined;
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name);
+    console.log(result);
+    if (result.hiscores === []) {
+        return res.redirect('../hiscores');
+    }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     res.render('hiscores', result);
 });
 
+router.get('/hiscores/ironman', async (req, res, next) => {
+    
+});
+
 router.get('/player/:username', async (req, res, next) => {
     const username = helper.validateName(req.params.username);
     const result = await db.getPlayerByName(req, server, username);
     if (result === undefined) {
-        res.redirect('../hiscores');
+        return res.redirect('../hiscores');
     }
-    else {
-        result.page_name = "RSC Cabbage - Players | " + username + " | Open RuneScape Classic";
-        res.render('player', result);
-    }
+    result.page_name = "RSC Cabbage - Players | " + username + " | Open RuneScape Classic";
+    res.render('player', result);
 });
 
 module.exports = router;
