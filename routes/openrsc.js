@@ -4,7 +4,7 @@ const db = require('../db');
 const constant = require('../constant');
 const helper = require('../helper');
 
-let server = constant.OPENRSC;
+const server = constant.OPENRSC;
 
 router.get('/', async (req, res, next) => {
     let result = await db.homepageStatistics(res, server);
@@ -30,6 +30,9 @@ router.post('/hiscores', async (req, res, next) => {
         name = undefined;
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name);
+    if (result.hiscores === []) {
+        return res.redirect('../hiscores');
+    }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';

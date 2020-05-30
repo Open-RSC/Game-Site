@@ -37,7 +37,7 @@ exports.playerDetails = {
         allowNull: false
     },
     banned: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     iron_man: {

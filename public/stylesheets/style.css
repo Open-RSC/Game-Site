@@ -466,6 +466,7 @@ a.hiscores-link {
     flex-flow: column;
     height: auto;
     min-height: auto;
+    font-size: 1em;
   }
 
   .subtitle {
@@ -488,6 +489,10 @@ a.hiscores-link {
     min-height: auto;
   }
 
+  .middle-content-hiscores .title {
+    width: auto;
+  }
+
   .hiscores {
     width: 100vw;
     display: flex;
@@ -501,6 +506,10 @@ a.hiscores-link {
     max-width: 80vw;
   }
 
+  .hiscore-links h4, .hiscore-table h4, .middle-content-hiscores .title h2 {
+    font-size: 1em;
+  }
+
   .hiscore-links h4 span {
     display: block;
     visibility: hidden;
@@ -509,11 +518,19 @@ a.hiscores-link {
   }
   .hiscore-links h4:after {
     text-align: center;
-    content: 'Select'
+    content: 'Menu';
+  }
+
+  .hiscore-table td, .hiscore-table th {
+    font-size: 0.9em;
   }
 
   .hiscore-links, .hiscore-links .hiscores-panel {
     width: auto;
+  }
+
+  a.hiscores-link {
+    font-size: 1em;
   }
 
   div.hiscore-search {
@@ -524,6 +541,10 @@ a.hiscores-link {
 
   .search-box.search-rank {
     margin: 0;
+  }
+  .search-box input {
+    width: 90%;
+    margin-top: 2px;
   }
 
   div.home-buttons {

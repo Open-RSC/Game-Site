@@ -48,12 +48,6 @@ const cabbage = new Sequelize(
     }
 })();
 
-// Set up Player model(s) for querying
-const players = {
-    openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
-}
-
 // Set up experience models for querying
 const experience = {
     openrsc: openrsc.define('experience',
@@ -65,6 +59,19 @@ const experience = {
         { freezeTableName: true }
     )
 }
+
+// Set up Player model(s) for querying
+const players = {
+    openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
+}
+
+
+// Set up relationships.
+players[constant.OPENRSC].hasOne(experience.openrsc, {foreignKey: 'playerID'});
+players[constant.CABBAGE].hasOne(experience.cabbage, {foreignKey: 'playerID'});
+experience[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
+experience[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
 
 const pool = {
     openrsc: openrsc,
@@ -118,11 +125,11 @@ const getOverall = async (req, res, type, rank, name) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
         .map(key => combined[key])
-        .filter(user => parseInt(user.banned) === 0 && user.group_id >= 10);
-
-        //if (type === constant.CABBAGE) {
-            combined = combined.filter(user => user.iron_man !== 4);
-        //}
+        .filter(user => {
+            return parseInt(user.banned) === 0 &&
+            user.group_id >= 10 &&
+            user.iron_man !== 4
+        });
 
         // Find the rank
         if (name !== undefined) {
@@ -188,13 +195,13 @@ const getSkill = async (req, res, type, skill, rank, name) => {
         // Combine the experience and player lists.
         let combined = helper.joinById(playerData, exps);
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].totals - combined[a].totals; })
+            return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals; })
         .map(key => combined[key])
-        .filter(user => parseInt(user.banned) === 0 && user.group_id >= 10);
-
-        //if (type === constant.CABBAGE) {
-            combined = combined.filter(user => user.iron_man !== 4);
-        //}
+        .filter(user => {
+            return parseInt(user.banned) === 0 &&
+            user.group_id >= 10 &&
+            user.iron_man !== 4
+        });
 
         // Find the rank.
         if (name !== undefined) {
@@ -299,20 +306,26 @@ exports.getPlayerByName = async (req, type, username) => {
 
         let skills = await experience[type].findOne({
             raw: true,
-            attributes: {exclude: ['id', 'playerID']},
+            attributes: {exclude: ['id', 'playerID', 'playerId']},
             where: {
                 playerID: player.id
             }
         });
         let total = Object.values(skills).reduce((a, b) => a + b, 0);
-        let totalRank = 0;
+        let totalRank = 1;
         let exps = await experience[type].findAll({
             raw: true,
-            attributes: {exclude: ['id']}
+            attributes: {exclude: ['id']},
+            include: {
+                model: players[type],
+                where: { group_id: {
+                    [Op.gt]: 9
+                }}
+            }
         });
-
         for (let x in exps) {
-            if (Object.values(exps[x]).reduce((a, b) => a + b, 0) > total) {
+            delete exps[x].playerId;
+            if (Object.values(exps[x]).filter(user => constant.getSkills(type).includes(user)).reduce((a, b) => a + b, 0) > total) {
                 totalRank++;
             }
         }
@@ -322,7 +335,13 @@ exports.getPlayerByName = async (req, type, username) => {
             let rank = 1;
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];
-            }).map(key => exps[key]);
+            })
+            .map(key => exps[key])
+            .filter(value => {
+                return parseInt(value['player.banned']) === 0 &&
+                value['player.group_id'] >= 10 &&
+                value['player.iron_man'] !== 4
+            });
             for (let x in exps) {
                 if(exps[x].playerID === player.id) {
                     rank = parseInt(x) + 1;

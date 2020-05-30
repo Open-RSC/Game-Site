@@ -29,7 +29,6 @@ router.post('/hiscores', async (req, res, next) => {
         name = undefined;
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name);
-    console.log(result);
     if (result.hiscores === []) {
         return res.redirect('../hiscores');
     }
