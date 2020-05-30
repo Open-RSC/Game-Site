@@ -51,7 +51,7 @@ const cabbage = new Sequelize(
 // Set up Player model(s) for querying
 const players = {
     openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('players', constant.playerDetailsCabbage, { freezeTableName: true })
+    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
 }
 
 // Set up experience models for querying
@@ -118,10 +118,11 @@ const getOverall = async (req, res, type, rank, name) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
         .map(key => combined[key])
-        .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
-        if (type === constant.CABBAGE) {
+        .filter(user => parseInt(user.banned) === 0 && user.group_id <= 10);
+        
+        //if (type === constant.CABBAGE) {
             combined = combined.filter(user => user.iron_man !== 4);
-        }
+        //}
 
         // Find the rank
         if (name !== undefined) {
@@ -189,12 +190,11 @@ const getSkill = async (req, res, type, skill, rank, name) => {
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].totals - combined[a].totals; })
         .map(key => combined[key])
-        .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
+        .filter(user => parseInt(user.banned) === 0 && user.group_id <= 10);
 
-        if (type === constant.CABBAGE) {
-
+        //if (type === constant.CABBAGE) {
             combined = combined.filter(user => user.iron_man !== 4);
-        }
+        //}
 
         // Find the rank.
         if (name !== undefined) {
