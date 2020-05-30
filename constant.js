@@ -39,10 +39,7 @@ exports.playerDetails = {
     banned: {
         type: DataTypes.STRING,
         allowNull: false
-    }
-}
-
-exports.playerDetailsCabbage = { ...exports.playerDetails,
+    },
     iron_man: {
         type: DataTypes.TINYINT,
         allowNull: false

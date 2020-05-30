@@ -51,7 +51,7 @@ const cabbage = new Sequelize(
 // Set up Player model(s) for querying
 const players = {
     openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('players', constant.playerDetailsCabbage, { freezeTableName: true })
+    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
 }
 
 // Set up experience models for querying
@@ -119,9 +119,10 @@ const getOverall = async (req, res, type, rank, name) => {
         })
         .map(key => combined[key])
         .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
-        if (type === constant.CABBAGE) {
+        
+        //if (type === constant.CABBAGE) {
             combined = combined.filter(user => user.iron_man !== 4);
-        }
+        //}
 
         // Find the rank
         if (name !== undefined) {
@@ -191,10 +192,9 @@ const getSkill = async (req, res, type, skill, rank, name) => {
         .map(key => combined[key])
         .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
 
-        if (type === constant.CABBAGE) {
-
+        //if (type === constant.CABBAGE) {
             combined = combined.filter(user => user.iron_man !== 4);
-        }
+        //}
 
         // Find the rank.
         if (name !== undefined) {
