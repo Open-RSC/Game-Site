@@ -6,8 +6,8 @@ const helper = require('../helper');
 
 const server = constant.CABBAGE;
 
-router.get('/', (req, res, next) => {
-    let result = db.homepageStatistics(res, server);
+router.get('/', async (req, res, next) => {
+    let result = await db.homepageStatistics(res, server);
     result.page_name = "RSC Cabbage - Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     res.render(constant.CABBAGE, result);
 });

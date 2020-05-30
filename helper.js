@@ -23,7 +23,7 @@ exports.validateRank = (rank) => {
 exports.validateName = (name) => {
     if (name !== undefined) {
         name = v.trim(v.escape(name));
-        if (!v.matches(name, /[A-Za-z0-9 _]+/)) {
+        if (!v.matches(name, /[A-Za-z0-9 ]+/)) {
             name = undefined;
         }
     }
