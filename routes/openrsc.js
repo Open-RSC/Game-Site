@@ -19,6 +19,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
+    result.server_name = "OpenRSC";
     res.render('hiscores', result);
 });
 
@@ -29,14 +30,15 @@ router.post('/hiscores', async (req, res, next) => {
     if (!isNaN(rank) && name !== undefined) {
         name = undefined;
     }
-    const result = await db.getHiscores(req, res, server, skill, rank, name);
+    const result = await db.getHiscores(req, res, server, skill, rank, name, 0);
     if (result.hiscores === []) {
-        return res.redirect('../hiscores');
+        return res.redirect('/hiscores');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
+    result.server_name = "OpenRSC";
     res.render('hiscores', result);
 });
 
@@ -44,7 +46,7 @@ router.get('/player/:username', async (req, res, next) => {
     const username = helper.validateName(req.params.username);
     const result = await db.getPlayerByName(req, server, username);
     if (result === undefined) {
-        res.redirect('../hiscores');
+        res.redirect('/hiscores');
     }
     else {
         result.page_name = "OpenRSC - Players | " + username + " | Open RuneScape Classic";

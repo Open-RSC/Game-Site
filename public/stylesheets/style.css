@@ -355,7 +355,7 @@ div.middle-content-server dl dd {
 
 .middle-content-hiscores .title {
   width: 234px;
-  height: 32px;
+  min-height: 32px;
   padding: 4px;
   text-align: center;
 }
@@ -364,6 +364,18 @@ div.middle-content-server dl dd {
   font-size: 13px;
   margin: 0;
 }
+
+.middle-content-hiscores .title ul {
+  padding: 0;
+  margin: 0;
+  min-height: 16px;
+  list-style: none;
+}
+
+.middle-content-hiscores .title li {
+  height: 16px;
+}
+
 a.hiscores-link {
   font-size: 13px;
   color: rgb(144, 192, 64);

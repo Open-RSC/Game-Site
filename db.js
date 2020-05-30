@@ -101,12 +101,11 @@ exports.homepageStatistics = async (res, type) => {
     }
 }
 
-const getOverall = async (req, res, type, rank, name) => {
+const getOverall = async (req, res, type, rank, name, ironman) => {
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: 'Overall',
-        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
+        skill: 'Overall'
     };
     try {
         if (rank === undefined || isNaN(rank) || rank < 8) {
@@ -128,7 +127,7 @@ const getOverall = async (req, res, type, rank, name) => {
         .filter(user => {
             return parseInt(user.banned) === 0 &&
             user.group_id >= 10 &&
-            user.iron_man !== 4
+            user.iron_man === ironman
         });
 
         // Find the rank
@@ -174,11 +173,10 @@ const getOverall = async (req, res, type, rank, name) => {
     return pageContent;
 }
 
-const getSkill = async (req, res, type, skill, rank, name) => {
+const getSkill = async (req, res, type, skill, rank, name, ironman) => {
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        server_name: type == constant.CABBAGE ? 'RSC Cabbage' : 'OpenRSC',
         skill: skill[0].toUpperCase() + skill.substr(1)
     };
     try {
@@ -200,7 +198,7 @@ const getSkill = async (req, res, type, skill, rank, name) => {
         .filter(user => {
             return parseInt(user.banned) === 0 &&
             user.group_id >= 10 &&
-            user.iron_man !== 4
+            user.iron_man === ironman
         });
 
         // Find the rank.
@@ -252,7 +250,7 @@ const getSkill = async (req, res, type, skill, rank, name) => {
     return pageContent;
 }
 
-exports.getHiscores = async (req, res, type, skill, rank, name) => {
+exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
     try {
         let skills = constant.getSkills(type);
         if (skill === 'fighting') {
@@ -262,10 +260,10 @@ exports.getHiscores = async (req, res, type, skill, rank, name) => {
             skill = 'overall';
         }
         if (skill === undefined || skill === '' || skill === 'overall') {
-            return await getOverall(req, res, type, rank, name);
+            return await getOverall(req, res, type, rank, name, ironman);
         }
         else {
-            return await getSkill(req, res, type, skill, rank, name);
+            return await getSkill(req, res, type, skill, rank, name, ironman);
         }
     }
     catch (err) {
@@ -313,14 +311,18 @@ exports.getPlayerByName = async (req, type, username) => {
         });
         let total = Object.values(skills).reduce((a, b) => a + b, 0);
         let totalRank = 1;
+        console.log(player);
         let exps = await experience[type].findAll({
             raw: true,
             attributes: {exclude: ['id']},
             include: {
                 model: players[type],
-                where: { group_id: {
-                    [Op.gt]: 9
-                }}
+                where: {
+                    group_id: {
+                        [Op.gt]: 9
+                    },
+                    iron_man: player.iron_man
+                }
             }
         });
         for (let x in exps) {

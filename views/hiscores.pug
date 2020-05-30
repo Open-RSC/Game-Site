@@ -3,8 +3,21 @@ extends layout
 block content
   div.middle-content-hiscores
     div.title.hiscores-panel
-      h2.hiscores-title #{server_name} Hiscores
-      a.hiscores-link(href=server) Return to main menu
+      h2.hiscores-title #{server_name} #{ironman !== undefined ? ironman[0].toUpperCase() + ironman.substr(1) : ""} Hiscores
+      ul
+        li
+          a.hiscores-link(href=server) Return to main menu
+        if server === '/cabbage'
+          if ironman === undefined
+            li
+              a.hiscores-link(href=server + '/hiscores/ironman') Ironman hiscores
+            li
+              a.hiscores-link(href=server + '/hiscores/ultimate-ironman') Ultimate ironman hiscores
+            li
+              a.hiscores-link(href=server + '/hiscores/hardcore-ironman') Hardcore ironman hiscores
+          else
+            li
+              a.hiscores-link(href=server + '/hiscores') Back to all hiscores
 
     div.hiscores
       div.hiscore-links
@@ -13,7 +26,7 @@ block content
         div.hiscores-panel
           each skillName in skills
             - let skillLink = "hiscores?skill=" + skillName
-            a.hiscores-link(href=skillLink) #{skillName[0].toUpperCase() + skillName.substr(1)}
+            a.hiscores-link(href='?skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
       div.hiscore-table
         h4 #{skill} Hiscores
         div.hiscores-panel
@@ -29,19 +42,19 @@ block content
                   each column, index in row
                     if index === 'username'
                       td
-                        a(href="player/" + column) #{column}
+                        a(href=server + "/player/" + column) #{column}
                     else
                       td= column
     div.hiscore-search
       div.search-box.search-rank
-        - let actionTextRank = "hiscores?skill=" + skill.toLowerCase();
+        - let actionTextRank = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
         form(method="POST", action=actionTextRank, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="rank") Search by rank
           input#rank(name="rank", type="text")
           input(type="submit", value="Search", aria-label="Search by rank")
       div.search-box.search-name
-        - let actionTextName = "hiscores?skill=" + skill.toLowerCase();
+        - let actionTextName = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
         form(method="POST", action=actionTextName, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="name") Search by name
