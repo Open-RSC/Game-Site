@@ -193,7 +193,8 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         // Combine the experience and player lists.
         let combined = helper.joinById(playerData, exps);
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals; })
+            return constant.experienceToLevel(combined[b].totals) - constant.experienceToLevel(combined[a].totals)
+                || combined[b].totals - combined[a].totals; })
         .map(key => combined[key])
         .filter(user => {
             return parseInt(user.banned) === 0 &&
@@ -311,7 +312,6 @@ exports.getPlayerByName = async (req, type, username) => {
         });
         let total = Object.values(skills).reduce((a, b) => a + b, 0);
         let totalRank = 1;
-        console.log(player);
         let exps = await experience[type].findAll({
             raw: true,
             attributes: {exclude: ['id']},
