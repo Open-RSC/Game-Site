@@ -5,7 +5,7 @@ block content
     div.title.hiscores-panel
       h2.hiscores-title #{server_name} Hiscores
       a.hiscores-link(href=server) Return to main menu
-    
+
     div.hiscores
       div.hiscore-links
         h4
@@ -27,7 +27,7 @@ block content
               each row in hiscores
                 tr
                   each column, index in row
-                    if index == 'username'
+                    if index === 'username'
                       td
                         a(href="player/" + column) #{column}
                     else
