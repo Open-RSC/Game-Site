@@ -115,7 +115,7 @@ const getOverall = async (req, res, type, rank, name) => {
         // Combine the lists
         let combined = helper.joinById(totals, exps);
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].totals - combined[a].totals;
+            return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
         .map(key => combined[key])
         .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
