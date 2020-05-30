@@ -71,26 +71,26 @@ const pool = {
     cabbage: cabbage
 }
 
-exports.homepageStatistics = async (res, type, page) => {
+exports.homepageStatistics = async (res, type) => {
     try {
         // await pool[type].authenticate();
-        res.render(page, {
+        return {
             online: await players[type].count({ where: { online: 1 } }),
             created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
             last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
             unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
             total: await players[type].count()
-        });
+        };
     }
     catch (err) {
         console.log(err);
-        res.render(page, {
+        return {
             online: 'Database Offline',
             created: 'Database Offline',
             last: 'Database Offline',
             unique: 'Database Offline',
             total: 'Database Offline'
-        });
+        };
     }
 }
 
@@ -115,7 +115,7 @@ const getOverall = async (req, res, type, rank, name) => {
         // Combine the lists
         let combined = helper.joinById(totals, exps);
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].totals - combined[a].totals;
+            return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
         .map(key => combined[key])
         .filter(user => parseInt(user.banned) === 0 && user.group_id === 10);
