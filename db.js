@@ -73,14 +73,14 @@ const pool = {
 
 exports.homepageStatistics = async (res, type) => {
     try {
-        // await pool[type].authenticate();
-        return {
+        let result = {
             online: await players[type].count({ where: { online: 1 } }),
             created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
             last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
             unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
             total: await players[type].count()
         };
+        return result;
     }
     catch (err) {
         console.log(err);

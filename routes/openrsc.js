@@ -6,8 +6,8 @@ const helper = require('../helper');
 
 let server = constant.OPENRSC;
 
-router.get('/', (req, res, next) => {
-    let result = db.homepageStatistics(res, server);
+router.get('/', async (req, res, next) => {
+    let result = await db.homepageStatistics(res, server);
     result.page_name = "OpenRSC - An authentic client with minor quality of life features. | Open RuneScape Classic";
     res.render(constant.OPENRSC, result);
 });
