@@ -327,7 +327,7 @@ exports.getPlayerByName = async (req, type, username) => {
         });
         for (let x in exps) {
             delete exps[x].playerId;
-            if (Object.values(exps[x]).filter(user => constant.getSkills(type).includes(user)).reduce((a, b) => a + b, 0) > total) {
+            if (Object.keys(exps[x]).filter(user => constant.getSkills(type).includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
                 totalRank++;
             }
         }
