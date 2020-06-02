@@ -228,7 +228,6 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             ]
         });
         cache_values = Object.values(cache_values).map(val => val.playerID);
-        console.log(cache_values);
 
         combined = Object.keys(combined).sort((a, b) => {
             return constant.experienceToLevel(combined[b]['experience.' + skill]) - constant.experienceToLevel(combined[a]['experience.' + skill])
