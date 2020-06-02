@@ -107,9 +107,10 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         server: "/" + type,
         skill: 'Overall'
     };
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
-        if (rank === undefined || isNaN(rank) || rank < 8) {
-            rank = 8;
+        if (rank === undefined || isNaN(rank) || rank < rankOffset) {
+            rank = rankOffset;
         }
         const totals = await players[type].findAll({
             raw: true,
@@ -140,12 +141,12 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             }
         }
 
-        combined = combined.slice(rank-8,rank+8)
+        combined = combined.slice(rank-rankOffset,rank+rankOffset)
 
         pageContent.hiscores = [];
         let i = 1;
-        if (rank !== undefined && rank > 7) {
-            i = rank - 7;
+        if (rank !== undefined && rank > rankOffset - 1) {
+            i = rank - (rankOffset - 1);
         }
         combined.forEach((element) => {
             thisHiscore = {
@@ -179,9 +180,11 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         server: "/" + type,
         skill: skill[0].toUpperCase() + skill.substr(1)
     };
+
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
-        if (rank === undefined || isNaN(rank) || rank < 8) {
-            rank = 8;
+        if (rank === undefined || isNaN(rank) || rank < rankOffset) {
+            rank = rankOffset;
         }
         const playerData = await players[type].findAll({
             raw: true
@@ -212,18 +215,12 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             }
         }
 
-        if (type === constant.CABBAGE) {
-            combined = combined.slice(rank-10,rank+10)
-        }
-        else {
-            combined = combined.slice(rank-8,rank+8)
-        }
-
+        combined = combined.slice(rank-rankOffset,rank+rankOffset)
 
         pageContent.hiscores = [];
         let i = 1;
-        if (rank !== undefined && rank > 7) {
-            i = rank - 7;
+        if (rank !== undefined && rank > rankOffset - 1) {
+            i = rank - (rankOffset - 1);
         }
         combined.forEach(element => {
             thisHiscore = {
