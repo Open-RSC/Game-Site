@@ -454,6 +454,15 @@ a.hiscores-link {
   margin-right: 25px;
 }
 
+.error-message {
+  margin: 15px;
+  text-align: center;
+}
+
+.error-image {
+  margin-top: 15px;
+}
+
 @media (max-width: 576px) {
 
   header {
@@ -672,4 +681,22 @@ a.hiscores-link {
     background-image: none;
   }
   
+}
+
+@media (max-width: 370px) {
+  .hiscores {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hiscores > .hiscore-links .hiscores-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .hiscores > .hiscore-links .hiscores-panel a {
+    flex: 1 0 30%;
+  }
 }

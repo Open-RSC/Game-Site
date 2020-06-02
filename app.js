@@ -42,14 +42,6 @@ app.use('/cabbage', cabbageRouter);
 app.use('/rules', rulesRouter);
 app.use('/faq', faqRouter);
 
-// Cache
-app.use((req, res, next) => {
-  res.set({
-    "Cache-Control": "public, max-age=86400",
-    "Expires": new Date(Date.now() + 86400000).toUTCString()
-  })
-});
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
