@@ -46,16 +46,28 @@ exports.playerDetails = {
     }
 }
 
+exports.playerCacheDetails = {
+    playerID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    key: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    value: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}
+
 exports.getExperience = (type) => {
     let experience = {
-        id: {
-            primaryKey: true,
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         playerID: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            primaryKey: true
         }
     };
 

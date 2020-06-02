@@ -66,12 +66,22 @@ const players = {
     cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
 }
 
+const player_cache = {
+    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, {freezeTableName: true }),
+    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true })
+}
+
 
 // Set up relationships.
 players[constant.OPENRSC].hasOne(experience.openrsc, {foreignKey: 'playerID'});
 players[constant.CABBAGE].hasOne(experience.cabbage, {foreignKey: 'playerID'});
 experience[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
 experience[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
+
+//players[constant.OPENRSC].hasMany(player_cache[constant.OPENRSC], {foreignKey: 'playerID'});
+//players[constant.CABBAGE].hasMany(player_cache[constant.CABBAGE], {foreignKey: 'playerID'});
+//player_cache[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
+//player_cache[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
 
 const pool = {
     openrsc: openrsc,
@@ -112,24 +122,23 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
         }
-        const totals = await players[type].findAll({
+        let combined = await players[type].findAll({
             raw: true,
+            include: [
+                { model: experience[type] }
+            ],
+            where: {
+                banned: 0,
+                group_id: {
+                    [Op.gt]: 9
+                },
+                iron_man: ironman
+            }
         });
-        const exps = await experience[type].findAll({ raw: true,
-            attributes: [[pool[type].literal('playerID AS id, ' + constant.totalExperienceString(type)), 'totals']]
-        });
-
-        // Combine the lists
-        let combined = helper.joinById(totals, exps);
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
-        .map(key => combined[key])
-        .filter(user => {
-            return parseInt(user.banned) === 0 &&
-            user.group_id >= 10 &&
-            user.iron_man === ironman
-        });
+        .map(key => combined[key]);
 
         // Find the rank
         if (name !== undefined) {
@@ -142,6 +151,14 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         }
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
+        
+        // Calculate the total experience
+        Object.keys(combined).forEach((user) => {
+            combined[user].totals = 0;
+            constant.getSkills(type).forEach((skill) => {
+                combined[user].totals += combined[user]['experience.' + skill];
+            });
+        });
 
         pageContent.hiscores = [];
         let i = 1;
@@ -186,24 +203,38 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
         }
-        const playerData = await players[type].findAll({
-            raw: true
-        });
-        const exps = await experience[type].findAll({ raw: true,
-            attributes: [[pool[type].literal('playerID AS id, ' + skill), 'totals']]
+        let combined = await players[type].findAll({
+            raw: true,
+            include: [
+                { model: experience[type], attributes: [skill] }
+            ],
+            where: {
+                banned: 0,
+                group_id: {
+                    [Op.gt]: 9
+                },
+                iron_man: ironman
+            }
         });
 
-        // Combine the experience and player lists.
-        let combined = helper.joinById(playerData, exps);
-        combined = Object.keys(combined).sort((a, b) => {
-            return constant.experienceToLevel(combined[b].totals) - constant.experienceToLevel(combined[a].totals)
-                || combined[b].totals - combined[a].totals; })
-        .map(key => combined[key])
-        .filter(user => {
-            return parseInt(user.banned) === 0 &&
-            user.group_id >= 10 &&
-            user.iron_man === ironman
+        // Grab player_cache to ensure we filter out the hiscore_opt flagged players
+        let cache_values = await player_cache[type].findAll({
+            raw: true,
+            where: {
+                key: 'hiscore_opt'
+            },
+            attributes: [
+                'playerID'
+            ]
         });
+        cache_values = Object.values(cache_values).map(val => val.playerID);
+        console.log(cache_values);
+
+        combined = Object.keys(combined).sort((a, b) => {
+            return constant.experienceToLevel(combined[b]['experience.' + skill]) - constant.experienceToLevel(combined[a]['experience.' + skill])
+                || combined[b]['experience.' + skill] - combined[a]['experience.' + skill]; })
+        .map(key => combined[key])
+        .filter(value => !cache_values.includes(value.id));
 
         // Find the rank.
         if (name !== undefined) {
@@ -226,8 +257,8 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             thisHiscore = {
                 rank: i,
                 username: element.username,
-                skill: constant.experienceToLevel(parseInt(element.totals)),
-                experience: Math.floor(parseInt(element.totals) / 4)
+                skill: constant.experienceToLevel(parseInt(element['experience.' + skill])),
+                experience: Math.floor(parseInt(element['experience.' + skill]) / 4)
             }
             pageContent.hiscores.push(thisHiscore);
             i++;
