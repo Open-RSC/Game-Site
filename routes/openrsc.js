@@ -46,12 +46,10 @@ router.get('/player/:username', async (req, res, next) => {
     const username = helper.validateName(req.params.username);
     const result = await db.getPlayerByName(req, server, username);
     if (result === undefined) {
-        res.redirect('/hiscores');
+        return res.redirect('/hiscores');
     }
-    else {
-        result.page_name = "OpenRSC - Players | " + username + " | Open RuneScape Classic";
-        res.render('player', result);
-    }
+    result.page_name = "OpenRSC - Players | " + username + " | Open RuneScape Classic";
+    res.render('player', result);
 });
 
 module.exports = router;

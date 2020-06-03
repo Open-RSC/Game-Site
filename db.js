@@ -322,6 +322,7 @@ exports.getPlayerByName = async (req, type, username) => {
     try {
         let player = await players[type].findOne({
             raw: true,
+            include: [{ model: experience[type] }],
             where: {
                 username: username
             }
@@ -330,15 +331,8 @@ exports.getPlayerByName = async (req, type, username) => {
             return undefined;
         }
 
-        let skills = await experience[type].findOne({
-            raw: true,
-            attributes: {exclude: ['id', 'playerID', 'playerId']},
-            where: {
-                playerID: player.id
-            }
-        });
-        let total = Object.values(skills).reduce((a, b) => a + b, 0);
-        let totalRank = 1;
+        let skills = constant.getSkills(type);
+        let total = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
         let exps = await experience[type].findAll({
             raw: true,
             attributes: {exclude: ['id']},
@@ -352,15 +346,17 @@ exports.getPlayerByName = async (req, type, username) => {
                 }
             }
         });
+
+        let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            if (Object.keys(exps[x]).filter(user => constant.getSkills(type).includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
+            if (Object.keys(exps[x]).filter(user => skills.includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
                 totalRank++;
             }
         }
 
-        let hiscores = [['Skill Total', player.skill_total]];
-        Object.keys(skills).forEach((element) => {
+        let hiscores = [['Skill Total', player.skill_total, Math.floor(total / 4), totalRank]];
+        Object.values(skills).forEach((element) => {
             let rank = 1;
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];
@@ -377,17 +373,13 @@ exports.getPlayerByName = async (req, type, username) => {
                     break;
                 }
             }
-
             hiscores.push([
                 element[0].toUpperCase() + element.substr(1),
-                constant.experienceToLevel(skills[element]),
-                Math.floor(parseInt(skills[element]) / 4),
+                constant.experienceToLevel(player['experience.' + element]),
+                Math.floor(parseInt(player['experience.' + element]) / 4),
                 rank
             ]);
         });
-
-        hiscores[0].push(Math.floor(total / 4));
-        hiscores[0].push(totalRank);
 
         return {
             csrfToken: req.csrfToken(),

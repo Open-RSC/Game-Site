@@ -317,7 +317,7 @@ div.orsc-buttons, div.cabbage-buttons {
   width: 70%;
 }
 .statistics {
-  width: 60%;
+  width: 70%;
 }
 .statistics h3 {
   text-align: center;
@@ -700,3 +700,4 @@ a.hiscores-link {
     flex: 1 0 30%;
   }
 }
+  

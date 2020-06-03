@@ -60,7 +60,7 @@ router.post('/hiscores/ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 1);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -90,7 +90,7 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 2);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -120,7 +120,7 @@ router.post('/hiscores/hardcore-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 3);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
