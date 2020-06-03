@@ -51,12 +51,12 @@ block content
         form(method="POST", action=actionTextRank, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="rank") Search by rank
-          input#rank(name="rank", type="text")
+          input#rank(name="rank", type="text", required="required")
           input(type="submit", value="Search", aria-label="Search by rank")
       div.search-box.search-name
         - let actionTextName = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
         form(method="POST", action=actionTextName, role="search")
           input(type="hidden", name="_csrf", value=csrfToken)
           label(for="name") Search by name
-          input#name(name="name", type="text")
+          input#name(name="name", type="text", required="required")
           input(type="submit", value="Search", aria-label="Search by username")

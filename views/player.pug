@@ -10,7 +10,7 @@ block content
       div.hiscore-links
         h4
           span Player Menu
-        div.hiscores-panel
+        div.hiscores-panel.players-nav
           a.hiscores-link(href="#") Skills
           a.hiscores-link(href="../hiscores") Back to all
       div.hiscore-table
@@ -27,10 +27,3 @@ block content
                 tr
                   each column in row
                     td= column
-    div.hiscore-search
-        div.search-box.search-name
-            form(method="POST", action="../hiscores")
-                input(type="hidden", name="_csrf", value=csrfToken)
-                label(for="name") Search by name
-                input#name(name="name", type="text")
-                input(type="submit", value="Search")

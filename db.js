@@ -48,6 +48,8 @@ const cabbage = new Sequelize(
     }
 })();
 
+/* Player Specific Model Initialization */
+
 // Set up experience models for querying
 const experience = {
     openrsc: openrsc.define('experience',
@@ -71,17 +73,34 @@ const player_cache = {
     cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true })
 }
 
-
 // Set up relationships.
-players[constant.OPENRSC].hasOne(experience.openrsc, {foreignKey: 'playerID'});
-players[constant.CABBAGE].hasOne(experience.cabbage, {foreignKey: 'playerID'});
-experience[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
-experience[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
+players.openrsc.hasOne(experience.openrsc, {foreignKey: 'playerID'});
+players.cabbage.hasOne(experience.cabbage, {foreignKey: 'playerID'});
+experience.openrsc.belongsTo(players.openrsc);
+experience.cabbage.belongsTo(players.cabbage);
 
-//players[constant.OPENRSC].hasMany(player_cache[constant.OPENRSC], {foreignKey: 'playerID'});
-//players[constant.CABBAGE].hasMany(player_cache[constant.CABBAGE], {foreignKey: 'playerID'});
-//player_cache[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
-//player_cache[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
+/* Item Specific Model Initialization */
+
+const inventory = {
+    openrsc: openrsc.define('invitems', constant.inventoryItemDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, { freezeTableName: true })
+};
+
+const bank = {
+    openrsc: openrsc.define('bank', constant.bankItemDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('bank', constant.bankItemDetails, { freezeTableName: true })
+};
+
+const itemstatuses = {
+    openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true })
+};
+
+itemstatuses.openrsc.belongsTo(inventory.openrsc, {foreignKey: 'itemID'});
+itemstatuses.cabbage.belongsTo(inventory.cabbage, {foreignKey: 'itemID'});
+
+itemstatuses.openrsc.belongsTo(bank.openrsc, {foreignKey: 'itemID'});
+itemstatuses.cabbage.belongsTo(bank.cabbage, {foreignKey: 'itemID'});
 
 const pool = {
     openrsc: openrsc,
@@ -93,14 +112,14 @@ exports.homepageStatistics = async (res, type) => {
         let result = {
             online: await players[type].count({ where: { online: 1 } }),
             created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
-            last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
+            last: await players[type].count({ where: { login_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
             unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
             total: await players[type].count()
         };
         return result;
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             online: 'Database Offline',
             created: 'Database Offline',
@@ -177,7 +196,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         });
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         pageContent.hiscores = [
             {
                 rank: 1,
@@ -264,7 +283,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         });
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         pageContent.hiscores = [
             {
                 rank: 1,
@@ -310,7 +329,7 @@ exports.getOnline = async () => {
         };
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             openrsc: 'Database Offline',
             cabbage: 'Database Offline'
@@ -389,7 +408,7 @@ exports.getPlayerByName = async (req, type, username) => {
         }
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
@@ -397,6 +416,38 @@ exports.getPlayerByName = async (req, type, username) => {
             hiscores: [['Awesomeness', 99, 200000000, 1]]
         }
     }
-}
+};
 
-exports.pool = pool;
+exports.getData = async (req, type, itemname) => {
+    try {
+        // Grab all items like provided name
+        let names = helper.fuzzysearch(itemname);
+        let namesAndIds = helper.namesToIds(names, type);
+        let items = await itemstatuses[type].findAll({
+            raw: true,
+            include: [{
+                model: bank[type]
+            }, {
+                model: inventory[type]
+            }],
+            where: {
+                catalogID: {
+                    [Op.in]: Object.values(namesAndIds).map(def => def.id)
+                }
+            }
+        });
+
+        items.forEach(element => {
+            namesAndIds.forEach(value => {
+                if (value.id == element.catalogID) {
+                    value.amount += element.amount;
+                }
+            });
+        });
+        return namesAndIds;
+    }
+    catch (err) {
+        console.error(err);
+        return undefined;
+    }
+};
