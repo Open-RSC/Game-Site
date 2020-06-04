@@ -79,18 +79,16 @@ players.openrsc.hasOne(experience.openrsc, {foreignKey: 'playerID'});
 players.cabbage.hasOne(experience.cabbage, {foreignKey: 'playerID'});
 experience.openrsc.belongsTo(players.openrsc);
 experience.cabbage.belongsTo(players.cabbage);
+players.openrsc.hasOne(player_cache.openrsc, {foreignKey: 'playerID'});
+players.cabbage.hasOne(player_cache.cabbage, {foreignKey: 'playerID'});
+
 
 /* Clans */
-/*const clans = cabbage.define('clan', constant.clanDetails, { freezeTableName: true })
+const clans = cabbage.define('clan', constant.clanDetails, { freezeTableName: true })
 const clan_players = cabbage.define('clan_players', constant.clanPlayersDetails, { freezeTableName: true });
-players.cabbage.hasOne(clan_players, {foreignKey: 'username'});
-clan_players.belongsTo(players.cabbage, {
-    foreignKey: 'username', sourceKey: 'username'
-});
 
-clan_players.belongsTo(clans, {
-    targetKey: 'id', foreignKey: 'clan_id'
-});*/
+players.cabbage.belongsTo(clan_players, {foreignKey: 'username', targetKey: 'username'});
+clan_players.belongsTo(clans, {foreignKey: 'clan_id', targetKey: 'id'});
 
 
 /* Item Specific Model Initialization */
@@ -182,7 +180,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         // Find the rank
         if (name !== undefined) {
             for (let x in combined) {
-                if (combined[x].username === name) {
+                if (combined[x].username.toLowerCase() === name.toLowerCase()) {
                     rank = parseInt(x) + 1;
                     break;
                 }
@@ -277,7 +275,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         // Find the rank.
         if (name !== undefined) {
             for (let x in combined) {
-                if(combined[x].username === name) {
+                if(combined[x].username.toLowerCase() === name.toLowerCase()) {
                     rank = parseInt(x) + 1;
                     break;
                 }
@@ -360,9 +358,30 @@ exports.getOnline = async () => {
 exports.getPlayerByName = async (req, type, username) => {
     try {
         let include = [{ model: experience[type] }];
-        /*if (type === constant.CABBAGE) {
-            include.push({ model: clan_players, include: clans });
-        }*/
+        if (type === constant.CABBAGE) {
+            include = include.concat([{
+                model: clan_players,
+                include: {
+                    model: clans,
+                    attributes: ['name', 'tag'],
+                    required: true
+                }
+            }, {
+                model: player_cache[type],
+                attributes: [['key', 'xp_mode']],
+                where: {
+                    'key': 'onexp_mode'
+                },
+                required: false
+            }, {
+                model: player_cache[type],
+                attributes: [['value', 'arrav_gang']],
+                where: {
+                    'key': 'arrav_gang'
+                },
+                required: false
+            }]);
+        }
 
         let player = await players[type].findOne({
             raw: true,
@@ -428,6 +447,9 @@ exports.getPlayerByName = async (req, type, username) => {
         const ironman = player.iron_man === 1 ? "Normal"
             : player.iron_man === 2 ? "Ultimate"
             : player.iron_man === 3 ? "Hardcore" : undefined;
+        const experience_rate = type !== constant.CABBAGE ? undefined
+            : player['player_cache.xp_mode'] !== null ? '1x'
+            : '5x';
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
@@ -437,10 +459,13 @@ exports.getPlayerByName = async (req, type, username) => {
             quest_points: player.quest_points,
             ironman: ironman,
             clan: player['clan_player.clan.name'] !== null ? player['clan_player.clan.name'] : undefined,
-            experience_rate: undefined,
+            clan_tag: player['clan_player.clan.tag'] !== null ? player['clan_player.clan.tag'] : undefined,
+            clan_rank: player['clan_player.rank'] !== null ? player['clan_player.rank'] : undefined,
+            experience_rate:  experience_rate,
             player_kills: player.kills,
             npc_kills: player.npc_kills,
-            deaths: player.deaths
+            deaths: player.deaths,
+            arrav_gang: player['player_cache.arrav_gang'] !== null ? parseInt(player['player_cache.arrav_gang']) : undefined
         }
     }
     catch (err) {
@@ -462,7 +487,6 @@ exports.getData = async (req, type, itemname) => {
         let namesAndIds = helper.namesToIds(names, type);
         let items = await itemstatuses[type].findAll({
             raw: true,
-            //attributes: [],
             include: [{
                 model: bank[type],
                 include: {
