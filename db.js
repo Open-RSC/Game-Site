@@ -116,6 +116,12 @@ itemstatuses.cabbage.belongsTo(inventory.cabbage, {foreignKey: 'itemID'});
 itemstatuses.openrsc.belongsTo(bank.openrsc, {foreignKey: 'itemID'});
 itemstatuses.cabbage.belongsTo(bank.cabbage, {foreignKey: 'itemID'});
 
+inventory.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
+inventory.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+
+bank.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
+bank.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+
 const pool = {
     openrsc: openrsc,
     cabbage: cabbage
@@ -456,15 +462,44 @@ exports.getData = async (req, type, itemname) => {
         let namesAndIds = helper.namesToIds(names, type);
         let items = await itemstatuses[type].findAll({
             raw: true,
+            //attributes: [],
             include: [{
-                model: bank[type]
+                model: bank[type],
+                include: {
+                    model: players[type],
+                    attributes: [],
+                    required: true
+                },
+                attributes: []
             }, {
-                model: inventory[type]
+                model: inventory[type],
+                include: {
+                    model: players[type],
+                    attributes: [],
+                    required: true
+                },
+                attributes: []
             }],
             where: {
                 catalogID: {
                     [Op.in]: Object.values(namesAndIds).map(def => def.id)
-                }
+                },
+                [Op.or]: [
+                    {[Op.and]: [
+                        {'$bank.player.banned$': 0},
+                        {'$bank.player.group_id$': {
+                            [Op.gte]: 10
+                        }},
+                        {'$bank.player.iron_man$' : 0}
+                    ]},
+                    {[Op.and]: [
+                        {'$invitem.player.banned$': 0},
+                        {'$invitem.player.group_id$': {
+                            [Op.gte]: 10
+                        }},
+                        {'$invitem.player.iron_man$' : 0}
+                    ]}
+                ]
             }
         });
 
