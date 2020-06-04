@@ -150,7 +150,6 @@ router.get('/database', async (req, res, next) => {
 
 router.post('/database', async (req, res, next) => {
     let result;
-    console.log(req.body.itemname);
     if (req.body.itemname !== undefined && req.body.itemname.length > 0) {
         const itemname = helper.validateItem(req.body.itemname);
         result = await db.getData(req, server, itemname);

@@ -449,6 +449,7 @@ exports.getPlayerByName = async (req, type, username) => {
 };
 
 exports.getData = async (req, type, itemname) => {
+    if (itemname === undefined) return itemname;
     try {
         // Grab all items like provided name
         let names = helper.fuzzysearch(itemname);
