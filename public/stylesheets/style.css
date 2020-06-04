@@ -1,11 +1,17 @@
+html {
+  height: 100%;
+}
+html, body {
+  min-height: 100%;
+  min-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 body {
   background-color: black;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
   justify-content: center;
   align-items: center;
   font-family: Arial, Helvetica, sans-serif;
@@ -17,17 +23,31 @@ a {
   color: white;
 }
 
+.subtitle {
+  text-align: center;
+  margin: 0;
+}
+
 hr {
   width: 80%;
+}
+
+.center {
+  text-align: center;
 }
 
 .flex {
   display: flex;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 header {
   width: 99vw;
-  height: 24px;
+  max-height: 24px;
   padding-left: 1vw;
   border-bottom: 1px solid grey;
   display: flex;
@@ -60,6 +80,7 @@ header li a {
 main {
   width: 605px;
   height: 613px;
+  flex: 1;
 }
 
 section.top-border {
@@ -71,17 +92,17 @@ section.top-border {
 div.top-left-border {
   width: 100px;
   height: 43px;
-  background-image: url("/images/edge_a.jpg");
+  background-image: url("/static/images/edge_a.jpg");
 }
 div.top-middle-border {
   width: 400px;
   height: 43px;
-  background-image: url("/images/edge_c.jpg");
+  background-image: url("/static/images/edge_c.jpg");
 }
 div.top-right-border {
   width: 100px;
   height: 43px;
-  background-image: url("/images/edge_d.jpg");
+  background-image: url("/static/images/edge_d.jpg");
 }
 
 section.middle {
@@ -94,12 +115,12 @@ section.middle {
 div.mid-left-border {
   width: 41px;
   min-height: 488px;
-  background-image: url("/images/edge_f.jpg");
+  background-image: url("/static/images/edge_f.jpg");
 }
 div.mid-right-border {
   width: 41px;
   min-height: 488px;
-  background-image: url("/images/edge_e.jpg");
+  background-image: url("/static/images/edge_e.jpg");
 }
 
 div.middle-content, div.middle-play,
@@ -109,7 +130,7 @@ div.middle-content-server, div.middle-content-hiscores {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url("/images/background.jpg");
+  background-image: url("/static/images/background.jpg");
 }
 
 div.middle-play .buttons {
@@ -139,7 +160,7 @@ div.logo {
   width: 309px;
   height: 106px;
   padding-top: 28px;
-  background-image: url("/images/logo.png");
+  background-image: url("/static/images/logo.png");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -149,7 +170,7 @@ div.logo2 {
   width: 309px;
   height: 106px;
   padding-top: 28px;
-  background-image: url("/images/logo2.png");
+  background-image: url("/static/images/logo2.png");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;
@@ -166,7 +187,7 @@ p.online {
 div.home-buttons {
   display: inline-grid;
   width: 507px;
-  height: 280px;
+  height: 360px;
   grid-template-columns: repeat(39, 13px);
   grid-template-rows: repeat(9, 30px);
   align-items: center;
@@ -174,11 +195,12 @@ div.home-buttons {
 }
 
 .button {
-  width: 109px;
+  width: 105px;
   height: 83px;
   display: block;
-  background-image: url("/images/button.gif");
+  background-image: url("/static/images/button.gif");
   background-repeat: no-repeat;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -194,7 +216,7 @@ div.home-buttons {
   width: 205px;
   height: 150px;
   display: block;
-  background-image: url("/images/play.gif");
+  background-image: url("/static/images/play.gif");
   display: flex;
   justify-content: center;
   align-items: center;
@@ -265,7 +287,7 @@ section.bottom-border {
 section>div.bottom-left-border {
   width: 100px;
   height: 82px;
-  background-image: url("/images/edge_g.jpg");
+  background-image: url("/static/images/edge_g.jpg");
 }
 section>div.bottom-middle {
   width: 400px;
@@ -274,20 +296,25 @@ section>div.bottom-middle {
   flex-direction: column;
 }
 section>div.bottom-middle>div.copyright {
+  display: table-cell;
   width: 400px;
   height: 39px;
   font-size: 11px;
   text-align: center;
+  vertical-align: bottom;
+}
+.copyright p {
+  margin: 0;
 }
 section>div.bottom-middle>div.bottom-middle-border {
   width: 400px;
   height: 43px;
-  background-image: url("/images/edge_c.jpg");
+  background-image: url("/static/images/edge_c.jpg");
 }
 section>div.bottom-right-border {
   width: 100px;
   height: 82px;
-  background-image: url("/images/edge_h.jpg");
+  background-image: url("/static/images/edge_h.jpg");
 }
 
 .middle-content .rules, .middle-content .faq {
@@ -315,12 +342,17 @@ div.orsc-buttons, div.cabbage-buttons {
   flex-direction: row;
   justify-content: space-between;
   width: 70%;
+  flex-wrap: wrap;
+}
+.cabbage-buttons a {
+  flex: 1 0 32%;
 }
 .statistics {
-  width: 60%;
+  width: 70%;
 }
 .statistics h3 {
   text-align: center;
+  margin: 5px 0 10px;
 }
 div.middle-content-server dl {
   display: grid;
@@ -341,10 +373,16 @@ div.middle-content-server dl dd {
 }
 
 .hiscores {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   margin: 4px;
   margin-bottom: 8px;
-  display: flex;
   min-height: 316px;
+}
+
+.middle-content-hiscores .title .hiscores-title {
+  font-size: 1.1em;
 }
 
 .hiscores-panel {
@@ -406,6 +444,37 @@ a.hiscores-link {
   min-height: 264px;
 }
 
+.hiscores > .hiscore-links .hiscores-panel.players-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dl {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dt,
+.hiscores > .hiscore-links .hiscores-panel.players-nav dd {
+  flex: 1 0 45%;
+  margin: 0;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dt {
+  text-align: right;
+  padding-right: 5px;
+}
+.hiscores > .hiscore-links .hiscores-panel.players-nav dd {
+  text-align: left;
+}
+
+.players-nav .hiscores-link {
+  padding: 10px 0;
+}
+
 .hiscore-table {
   width: 290px;
   min-height: 312px;
@@ -434,6 +503,25 @@ a.hiscores-link {
   font-size: 13px;
   padding: 0 1px;
 }
+
+.players-info {
+  flex: 2 0 30%;
+}
+
+.players-skills {
+  flex: 1 0 50%;
+  width: auto;
+}
+
+.player {
+  justify-content: space-between;
+}
+
+.hiscore-links .hiscores-panel.players-nav {
+  padding: 0;
+  width: 90%;
+}
+
 .hiscore-search {
   display: flex;
   justify-items: center;
@@ -452,6 +540,41 @@ a.hiscores-link {
 }
 .search-box:first-child {
   margin-right: 25px;
+}
+
+.error-message {
+  margin: 15px;
+  text-align: center;
+}
+
+.error-image {
+  margin-top: 15px;
+}
+
+.database {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.database form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.database hr {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.database tr, .database th {
+  padding: 2px;
+}
+
+.database > p {
+  margin: 0 15px;
 }
 
 @media (max-width: 576px) {
@@ -479,10 +602,6 @@ a.hiscores-link {
     height: auto;
     min-height: auto;
     font-size: 1em;
-  }
-
-  .subtitle {
-    text-align: center;
   }
 
   main, section.middle,
@@ -539,6 +658,18 @@ a.hiscores-link {
 
   .hiscore-links, .hiscore-links .hiscores-panel {
     width: auto;
+    min-height: auto;
+    margin-bottom: 10px;
+  }
+
+  .hiscores > .hiscore-links .hiscores-panel.players-nav {
+    flex-direction: column;
+    justify-content: start;
+    height: auto;
+    min-height: auto;
+  }
+  .hiscores > .hiscore-links .hiscores-panel.players-nav a {
+    flex: 0;
   }
 
   a.hiscores-link {
@@ -563,7 +694,7 @@ a.hiscores-link {
   div.home-buttons {
     display: flex;
     width: 100vw;
-    min-height: 280px;
+    min-height: 400px;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
@@ -649,18 +780,18 @@ a.hiscores-link {
   }
   section>div.bottom-middle {
     width: 100vw;
-    min-height: 20px;
+    height: 40px;
     display: flex;
     flex-direction: column;
-    background: url('/images/background.jpg');
+    background: url('/static/images/background.jpg');
   }
   section>div.bottom-middle>div.copyright {
     width: 100vw;
     height: 39px;
-    padding-top: 10px;
     font-size: 11px;
     text-align: center;
   }
+
   section>div.bottom-middle>div.bottom-middle-border {
     width: 400px;
     height: 0;
@@ -673,3 +804,22 @@ a.hiscores-link {
   }
   
 }
+
+@media (max-width: 370px) {
+  .hiscores {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hiscores > .hiscore-links .hiscores-panel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .hiscores > .hiscore-links .hiscores-panel a {
+    flex: 1 0 30%;
+  }
+}
+  

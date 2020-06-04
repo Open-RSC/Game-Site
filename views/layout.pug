@@ -4,13 +4,13 @@ html
     title= page_name
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    link(rel='stylesheet', href='/stylesheets/style.css?v=1')
-    link(rel="icon" type="image/ico" href="images/favicon.ico" sizes="48x48")
-    link(rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16")
-    link(rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32")
-    link(rel="icon" type="image/png" href="images/favicon-180x180.png" sizes="180x180")
-    link(rel="icon" type="image/png" href="images/favicon-192x192.png" sizes="192x192")
-    link(rel="icon" type="image/png" href="images/favicon-512x512.png" sizes="512x512")
+    link(rel='stylesheet', type="text/css", href='/static/stylesheets/style.css?v=4')
+    link(rel="icon" type="image/ico" href="/static/images/favicon.ico" sizes="48x48")
+    link(rel="icon" type="image/png" href="/static/images/favicon-16x16.png" sizes="16x16")
+    link(rel="icon" type="image/png" href="/static/images/favicon-32x32.png" sizes="32x32")
+    link(rel="icon" type="image/png" href="/static/images/favicon-180x180.png" sizes="180x180")
+    link(rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192")
+    link(rel="icon" type="image/png" href="/static/images/favicon-512x512.png" sizes="512x512")
   body
     header
       h1
@@ -48,8 +48,7 @@ html
         div.bottom-left-border
         div.bottom-middle
           div.copyright
-            | This webpage is maintained by Open RuneScape Classic.
-            br
-            | We are not affiliated with RuneScape Classic or JaGeX in any way.
+            p This webpage is maintained by Open RuneScape Classic. 
+             | We are not affiliated with RuneScape Classic or JaGeX in any way.
           div.bottom-middle-border
         div.bottom-right-border

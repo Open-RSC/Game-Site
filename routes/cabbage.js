@@ -60,7 +60,7 @@ router.post('/hiscores/ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 1);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -90,7 +90,7 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 2);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -120,7 +120,7 @@ router.post('/hiscores/hardcore-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 3);
     if (result.hiscores === []) {
-        return res.redirect('../../hiscores');
+        return res.redirect('..');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -136,8 +136,36 @@ router.get('/player/:username', async (req, res, next) => {
     if (result === undefined) {
         return res.redirect('../hiscores');
     }
-    result.page_name = "RSC Cabbage - Players | " + username + " | Open RuneScape Classic";
+    result.page_name = "RSC Cabbage - Players | " + result.username + " | Open RuneScape Classic";
     res.render('player', result);
+});
+
+router.get('/database', async (req, res, next) => {
+    res.render('database', {
+        csrfToken: req.csrfToken(),
+        placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],
+        page_name: 'RSC Cabbage - Database | Open RuneScape Classic'
+    })
+});
+
+router.post('/database', async (req, res, next) => {
+    let result;
+    console.log(req.body.itemname);
+    if (req.body.itemname !== undefined && req.body.itemname.length > 0) {
+        const itemname = helper.validateItem(req.body.itemname);
+        result = await db.getData(req, server, itemname);
+    }
+    if (result === undefined) {
+        result = [];
+    }
+    
+    res.render('database', {
+        csrfToken: req.csrfToken(),
+        placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],
+        page_name: 'RSC Cabbage - Database | Open RuneScape Classic',
+        type: 'items',
+        items: result
+    });
 });
 
 module.exports = router;

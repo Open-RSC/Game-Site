@@ -3,18 +3,37 @@ extends layout
 block content
   div.middle-content-hiscores
     div.title.hiscores-panel
-      h2.hiscores-title User #{username}
+      h2.hiscores-title #{username}
       a.hiscores-link(href=server) Return to main menu
     
-    div.hiscores
-      div.hiscore-links
+    div.hiscores.player
+      div.hiscore-links.players-info
         h4
-          span Player Menu
-        div.hiscores-panel
-          a.hiscores-link(href="#") Skills
-          a.hiscores-link(href="../hiscores") Back to all
-      div.hiscore-table
-        h4 Skills of #{username}
+          span Player Info
+        div.hiscores-panel.players-nav
+          dl
+            dt Combat:
+            dd #{combat}
+            dt Quest Points:
+            dd #{quest_points}
+            if ironman !== undefined
+              dt Ironman:
+              dd #{ironman}
+            if clan !== undefined
+              dt Clan:
+              dd #{clan}
+            if experience_rate !== undefined
+              dt Exp Rate:
+              dd #{experience_rate}
+            dt Player Kills:
+            dd #{player_kills}
+            dt NPC Kills:
+            dd #{npc_kills}
+            dt Deaths:
+            dd #{deaths}
+          a.hiscores-link(href="../hiscores") Back to all scores
+      div.hiscore-table.players-skills
+        h4 Skills
         div.hiscores-panel
           table
             thead
@@ -27,10 +46,3 @@ block content
                 tr
                   each column in row
                     td= column
-    div.hiscore-search
-        div.search-box.search-name
-            form(method="POST", action="../hiscores")
-                input(type="hidden", name="_csrf", value=csrfToken)
-                label(for="name") Search by name
-                input#name(name="name", type="text")
-                input(type="submit", value="Search")

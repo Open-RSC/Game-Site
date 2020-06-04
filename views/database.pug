@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  div.middle-content
+    div.database
+      h2 Database
+      hr
+      if type === 'items' && items.length > 0
+        table
+          thead
+            tr
+              th Image
+              th Name
+              th Count
+          tbody
+            each item in items
+              tr.center
+                td
+                  img(src="/static/images/items/" +  item.id + ".png", alt=item.description)
+                td #{item.name}
+                td #{item.amount}
+      else
+        p Curious about how many cabbages are in-game? Search below!
+      hr
+      div.database-forms
+        form.column(method="POST", action="database")
+          input(type="hidden", name="_csrf", value=csrfToken)
+          label.center(for="itemname") Item Search
+          div
+            input(type="text", name="itemname", id="itemname", placeholder=placeholder_item, required="required")
+            input(type="submit", value="Search")

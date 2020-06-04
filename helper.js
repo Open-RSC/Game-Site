@@ -1,8 +1,10 @@
 const v = require('validator');
+const fuzzysort = require('fuzzysort');
+const { itemnames, itemdefs, itemdefscustom } = require('./constant');
 
-exports.validateSkill = (skill) => {
+exports.validateSkill = skill => {
     if (skill !== undefined) {
-        skill = v.trim(v.escape(skill));
+        skill = v.escape(v.trim(skill));
         if (!v.isAlpha(skill)) {
             skill = 'overall';
         }
@@ -10,9 +12,9 @@ exports.validateSkill = (skill) => {
     return skill;
 };
 
-exports.validateRank = (rank) => {
+exports.validateRank = rank => {
     if (rank !== undefined) {
-        rank = v.trim(v.escape(rank));
+        rank = v.escape(v.trim(rank));
         if (!v.isNumeric(rank)) {
             rank = undefined;
         }
@@ -20,14 +22,24 @@ exports.validateRank = (rank) => {
     return parseInt(rank);
 };
 
-exports.validateName = (name) => {
+exports.validateName = name => {
     if (name !== undefined) {
-        name = v.trim(v.escape(name));
+        name = v.escape(v.trim(name));
         if (!v.matches(name, /[A-Za-z0-9 ]+/)) {
             name = undefined;
         }
     }
     return name;
+};
+
+exports.validateItem = item => {
+    if (item !== undefined) {
+        item = v.escape(v.trim(item));
+        if (!v.matches(item, /[A-Za-z0-9 -']+/)) {
+            return undefined;
+        }
+    }
+    return item;
 };
 
 exports.joinById = ( ...lists ) => {
@@ -40,4 +52,34 @@ exports.joinById = ( ...lists ) => {
         })
         return idx
     }, {}))
+};
+
+const options = {
+    limit: 5, // don't return more results than you need!
+    allowTypo: true, // if you don't care about allowing typos
+    threshold: -10000, // don't return bad results
+};
+exports.fuzzysearch = word => {
+    const results = fuzzysort.go(word.toLowerCase(), itemnames, options);
+    delete results.total;
+    return Object.values(results).map(value => value.target);
+};
+
+exports.namesToIds = (names, type) => {
+    let namesAndIds = {};
+    let defs = itemdefs.filter(def => names.includes(def.name.toLowerCase()));
+    if (type === 'cabbage') {
+        const custom = itemdefscustom.filter(def => names.includes(def.name.toLowerCase()));
+        if (custom.length > 0) {
+            defs = defs.concat(custom);
+        }
+    }
+    return defs.map(value => {
+        return {
+            id: value.id,
+            name: value.name,
+            description: value.description,
+            amount: 0
+        };
+    });
 };

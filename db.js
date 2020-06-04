@@ -12,7 +12,8 @@ const openrsc = new Sequelize(
         dialect: constant.architecture,
         define: {
             timestamps: false
-        }
+        },
+        logging: false
     }
 );
 (async () => {
@@ -48,6 +49,8 @@ const cabbage = new Sequelize(
     }
 })();
 
+/* Player Specific Model Initialization */
+
 // Set up experience models for querying
 const experience = {
     openrsc: openrsc.define('experience',
@@ -67,21 +70,51 @@ const players = {
 }
 
 const player_cache = {
-    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, {freezeTableName: true }),
-    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true })
+    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, { freezeTableName: true })
 }
 
-
 // Set up relationships.
-players[constant.OPENRSC].hasOne(experience.openrsc, {foreignKey: 'playerID'});
-players[constant.CABBAGE].hasOne(experience.cabbage, {foreignKey: 'playerID'});
-experience[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
-experience[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
+players.openrsc.hasOne(experience.openrsc, {foreignKey: 'playerID'});
+players.cabbage.hasOne(experience.cabbage, {foreignKey: 'playerID'});
+experience.openrsc.belongsTo(players.openrsc);
+experience.cabbage.belongsTo(players.cabbage);
 
-//players[constant.OPENRSC].hasMany(player_cache[constant.OPENRSC], {foreignKey: 'playerID'});
-//players[constant.CABBAGE].hasMany(player_cache[constant.CABBAGE], {foreignKey: 'playerID'});
-//player_cache[constant.OPENRSC].belongsTo(players[constant.OPENRSC]);
-//player_cache[constant.CABBAGE].belongsTo(players[constant.CABBAGE]);
+/* Clans */
+/*const clans = cabbage.define('clan', constant.clanDetails, { freezeTableName: true })
+const clan_players = cabbage.define('clan_players', constant.clanPlayersDetails, { freezeTableName: true });
+players.cabbage.hasOne(clan_players, {foreignKey: 'username'});
+clan_players.belongsTo(players.cabbage, {
+    foreignKey: 'username', sourceKey: 'username'
+});
+
+clan_players.belongsTo(clans, {
+    targetKey: 'id', foreignKey: 'clan_id'
+});*/
+
+
+/* Item Specific Model Initialization */
+
+const inventory = {
+    openrsc: openrsc.define('invitems', constant.inventoryItemDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, { freezeTableName: true })
+};
+
+const bank = {
+    openrsc: openrsc.define('bank', constant.bankItemDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('bank', constant.bankItemDetails, { freezeTableName: true })
+};
+
+const itemstatuses = {
+    openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true })
+};
+
+itemstatuses.openrsc.belongsTo(inventory.openrsc, {foreignKey: 'itemID'});
+itemstatuses.cabbage.belongsTo(inventory.cabbage, {foreignKey: 'itemID'});
+
+itemstatuses.openrsc.belongsTo(bank.openrsc, {foreignKey: 'itemID'});
+itemstatuses.cabbage.belongsTo(bank.cabbage, {foreignKey: 'itemID'});
 
 const pool = {
     openrsc: openrsc,
@@ -93,14 +126,14 @@ exports.homepageStatistics = async (res, type) => {
         let result = {
             online: await players[type].count({ where: { online: 1 } }),
             created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
-            last: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
+            last: await players[type].count({ where: { login_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
             unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
             total: await players[type].count()
         };
         return result;
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             online: 'Database Offline',
             created: 'Database Offline',
@@ -177,7 +210,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         });
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         pageContent.hiscores = [
             {
                 rank: 1,
@@ -228,7 +261,6 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             ]
         });
         cache_values = Object.values(cache_values).map(val => val.playerID);
-        console.log(cache_values);
 
         combined = Object.keys(combined).sort((a, b) => {
             return constant.experienceToLevel(combined[b]['experience.' + skill]) - constant.experienceToLevel(combined[a]['experience.' + skill])
@@ -265,7 +297,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         });
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         pageContent.hiscores = [
             {
                 rank: 1,
@@ -311,7 +343,7 @@ exports.getOnline = async () => {
         };
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             openrsc: 'Database Offline',
             cabbage: 'Database Offline'
@@ -321,8 +353,14 @@ exports.getOnline = async () => {
 
 exports.getPlayerByName = async (req, type, username) => {
     try {
+        let include = [{ model: experience[type] }];
+        /*if (type === constant.CABBAGE) {
+            include.push({ model: clan_players, include: clans });
+        }*/
+
         let player = await players[type].findOne({
             raw: true,
+            include: include,
             where: {
                 username: username
             }
@@ -331,15 +369,8 @@ exports.getPlayerByName = async (req, type, username) => {
             return undefined;
         }
 
-        let skills = await experience[type].findOne({
-            raw: true,
-            attributes: {exclude: ['id', 'playerID', 'playerId']},
-            where: {
-                playerID: player.id
-            }
-        });
-        let total = Object.values(skills).reduce((a, b) => a + b, 0);
-        let totalRank = 1;
+        let skills = constant.getSkills(type);
+        let total = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
         let exps = await experience[type].findAll({
             raw: true,
             attributes: {exclude: ['id']},
@@ -353,15 +384,17 @@ exports.getPlayerByName = async (req, type, username) => {
                 }
             }
         });
+
+        let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            if (Object.keys(exps[x]).filter(user => constant.getSkills(type).includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
+            if (Object.keys(exps[x]).filter(user => skills.includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
                 totalRank++;
             }
         }
 
-        let hiscores = [['Skill Total', player.skill_total]];
-        Object.keys(skills).forEach((element) => {
+        let hiscores = [['Skill Total', player.skill_total, Math.floor(total / 4), totalRank]];
+        Object.values(skills).forEach((element) => {
             let rank = 1;
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];
@@ -378,27 +411,34 @@ exports.getPlayerByName = async (req, type, username) => {
                     break;
                 }
             }
-
             hiscores.push([
                 element[0].toUpperCase() + element.substr(1),
-                constant.experienceToLevel(skills[element]),
-                Math.floor(parseInt(skills[element]) / 4),
+                constant.experienceToLevel(player['experience.' + element]),
+                Math.floor(parseInt(player['experience.' + element]) / 4),
                 rank
             ]);
         });
 
-        hiscores[0].push(Math.floor(total / 4));
-        hiscores[0].push(totalRank);
-
+        const ironman = player.iron_man === 1 ? "Normal"
+            : player.iron_man === 2 ? "Ultimate"
+            : player.iron_man === 3 ? "Hardcore" : undefined;
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
             username: player.username,
-            hiscores: hiscores
+            hiscores: hiscores,
+            combat: player.combat,
+            quest_points: player.quest_points,
+            ironman: ironman,
+            clan: player['clan_player.clan.name'] !== null ? player['clan_player.clan.name'] : undefined,
+            experience_rate: undefined,
+            player_kills: player.kills,
+            npc_kills: player.npc_kills,
+            deaths: player.deaths
         }
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
@@ -406,6 +446,38 @@ exports.getPlayerByName = async (req, type, username) => {
             hiscores: [['Awesomeness', 99, 200000000, 1]]
         }
     }
-}
+};
 
-exports.pool = pool;
+exports.getData = async (req, type, itemname) => {
+    try {
+        // Grab all items like provided name
+        let names = helper.fuzzysearch(itemname);
+        let namesAndIds = helper.namesToIds(names, type);
+        let items = await itemstatuses[type].findAll({
+            raw: true,
+            include: [{
+                model: bank[type]
+            }, {
+                model: inventory[type]
+            }],
+            where: {
+                catalogID: {
+                    [Op.in]: Object.values(namesAndIds).map(def => def.id)
+                }
+            }
+        });
+
+        items.forEach(element => {
+            namesAndIds.forEach(value => {
+                if (value.id == element.catalogID) {
+                    value.amount += element.amount;
+                }
+            });
+        });
+        return namesAndIds;
+    }
+    catch (err) {
+        console.error(err);
+        return undefined;
+    }
+};
