@@ -373,10 +373,16 @@ div.middle-content-server dl dd {
 }
 
 .hiscores {
+  display: flex;
+  justify-content: center;
+  width: 100%;
   margin: 4px;
   margin-bottom: 8px;
-  display: flex;
   min-height: 316px;
+}
+
+.middle-content-hiscores .title .hiscores-title {
+  font-size: 1.1em;
 }
 
 .hiscores-panel {
@@ -438,6 +444,37 @@ a.hiscores-link {
   min-height: 264px;
 }
 
+.hiscores > .hiscore-links .hiscores-panel.players-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dl {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dt,
+.hiscores > .hiscore-links .hiscores-panel.players-nav dd {
+  flex: 1 0 45%;
+  margin: 0;
+}
+
+.hiscores > .hiscore-links .hiscores-panel.players-nav dt {
+  text-align: right;
+  padding-right: 5px;
+}
+.hiscores > .hiscore-links .hiscores-panel.players-nav dd {
+  text-align: left;
+}
+
+.players-nav .hiscores-link {
+  padding: 10px 0;
+}
+
 .hiscore-table {
   width: 290px;
   min-height: 312px;
@@ -466,6 +503,25 @@ a.hiscores-link {
   font-size: 13px;
   padding: 0 1px;
 }
+
+.players-info {
+  flex: 2 0 30%;
+}
+
+.players-skills {
+  flex: 1 0 50%;
+  width: auto;
+}
+
+.player {
+  justify-content: space-between;
+}
+
+.hiscore-links .hiscores-panel.players-nav {
+  padding: 0;
+  width: 90%;
+}
+
 .hiscore-search {
   display: flex;
   justify-items: center;

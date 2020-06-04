@@ -12,7 +12,8 @@ const openrsc = new Sequelize(
         dialect: constant.architecture,
         define: {
             timestamps: false
-        }
+        },
+        logging: false
     }
 );
 (async () => {
@@ -69,8 +70,8 @@ const players = {
 }
 
 const player_cache = {
-    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, {freezeTableName: true }),
-    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true })
+    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, { freezeTableName: true })
 }
 
 // Set up relationships.
@@ -78,6 +79,19 @@ players.openrsc.hasOne(experience.openrsc, {foreignKey: 'playerID'});
 players.cabbage.hasOne(experience.cabbage, {foreignKey: 'playerID'});
 experience.openrsc.belongsTo(players.openrsc);
 experience.cabbage.belongsTo(players.cabbage);
+
+/* Clans */
+/*const clans = cabbage.define('clan', constant.clanDetails, { freezeTableName: true })
+const clan_players = cabbage.define('clan_players', constant.clanPlayersDetails, { freezeTableName: true });
+players.cabbage.hasOne(clan_players, {foreignKey: 'username'});
+clan_players.belongsTo(players.cabbage, {
+    foreignKey: 'username', sourceKey: 'username'
+});
+
+clan_players.belongsTo(clans, {
+    targetKey: 'id', foreignKey: 'clan_id'
+});*/
+
 
 /* Item Specific Model Initialization */
 
@@ -339,9 +353,14 @@ exports.getOnline = async () => {
 
 exports.getPlayerByName = async (req, type, username) => {
     try {
+        let include = [{ model: experience[type] }];
+        /*if (type === constant.CABBAGE) {
+            include.push({ model: clan_players, include: clans });
+        }*/
+
         let player = await players[type].findOne({
             raw: true,
-            include: [{ model: experience[type] }],
+            include: include,
             where: {
                 username: username
             }
@@ -400,11 +419,22 @@ exports.getPlayerByName = async (req, type, username) => {
             ]);
         });
 
+        const ironman = player.iron_man === 1 ? "Normal"
+            : player.iron_man === 2 ? "Ultimate"
+            : player.iron_man === 3 ? "Hardcore" : undefined;
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
             username: player.username,
-            hiscores: hiscores
+            hiscores: hiscores,
+            combat: player.combat,
+            quest_points: player.quest_points,
+            ironman: ironman,
+            clan: player['clan_player.clan.name'] !== null ? player['clan_player.clan.name'] : undefined,
+            experience_rate: undefined,
+            player_kills: player.kills,
+            npc_kills: player.npc_kills,
+            deaths: player.deaths
         }
     }
     catch (err) {

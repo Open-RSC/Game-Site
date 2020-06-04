@@ -46,8 +46,28 @@ exports.playerDetails = {
     iron_man: {
         type: DataTypes.TINYINT,
         allowNull: false
+    },
+    quest_points: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    combat: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    kills: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    npc_kills: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    deaths: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
-}
+};
 
 exports.playerCacheDetails = {
     playerID: {
@@ -63,7 +83,7 @@ exports.playerCacheDetails = {
         type: DataTypes.STRING,
         allowNull: false
     }
-}
+};
 
 exports.inventoryItemDetails = {
     itemID: {
@@ -75,7 +95,7 @@ exports.inventoryItemDetails = {
         type: DataTypes.INTEGER,
         allowNull: false
     }
-}
+};
 
 exports.bankItemDetails = {
     itemID: {
@@ -87,7 +107,7 @@ exports.bankItemDetails = {
         type: DataTypes.INTEGER,
         allowNull: false
     }
-}
+};
 
 exports.itemStatusesDetails = {
     itemID: {
@@ -103,7 +123,43 @@ exports.itemStatusesDetails = {
         type: DataTypes.INTEGER,
         allowNull: false
     }
-}
+};
+
+exports.clanDetails = {
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    tag: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    leader: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+};
+
+exports.clanPlayersDetails = {
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+    },
+    clan_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    rank: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+};
 
 exports.getExperience = (type) => {
     let experience = {
