@@ -17,13 +17,12 @@ block content
       h3 Statistics
       div
         dl
-          dt Players Online:
-          dd #{online}
-          dt Players Created Today:
-          dd #{created}
-          dt Online Last 48 Hours:
-          dd #{last}
-          dt Unique Players:
-          dd #{unique}
-          dt Total Players:
-          dd #{total}
+          if last !== undefined
+            dt Online Last 48 Hours:
+            dd #{last}
+          if unique !== undefined
+            dt Unique Players:
+            dd #{unique}
+          if total !== undefined
+            dt Total Players:
+            dd #{total}

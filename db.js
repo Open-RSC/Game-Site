@@ -140,11 +140,11 @@ exports.homepageStatistics = async (res, type) => {
     catch (err) {
         console.error(err);
         return {
-            online: 'Database Offline',
-            created: 'Database Offline',
-            last: 'Database Offline',
-            unique: 'Database Offline',
-            total: 'Database Offline'
+            online: undefined,
+            created: undefined,
+            last: undefined,
+            unique: undefined,
+            total: undefined
         };
     }
 }
