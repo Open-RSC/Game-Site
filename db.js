@@ -352,8 +352,8 @@ exports.getOnline = async () => {
     catch (err) {
         console.error(err);
         return {
-            openrsc: 'Database Offline',
-            cabbage: 'Database Offline'
+            openrsc: undefined,
+            cabbage: undefined
         };
     }
 }
