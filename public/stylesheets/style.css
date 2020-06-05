@@ -25,7 +25,7 @@ a {
 
 .subtitle {
   text-align: center;
-  margin: 0;
+  margin: 10px 0;
 }
 
 hr {
@@ -79,6 +79,11 @@ header li {
 }
 header li a {
   line-height: 22px;
+}
+
+
+header li a:hover, .features a:hover {
+  color: gold;
 }
 
 main {
@@ -216,8 +221,13 @@ div.home-buttons {
   font-weight: 500;
 }
 
+.button:hover, .play-button:hover,
+.large-button:hover {
+  filter: brightness(130%);
+}
+
 .play-button, .large-button {
-  width: 205px;
+  width: 195px;
   height: 150px;
   display: block;
   background-image: url("/static/images/play.gif");
@@ -227,58 +237,59 @@ div.home-buttons {
   text-decoration: none;
   font-size: 32px;
   text-shadow: black 1px 2px;
+  text-align: center;
 }
 .play-button {
   color: #e03010;
 }
 
-.button.wiki {
+.button.launcher-button {
   grid-column-start: 6;
   grid-column-end: 12;
-  grid-row-start: 2;
+  grid-row-start: 1;
   grid-row-end: 4;
 }
 .button.discord {
   grid-column-start: 27;
   grid-column-end: 33;
-  grid-row-start: 2;
+  grid-row-start: 1;
   grid-row-end: 4;
 }
-.button.rules-button {
+.button.wiki {
   grid-column-start: 3;
   grid-column-end: 9;
-  grid-row-start: 5;
+  grid-row-start: 4;
   grid-row-end: 7;
 }
 .button.code {
   grid-column-start: 30;
   grid-column-end: 36;
-  grid-row-start: 5;
+  grid-row-start: 4;
   grid-row-end: 7;
 }
 .button.single-player {
   grid-column-start: 6;
   grid-column-end: 12;
-  grid-row-start: 8;
+  grid-row-start: 7;
   grid-row-end: 10;
 }
 .button.faqs {
   grid-column-start: 27;
   grid-column-end: 33;
-  grid-row-start: 8;
+  grid-row-start: 7;
   grid-row-end: 10;
 }
 .button.rscplus {
   grid-column-start: 17;
   grid-column-end: 24;
-  grid-row-start: 9;
+  grid-row-start: 7;
   grid-row-end: 11;
   justify-self: center;
 }
 .large-button.play {
   grid-column-start: 13;
   grid-column-end: 22;
-  grid-row-start: 4;
+  grid-row-start: 3;
   grid-row-end: 8;
 }
 
@@ -322,12 +333,9 @@ section>div.bottom-right-border {
 }
 
 .middle-content .rules, .middle-content .faq {
-  padding: 15px;
   height: auto;
   overflow: hidden;
-}
-.middle-content .rules h2, .middle-content .faq h2 {
-  margin-top: 0;
+  width: 90%;
 }
 .middle-content .rules h3, .middle-content .faq dt {
   text-align: left;
@@ -339,6 +347,10 @@ section>div.bottom-right-border {
   margin: 0;
   padding-left: 20px;
   font-size: .8rem;
+}
+
+.middle-content .rules {
+  margin-bottom: 20px;
 }
 
 div.orsc-buttons, div.cabbage-buttons {
@@ -353,6 +365,7 @@ div.orsc-buttons, div.cabbage-buttons {
 }
 .statistics {
   width: 70%;
+  margin-bottom: 10px;
 }
 .statistics h3 {
   text-align: center;
@@ -496,6 +509,7 @@ a.hiscores-link {
   display: flex;
   justify-content: center;
 }
+
 .hiscore-table th {
   font-weight: 700;
   text-align: left;
@@ -718,7 +732,7 @@ a.hiscores-link {
   .button.discord {
     order: 2;
   }
-  .button.rules-button {
+  .button.launcher-button {
     order: 2;
   }
   .button.code {
