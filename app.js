@@ -12,9 +12,9 @@ const db = require('./db');
 
 const indexRouter = require('./routes/index');
 const playRouter = require('./routes/play');
+const downloadRouter = require('./routes/download');
 const openrscRouter = require('./routes/openrsc');
 const cabbageRouter = require('./routes/cabbage');
-const rulesRouter = require('./routes/rules');
 const faqRouter = require('./routes/faq');
 
 const app = express();
@@ -38,9 +38,9 @@ app.use('/static', express.static(
 
 app.use('/', indexRouter);
 app.use('/play', playRouter);
+app.use('/download', downloadRouter);
 app.use('/openrsc', openrscRouter);
 app.use('/cabbage', cabbageRouter);
-app.use('/rules', rulesRouter);
 app.use('/faq', faqRouter);
 
 // catch 404 and forward to error handler

@@ -37,8 +37,9 @@ block content
 
             dt.space-above Player Kills:
             dd.space-above #{player_kills}
-            dt NPC Kills:
-            dd #{npc_kills}
+            if npc_kills !== 0
+              dt NPC Kills:
+              dd #{npc_kills}
             dt Deaths:
             dd #{deaths}        
             if experience_rate !== undefined

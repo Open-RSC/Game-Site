@@ -55,9 +55,9 @@ exports.joinById = ( ...lists ) => {
 };
 
 const options = {
-    limit: 5, // don't return more results than you need!
+    limit: 25, // don't return more results than you need!
     allowTypo: true, // if you don't care about allowing typos
-    threshold: -10000, // don't return bad results
+    threshold: -5000, // don't return bad results
 };
 exports.fuzzysearch = word => {
     const results = fuzzysort.go(word.toLowerCase(), itemnames, options);
