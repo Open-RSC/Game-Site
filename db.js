@@ -160,7 +160,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
         }
-        console.time(1)
+
         let combined = await players[type].findAll({
             raw: true,
             include: [
@@ -174,7 +174,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 iron_man: ironman
             }
         });
-        console.timeEnd(1)
+
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
@@ -376,7 +376,7 @@ exports.getPlayerByName = async (req, type, username) => {
                 include: {
                     model: clans,
                     attributes: ['name', 'tag'],
-                    required: true
+                    required: false
                 }
             }]);
         }
@@ -392,7 +392,6 @@ exports.getPlayerByName = async (req, type, username) => {
             return undefined;
         }
 
-         
         let xp_mode;
         if(type === constant.CABBAGE) {
             xp_mode = await player_cache[type].findOne({
@@ -457,7 +456,6 @@ exports.getPlayerByName = async (req, type, username) => {
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
             : '5x';
-        console.log(player);
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
@@ -541,6 +539,9 @@ exports.getData = async (req, type, itemname) => {
                     value.amount += element.amount;
                 }
             });
+        });
+        namesAndIds.sort((a, b) => {
+            return b.amount - a.amount;
         });
         return namesAndIds;
     }

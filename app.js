@@ -4,11 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const compression = require('compression')
+const compression = require('compression');
 const helmet = require('helmet');
-const csrf = require('csurf')
-
-const db = require('./db');
+const csrf = require('csurf');
 
 const indexRouter = require('./routes/index');
 const playRouter = require('./routes/play');
@@ -42,6 +40,14 @@ app.use('/download', downloadRouter);
 app.use('/openrsc', openrscRouter);
 app.use('/cabbage', cabbageRouter);
 app.use('/faq', faqRouter);
+
+app.get("/sitemap.xml", function(req, res, next){
+  res.sendFile(__dirname + '/public/sitemap.xml'); 
+});
+
+app.get("/robots.txt", function(req, res, next){
+  res.sendFile(__dirname + '/public/robots.txt'); 
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
