@@ -542,6 +542,9 @@ exports.getData = async (req, type, itemname) => {
                 }
             });
         });
+        namesAndIds.sort((a, b) => {
+            return b.amount - a.amount;
+        });
         return namesAndIds;
     }
     catch (err) {
