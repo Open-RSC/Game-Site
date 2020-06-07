@@ -169,7 +169,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             where: {
                 banned: 0,
                 group_id: {
-                    [Op.gt]: 9
+                    [Op.gte]: 10
                 },
                 iron_man: ironman
             }
@@ -251,7 +251,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             where: {
                 banned: 0,
                 group_id: {
-                    [Op.gt]: 9
+                    [Op.gte]: 10
                 },
                 iron_man: ironman
             }
@@ -423,7 +423,13 @@ exports.getPlayerByName = async (req, type, username) => {
         let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            if (Object.keys(exps[x]).filter(user => skills.includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
+            const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
+                .reduce((a, b) => a + b);
+            const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
+            if (currSkillTotal > player.skill_total) {
+                totalRank++;
+            }
+            else if (currTotalExp > total && currSkillTotal > player.skill_total) {
                 totalRank++;
             }
         }
@@ -452,7 +458,6 @@ exports.getPlayerByName = async (req, type, username) => {
         const ironman = player.iron_man === 1 ? "Normal"
             : player.iron_man === 2 ? "Ultimate"
             : player.iron_man === 3 ? "Hardcore" : undefined;
-            console.log(xp_mode);
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
             : '5x';
