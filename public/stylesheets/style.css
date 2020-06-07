@@ -406,8 +406,9 @@ div.middle-content-server dl dd {
   text-decoration: none;
 }
 
-.hiscores .page-link:hover {
+.hiscores .page-link:hover, .hiscores .page-link:focus {
   color: gold;
+  cursor: pointer;
 }
 
 .middle-content-hiscores .title .hiscores-title {
@@ -457,6 +458,10 @@ a.hiscores-link {
   text-align: center;
 }
 
+.player-page-link:hover {
+  color: lightgray;
+}
+
 .hiscore-links {
   width: 160px;
   min-height: 310px;
@@ -484,6 +489,7 @@ a.hiscores-link {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
+  padding: 5px 0 0;
 }
 
 .hiscores > .hiscore-links .hiscores-panel.players-nav dt,
@@ -666,6 +672,36 @@ a.hiscores-link {
     width: auto;
     height: auto;
     max-width: 80vw;
+  }
+
+  .hiscore-table .hiscores-panel {
+    flex-wrap: wrap;
+  }
+
+  .hiscore-table .hiscores-panel table {
+    width: 100%;
+  }
+
+  .hiscore-table .hiscores-panel > a:first-child {
+    display: block;
+    order: 2;
+    flex: 1;
+    text-align: left;
+  }
+
+  .hiscore-table .hiscores-panel > a:first-child:after {
+    content: " Prev"
+  }
+
+  .hiscore-table .hiscores-panel > a:last-child {
+    display: block;
+    order: 3;
+    flex: 1;
+    text-align: right;
+  }
+
+  .hiscore-table .hiscores-panel > a:last-child:before {
+    content: "Next "
   }
 
   .hiscore-links h4, .hiscore-table h4, .middle-content-hiscores .title h2 {
