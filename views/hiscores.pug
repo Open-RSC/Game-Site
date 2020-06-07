@@ -30,6 +30,11 @@ block content
       div.hiscore-table
         h4 #{skill} Hiscores
         div.hiscores-panel
+          if !isNaN(rank) && (rank - rankOffset) > 0
+            - let prevLink = "hiscores?skill=" + skill.toLowerCase()
+            - prevRank = Math.max(rankOffset, rank - (rankOffset * 2))
+            - prevLink += "&rank=" + prevRank
+            a(class="page-link", href=prevLink) &lt;
           table
             thead
               th Rank
@@ -45,6 +50,12 @@ block content
                         a(href=server + "/player/" + column) #{column}
                     else
                       td= column
+          - let prevLink = "hiscores?skill=" + skill.toLowerCase()
+          if !isNaN(rank)
+            - prevLink += "&rank=" + (rank + (rankOffset * 2))
+          else
+            - prevLink += "&rank=" + (rankOffset * 3)
+          a(class="page-link", href=prevLink) &gt;
     div.hiscore-search
       div.search-box.search-rank
         - let actionTextRank = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();

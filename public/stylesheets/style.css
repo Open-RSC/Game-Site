@@ -398,6 +398,18 @@ div.middle-content-server dl dd {
   min-height: 316px;
 }
 
+.hiscores .page-link {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+.hiscores .page-link:hover {
+  color: gold;
+}
+
 .middle-content-hiscores .title .hiscores-title {
   font-size: 1.1em;
 }
@@ -507,7 +519,7 @@ a.hiscores-link {
   padding: 4px;
   padding-top: 8px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .hiscore-table th {

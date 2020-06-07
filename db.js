@@ -150,12 +150,13 @@ exports.homepageStatistics = async (res, type) => {
 }
 
 const getOverall = async (req, res, type, rank, name, ironman) => {
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: 'Overall'
+        skill: 'Overall',
+        rankOffset: rankOffset
     };
-    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
@@ -189,6 +190,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 }
             }
         }
+        pageContent.rank = rank;
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
         
@@ -232,13 +234,13 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
 }
 
 const getSkill = async (req, res, type, skill, rank, name, ironman) => {
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: skill[0].toUpperCase() + skill.substr(1)
+        skill: skill[0].toUpperCase() + skill.substr(1),
+        rankOffset: rankOffset
     };
-
-    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
@@ -284,6 +286,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
                 }
             }
         }
+        pageContent.rank = rank;
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
 

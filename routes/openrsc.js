@@ -14,7 +14,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/hiscores', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, server, skill, undefined, undefined, 0);
+    const rank = helper.validateRank(req.query.rank);
+    const result = await db.getHiscores(req, res, server, skill, rank, undefined, 0);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
