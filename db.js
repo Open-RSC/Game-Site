@@ -150,12 +150,13 @@ exports.homepageStatistics = async (res, type) => {
 }
 
 const getOverall = async (req, res, type, rank, name, ironman) => {
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: 'Overall'
+        skill: 'Overall',
+        rankOffset: rankOffset
     };
-    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
@@ -169,7 +170,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             where: {
                 banned: 0,
                 group_id: {
-                    [Op.gt]: 9
+                    [Op.gte]: 10
                 },
                 iron_man: ironman
             }
@@ -189,6 +190,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 }
             }
         }
+        pageContent.rank = rank;
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
         
@@ -232,13 +234,13 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
 }
 
 const getSkill = async (req, res, type, skill, rank, name, ironman) => {
+    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: skill[0].toUpperCase() + skill.substr(1)
+        skill: skill[0].toUpperCase() + skill.substr(1),
+        rankOffset: rankOffset
     };
-
-    const rankOffset = type === constant.CABBAGE ? 10 : 8;
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
@@ -251,7 +253,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             where: {
                 banned: 0,
                 group_id: {
-                    [Op.gt]: 9
+                    [Op.gte]: 10
                 },
                 iron_man: ironman
             }
@@ -284,6 +286,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
                 }
             }
         }
+        pageContent.rank = rank;
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
 
@@ -423,7 +426,13 @@ exports.getPlayerByName = async (req, type, username) => {
         let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            if (Object.keys(exps[x]).filter(user => skills.includes(user)).reduce((a, b) => a + exps[x][b], 0) > total) {
+            const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
+                .reduce((a, b) => a + b);
+            const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
+            if (currSkillTotal > player.skill_total) {
+                totalRank++;
+            }
+            else if (currTotalExp > total && currSkillTotal > player.skill_total) {
                 totalRank++;
             }
         }
@@ -452,7 +461,6 @@ exports.getPlayerByName = async (req, type, username) => {
         const ironman = player.iron_man === 1 ? "Normal"
             : player.iron_man === 2 ? "Ultimate"
             : player.iron_man === 3 ? "Hardcore" : undefined;
-            console.log(xp_mode);
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
             : '5x';

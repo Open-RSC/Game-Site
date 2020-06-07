@@ -53,7 +53,16 @@ block content
             else
               dd None
 
-          a.hiscores-link(href="../hiscores") Back to all scores
+          - let hiscoresLink = "../hiscores"
+          if ironman === "Normal"
+            - hiscoresLink += "/ironman"
+          else if ironman === "Ultimate"
+            - hiscoresLink += "/ultimate-ironman"
+          else if ironman === "Hardcore"
+            - hiscoresLink += "/hardcore-ironman"
+
+          a.hiscores-link(href=hiscoresLink) Back to all scores
+
       div.hiscore-table.players-skills
         h4 Skills
         div.hiscores-panel

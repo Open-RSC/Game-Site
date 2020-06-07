@@ -15,9 +15,11 @@ router.get('/', async (req, res, next) => {
 
 router.get('/hiscores', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, server, skill, undefined, undefined, 0);
+    const rank = helper.validateRank(req.query.rank);
+    const result = await db.getHiscores(req, res, server, skill, rank, undefined, 0);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
+    result.rank = rank;
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
@@ -37,6 +39,7 @@ router.post('/hiscores', async (req, res, next) => {
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
+    result.rank = rank;
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
@@ -45,9 +48,11 @@ router.post('/hiscores', async (req, res, next) => {
 
 router.get('/hiscores/ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, server, skill, undefined, undefined, 1);
+    const rank = helper.validateRank(req.query.rank);
+    const result = await db.getHiscores(req, res, server, skill, rank, undefined, 1);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
+    result.rank = rank;
     result.page_name = "RSC Cabbage - Ironman Hiscores | Open RuneScape Classic";
     result.description = "RSC Cabbage - Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
@@ -64,7 +69,7 @@ router.post('/hiscores/ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 1);
     if (result.hiscores === []) {
-        return res.redirect('..');
+        return res.redirect('.');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -77,7 +82,8 @@ router.post('/hiscores/ironman', async (req, res, next) => {
 
 router.get('/hiscores/ultimate-ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, server, skill, undefined, undefined, 2);
+    const rank = helper.validateRank(req.query.rank);
+    const result = await db.getHiscores(req, res, server, skill, rank, undefined, 2);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Ultimate Ironman Hiscores | Open RuneScape Classic";
@@ -96,7 +102,7 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 2);
     if (result.hiscores === []) {
-        return res.redirect('..');
+        return res.redirect('.');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -109,7 +115,8 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
 
 router.get('/hiscores/hardcore-ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
-    const result = await db.getHiscores(req, res, server, skill, undefined, undefined, 3);
+    const rank = helper.validateRank(req.query.rank);
+    const result = await db.getHiscores(req, res, server, skill, rank, undefined, 3);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Hardcore Ironman Hiscores | Open RuneScape Classic";
@@ -128,7 +135,7 @@ router.post('/hiscores/hardcore-ironman', async (req, res, next) => {
     }
     const result = await db.getHiscores(req, res, server, skill, rank, name, 3);
     if (result.hiscores === []) {
-        return res.redirect('..');
+        return res.redirect('.');
     }
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
