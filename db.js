@@ -104,6 +104,11 @@ const bank = {
     cabbage: cabbage.define('bank', constant.bankItemDetails, { freezeTableName: true })
 };
 
+const equipment = {
+    openrsc: openrsc.define('equipped', constant.equipmentDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('equipped', constant.equipmentDetails, { freezeTableName: true })
+};
+
 const itemstatuses = {
     openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true }),
     cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true })
@@ -115,11 +120,17 @@ itemstatuses.cabbage.belongsTo(inventory.cabbage, {foreignKey: 'itemID'});
 itemstatuses.openrsc.belongsTo(bank.openrsc, {foreignKey: 'itemID'});
 itemstatuses.cabbage.belongsTo(bank.cabbage, {foreignKey: 'itemID'});
 
+itemstatuses.openrsc.belongsTo(equipment.openrsc, {foreignKey: 'itemID'});
+itemstatuses.cabbage.belongsTo(equipment.cabbage, {foreignKey: 'itemID'});
+
 inventory.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 inventory.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
 
 bank.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 bank.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+
+equipment.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
+equipment.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
 
 const pool = {
     openrsc: openrsc,
@@ -351,7 +362,7 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
         }
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(404).send("Unable to find result.");
     }
 }
@@ -521,28 +532,42 @@ exports.getPlayerByName = async (req, type, username) => {
 exports.getData = async (req, type, itemname) => {
     if (itemname === undefined) return itemname;
     try {
+        let include = [{
+            model: bank[type],
+            include: {
+                model: players[type],
+                attributes: [],
+                required: true
+            },
+            attributes: []
+        }, {
+            model: inventory[type],
+            include: {
+                model: players[type],
+                attributes: [],
+                required: true
+            },
+            attributes: []
+        }];
+
+        if (type === constant.CABBAGE) {
+            include = include.concat([{
+                model: equipment[type],
+                include: {
+                    model: players[type],
+                    attributes: [],
+                    required: true
+                },
+                attributes: []
+            }]);
+        }
+
         // Grab all items like provided name
         let names = helper.fuzzysearch(itemname);
         let namesAndIds = helper.namesToIds(names, type);
         let items = await itemstatuses[type].findAll({
             raw: true,
-            include: [{
-                model: bank[type],
-                include: {
-                    model: players[type],
-                    attributes: [],
-                    required: true
-                },
-                attributes: []
-            }, {
-                model: inventory[type],
-                include: {
-                    model: players[type],
-                    attributes: [],
-                    required: true
-                },
-                attributes: []
-            }],
+            include: include,
             where: {
                 catalogID: {
                     [Op.in]: Object.values(namesAndIds).map(def => def.id)
@@ -561,6 +586,13 @@ exports.getData = async (req, type, itemname) => {
                             [Op.gte]: 10
                         }},
                         {'$invitem.player.iron_man$' : 0}
+                    ]},
+                    {[Op.and]: [
+                        {'$equipped.player.banned$': 0},
+                        {'$equipped.player.group_id$': {
+                            [Op.gte]: 10
+                        }},
+                        {'$equipped.player.iron_man$' : 0}
                     ]}
                 ]
             }

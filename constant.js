@@ -109,6 +109,18 @@ exports.bankItemDetails = {
     }
 };
 
+exports.equipmentDetails = {
+    itemID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    playerID: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+};
+
 exports.itemStatusesDetails = {
     itemID: {
         type: DataTypes.INTEGER,
