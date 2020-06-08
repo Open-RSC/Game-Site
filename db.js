@@ -176,10 +176,23 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             }
         });
 
+        // Grab player_cache to ensure we filter out the hiscore_opt flagged players
+        let cache_values = await player_cache[type].findAll({
+            raw: true,
+            where: {
+                key: 'hiscore_opt'
+            },
+            attributes: [
+                'playerID'
+            ]
+        });
+        cache_values = Object.values(cache_values).map(val => val.playerID);
+
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
-        .map(key => combined[key]);
+        .map(key => combined[key])
+        .filter(value => !cache_values.includes(value.id));
 
         // Find the rank
         if (name !== undefined) {
@@ -406,6 +419,18 @@ exports.getPlayerByName = async (req, type, username) => {
             });
         }
 
+        // Grab player_cache to ensure we filter out the hiscore_opt flagged players
+        let cache_values = await player_cache[type].findAll({
+            raw: true,
+            where: {
+                key: 'hiscore_opt'
+            },
+            attributes: [
+                'playerID'
+            ]
+        });
+        cache_values = Object.values(cache_values).map(val => val.playerID);
+
         let skills = constant.getSkills(type);
         let total = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
         let exps = await experience[type].findAll({
@@ -421,7 +446,7 @@ exports.getPlayerByName = async (req, type, username) => {
                 '$player.iron_man$': player.iron_man,
                 '$player.banned$': 0
             }
-        });
+        }).filter(value => !cache_values.includes(value.playerID));
 
         let totalRank = 1;
         for (let x in exps) {

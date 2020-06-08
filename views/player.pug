@@ -75,5 +75,10 @@ block content
             tbody
               each row in hiscores
                 tr
-                  each column in row
-                    td= column
+                  - let hiscoresLink = "../hiscores?skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
+                  each column, idx in row
+                    if idx === 0
+                      td
+                        a(href=hiscoresLink) #{column}
+                    else
+                      td= column
