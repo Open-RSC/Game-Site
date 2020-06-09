@@ -15,18 +15,16 @@ block content
         h4
           span Player Info
         div.hiscores-panel.players-nav
-          dl
+          dl.space-above
+            dt Name:
+            dd #{username}
             dt Combat:
             dd #{combat}
-            dt Quest Points:
-            dd #{quest_points}
-            if ironman !== undefined
-              dt Ironman:
-              dd #{ironman}
 
             if clan !== undefined
               dt.space-above Clan Name:
-              dd.space-above(title=clan_tag) #{clan}
+              dd.space-above
+                a(class="clan-page-link", href="/cabbage/clans/" + clan, title=clan_tag) #{clan}
               dt Clan Rank:
               if clan_rank === 1
                 dd Leader
@@ -35,8 +33,14 @@ block content
               else
                 dd Member
 
-            dt.space-above Player Kills:
-            dd.space-above #{player_kills}
+            dt.space-above Quest Points:
+            dd.space-above #{quest_points}
+            if ironman !== undefined
+              dt Ironman:
+              dd #{ironman}
+
+            dt Player Kills:
+            dd #{player_kills}
             if npc_kills !== 0
               dt NPC Kills:
               dd #{npc_kills}
@@ -79,6 +83,6 @@ block content
                   each column, idx in row
                     if idx === 0
                       td
-                        a(href=hiscoresLink) #{column}
+                        a(class="player-page-link", href=hiscoresLink) #{column}
                     else
                       td= column

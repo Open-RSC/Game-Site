@@ -161,7 +161,8 @@ router.get('/database', async (req, res, next) => {
     res.render('database', {
         csrfToken: req.csrfToken(),
         placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],
-        page_name: 'RSC Cabbage - Database | Open RuneScape Classic'
+        page_name: 'RSC Cabbage - Database | Open RuneScape Classic',
+        description: "RSC Cabbage - Database | Open RuneScape Classic"
     })
 });
 
@@ -172,15 +173,54 @@ router.post('/database', async (req, res, next) => {
         result = await db.getData(req, server, itemname);
     }
     if (result === undefined) {
-        result = [];
+        return res.redirect('.');
     }
     
     res.render('database', {
         csrfToken: req.csrfToken(),
         placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],
         page_name: 'RSC Cabbage - Database | Open RuneScape Classic',
+        description: "RSC Cabbage - Database | " + itemname + " | Open RuneScape Classic",
         type: 'items',
         items: result
+    });
+});
+
+router.get('/clans', async (req, res, next) => {
+    const rank = helper.validateRank(req.query.rank);
+    let result = await db.getClans(req, rank);
+    res.render('clan_list', {
+        server: '/cabbage',
+        page_name: 'RSC Cabbage - Clans | Open RuneScape Classic',
+        description: "RSC Cabbage - Clans | A list of all clans. |  Open RuneScape Classic",
+        clans: result.clans,
+        rankOffset: result.rankOffset,
+        rank: result.rank
+    });
+});
+
+router.get('/clans/:clan', async (req, res, next) => {
+    const clan = helper.validateName(req.params.clan);
+    let result = await db.getClan(req, clan);
+    if (result === undefined) {
+        return res.redirect('/cabbage');
+    }
+
+    let generalsTotal = result.generals.reduce((a, b) => a + b[2], 0);
+    let membersTotal = result.members.reduce((a, b) => a + b[2], 0);
+
+    res.render('clan', {
+        server: '/cabbage',
+        page_name: 'RSC Cabbage - Clans | ' + result.clan_name + ' | Open RuneScape Classic',
+        description: "RSC Cabbage - Clans | " + result.clan_name + " |  Open RuneScape Classic",
+        clan_name: result.clan_name,
+        clan_tag: result.clan_tag,
+        member_count: result.member_count,
+        total_skill: membersTotal + generalsTotal + result.leader[2],
+        average_skill: Math.floor((membersTotal + generalsTotal + result.leader[2]) / result.member_count),
+        leader: result.leader,
+        generals: result.generals,
+        members: result.members
     });
 });
 

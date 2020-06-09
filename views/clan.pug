@@ -1,0 +1,64 @@
+extends layout
+
+block content
+  div.middle-content-hiscores
+    div.title.hiscores-panel
+      h2.hiscores-title #{clan_name}
+      a.hiscores-link(href=server) Return to main menu
+    
+    div.hiscores.player
+      div.hiscore-links.players-info
+        h4
+          span Clan Info
+        div.hiscores-panel.players-nav
+          dl.space-above
+            dt Clan Name:
+            dd #{clan_name}
+            dt Leader:
+            dd
+              a(class="player-page-link", href="/cabbage/player/" + leader[1]) #{leader[1]}
+
+            dt.space-above Clan Tag:
+            dd.space-above #{clan_tag}
+            dt Members:
+            dd #{member_count}
+            dt Total Skill:
+            dd #{total_skill}
+            dt(title="Total skill divided by number of members") Average Skill:
+            dd #{average_skill}
+
+          a.hiscores-link(href="/cabbage/clans") Back to all clans
+
+      div.hiscore-table.clan-members
+        h4 Members
+        div.hiscores-panel
+          table
+            thead
+              th Rank
+              th Name
+              th Total
+              th Combat
+            tbody
+              tr
+                each column, idx in leader
+                  if idx === 1
+                    td
+                      a(class="player-page-link", href="../player/" + column) #{column}
+                  else
+                    td= column
+              each row in generals
+                tr
+                  each column, idx in row
+                    if idx === 1
+                      td
+                        a(class="player-page-link", href="../player/" + column) #{column}
+                    else
+                      td= column
+              each row in members
+                tr
+                  each column, idx in row
+                    if idx === 1
+                      td
+                        a(class="player-page-link", href="../player/" + column) #{column}
+                    else
+                      td= column
