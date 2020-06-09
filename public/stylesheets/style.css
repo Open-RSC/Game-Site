@@ -462,6 +462,10 @@ a.hiscores-link {
   color: lightgray;
 }
 
+.hiscore-table .hiscores-panel.clan-list {
+  width: auto;
+}
+
 .hiscore-links {
   width: 160px;
   min-height: 310px;

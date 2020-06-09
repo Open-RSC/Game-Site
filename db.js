@@ -616,6 +616,53 @@ exports.getData = async (req, type, itemname) => {
     }
 };
 
+exports.getClans = async (req, rank) => {
+    const rankOffset = 10;
+    try {
+        if (rank === undefined || isNaN(rank) || rank < rankOffset) {
+            rank = rankOffset;
+        }
+        
+        const clan = await clans.findAll({
+            raw: true
+        });
+        if (clan === undefined || clan === null) {
+            return undefined;
+        }
+
+        const clanPlayers = await clan_players.findAll({
+            raw: true,
+            attributes: [['clan_id', 'id'], [Sequelize.fn("COUNT", Sequelize.col("clan_id")), 'count']],
+            group: 'clan_id'
+        });
+        
+        if (clanPlayers.length < 1) {
+            return undefined;
+        }
+
+        let combined = helper.joinById(clan, clanPlayers);
+        combined = Object.values(combined).map(val => {
+            return [
+                val.name,
+                val.tag,
+                val.leader,
+                val.count
+            ]
+        }).sort((a, b) => b[3] - a[3])
+        .slice(rank-rankOffset,rank+rankOffset);
+
+        return {
+            clans: combined,
+            rank: rank,
+            rankOffset: rankOffset
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return undefined;
+    }
+};
+
 exports.getClan = async (req, clanName) => {
     try {
         const clan = await clans.findOne({

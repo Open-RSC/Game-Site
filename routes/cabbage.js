@@ -186,7 +186,20 @@ router.post('/database', async (req, res, next) => {
     });
 });
 
-router.get('/clan/:clan', async (req, res, next) => {
+router.get('/clans', async (req, res, next) => {
+    const rank = helper.validateRank(req.query.rank);
+    let result = await db.getClans(req, rank);
+    res.render('clan_list', {
+        server: '/cabbage',
+        page_name: 'RSC Cabbage - Clans | Open RuneScape Classic',
+        description: "RSC Cabbage - Clans | A list of all clans. |  Open RuneScape Classic",
+        clans: result.clans,
+        rankOffset: result.rankOffset,
+        rank: result.rank
+    });
+});
+
+router.get('/clans/:clan', async (req, res, next) => {
     const clan = helper.validateName(req.params.clan);
     let result = await db.getClan(req, clan);
     if (result === undefined) {
@@ -196,7 +209,7 @@ router.get('/clan/:clan', async (req, res, next) => {
     let generalsTotal = result.generals.reduce((a, b) => a + b[2], 0);
     let membersTotal = result.members.reduce((a, b) => a + b[2], 0);
 
-    res.render('clan', {
+    res.render('clans', {
         server: '/cabbage',
         page_name: 'RSC Cabbage - Clans | ' + result.clan_name + ' | Open RuneScape Classic',
         description: "RSC Cabbage - Clans | " + result.clan_name + " |  Open RuneScape Classic",
