@@ -458,8 +458,12 @@ a.hiscores-link {
   text-align: center;
 }
 
-.player-page-link:hover {
+.player-page-link:hover, .clan-page-link:hover {
   color: lightgray;
+}
+
+.clan-list td:not(:last-child) {
+  padding-left: 5px;
 }
 
 .hiscore-table .hiscores-panel.clan-list {
@@ -487,13 +491,14 @@ a.hiscores-link {
   flex-direction: column;
   justify-content: center;
   font-size: 13px;
+  height: auto;
+  min-height: auto;
 }
 
 .hiscores > .hiscore-links .hiscores-panel.players-nav dl {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
-  padding: 5px 0 0;
 }
 
 .hiscores > .hiscore-links .hiscores-panel.players-nav dt,
@@ -545,13 +550,22 @@ a.hiscores-link {
   padding: 0 1px;
 }
 
+.hiscores.player .hiscore-table .hiscores-panel {
+  min-height: auto;
+  padding-bottom: 10px;
+}
+
 .players-info {
   flex: 2 0 30%;
 }
 
-.players-skills {
+.players-skills, .clan-members {
   flex: 1 0 50%;
   width: auto;
+}
+
+.players-skills table, .clan-members table {
+  width: 100%;
 }
 
 .player {

@@ -209,7 +209,7 @@ router.get('/clans/:clan', async (req, res, next) => {
     let generalsTotal = result.generals.reduce((a, b) => a + b[2], 0);
     let membersTotal = result.members.reduce((a, b) => a + b[2], 0);
 
-    res.render('clans', {
+    res.render('clan', {
         server: '/cabbage',
         page_name: 'RSC Cabbage - Clans | ' + result.clan_name + ' | Open RuneScape Classic',
         description: "RSC Cabbage - Clans | " + result.clan_name + " |  Open RuneScape Classic",
