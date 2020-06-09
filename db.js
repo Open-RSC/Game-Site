@@ -615,3 +615,79 @@ exports.getData = async (req, type, itemname) => {
         return undefined;
     }
 };
+
+exports.getClan = async (req, clanName) => {
+    try {
+        const clan = await clans.findOne({
+            raw: true,
+            where: {
+                name: clanName
+            }
+        });
+
+        if (clan === undefined || clan === null) {
+            return undefined;
+        }
+
+        let clanPlayers = await players[constant.CABBAGE].findAll({
+            raw: true,
+            attributes: ['username', 'skill_total', 'combat'],
+            include: {
+                model: clan_players,
+                where: {
+                    clan_id: clan.id
+                }
+            },
+            order: [
+                ['skill_total', 'DESC']
+            ]
+        });
+
+        if (clanPlayers.length < 1) {
+            return undefined;
+        }
+
+        let leader;
+        let generals = [];
+        let members = [];
+        clanPlayers = clanPlayers.map(value => {
+            let rank = 'Member';
+            if (value['clan_player.rank'] === 1) {
+                leader = [
+                    'Leader',
+                    value.username,
+                    value.skill_total,
+                    value.combat,
+                ];
+            }
+            else if (value['clan_player.rank'] === 2) {
+                generals.push([
+                    'General',
+                    value.username,
+                    value.skill_total,
+                    value.combat,
+                ])
+            }
+            else {
+                members.push([
+                    'Member',
+                    value.username,
+                    value.skill_total,
+                    value.combat,
+                ])
+            }
+        });
+        return {
+            clan_name: clan.name,
+            clan_tag: clan.tag,
+            member_count: clanPlayers.length,
+            leader: leader,
+            generals: generals,
+            members: members
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return undefined;
+    }
+};
