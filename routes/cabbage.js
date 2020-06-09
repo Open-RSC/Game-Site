@@ -180,7 +180,7 @@ router.post('/database', async (req, res, next) => {
         csrfToken: req.csrfToken(),
         placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],
         page_name: 'RSC Cabbage - Database | Open RuneScape Classic',
-        description: "RSC Cabbage - Database | " + itemname + " | Open RuneScape Classic",
+        description: "RSC Cabbage - Database | Search for items found in the game! | Open RuneScape Classic",
         type: 'items',
         items: result
     });
