@@ -25,7 +25,6 @@ block content
           span Select hiscore table
         div.hiscores-panel
           each skillName in skills
-            - let skillLink = "hiscores?skill=" + skillName
             a.hiscores-link(href='?skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
       div.hiscore-table
         h4 #{skill} Hiscores

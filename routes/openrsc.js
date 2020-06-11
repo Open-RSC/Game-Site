@@ -51,6 +51,7 @@ router.get('/player/:username', async (req, res, next) => {
     if (result === undefined) {
         return res.redirect('/hiscores');
     }
+    result.server = '/openrsc';
     result.page_name = "OpenRSC - Players | " + result.username + " | Open RuneScape Classic";
     result.description = "OpenRSC - Players | " + result.username + " | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     res.render('player', result);

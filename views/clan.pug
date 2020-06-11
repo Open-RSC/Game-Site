@@ -43,7 +43,7 @@ block content
                 each column, idx in leader
                   if idx === 1
                     td
-                      a(class="player-page-link", href="../player/" + column) #{column}
+                      a(class="player-page-link", href="/cabbage/player/" + column) #{column}
                   else
                     td= column
               each row in generals
@@ -51,7 +51,7 @@ block content
                   each column, idx in row
                     if idx === 1
                       td
-                        a(class="player-page-link", href="../player/" + column) #{column}
+                        a(class="player-page-link", href="/cabbage/player/" + column) #{column}
                     else
                       td= column
               each row in members
@@ -59,6 +59,6 @@ block content
                   each column, idx in row
                     if idx === 1
                       td
-                        a(class="player-page-link", href="../player/" + column) #{column}
+                        a(class="player-page-link", href="/cabbage/player/" + column) #{column}
                     else
                       td= column
