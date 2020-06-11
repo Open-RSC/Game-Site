@@ -152,6 +152,7 @@ router.get('/player/:username', async (req, res, next) => {
     if (result === undefined) {
         return res.redirect('../hiscores');
     }
+    result.server = '/cabbage';
     result.page_name = "RSC Cabbage - Players | " + result.username + " | Open RuneScape Classic";
     result.description = "RSC Cabbage - Players | " + result.username + " | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     res.render('player', result);
