@@ -8,6 +8,9 @@ exports.architecture = 'mysql';
 exports.OPENRSC = 'openrsc';
 exports.CABBAGE = 'cabbage';
 
+exports.protocol = 'https';
+exports.website = 'runescapeclassic.dev';
+
 exports.itemnames = require('./data/itemnames.json')['items'];
 exports.itemdefs = require('./data/ItemDefs.json')['item'];
 exports.itemdefscustom = require('./data/ItemDefsCustom.json')['items'];

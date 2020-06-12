@@ -8,6 +8,8 @@ const compression = require('compression');
 const helmet = require('helmet');
 const csrf = require('csurf');
 
+const {protocol, website} = require('./constant')
+
 const indexRouter = require('./routes/index');
 const playRouter = require('./routes/play');
 const downloadRouter = require('./routes/download');
@@ -22,6 +24,11 @@ app.use(compression());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use((req, res, next) => {
+  res.locals.url = protocol + "://" + website;
+  next();
+})
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -60,9 +67,8 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
-  //console.error(err);
-  res.status(err.status || 500);
-  res.render('error');
+  console.error(err);
+  res.status(err.status || 500).render('error');
 });
 
 module.exports = app;
