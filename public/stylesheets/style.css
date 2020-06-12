@@ -49,6 +49,10 @@ hr {
   margin-top: 10px !important;
 }
 
+.selected {
+  color: yellow;
+}
+
 header {
   width: 99vw;
   max-height: 24px;

@@ -1,6 +1,14 @@
 extends layout
 
 block content
+  - let hiscoresLink = server + "/hiscores"
+  if ironman === "Normal"
+    - hiscoresLink += "/ironman"
+  else if ironman === "Ultimate"
+    - hiscoresLink += "/ultimate-ironman"
+  else if ironman === "Hardcore"
+    - hiscoresLink += "/hardcore-ironman"
+
   div.middle-content-hiscores
     div.title.hiscores-panel
       h2.hiscores-title
@@ -57,14 +65,6 @@ block content
             else
               dd None
 
-          - let hiscoresLink = server + "/hiscores"
-          if ironman === "Normal"
-            - hiscoresLink += "/ironman"
-          else if ironman === "Ultimate"
-            - hiscoresLink += "/ultimate-ironman"
-          else if ironman === "Hardcore"
-            - hiscoresLink += "/hardcore-ironman"
-
           a.hiscores-link(href=hiscoresLink) Back to all scores
 
       div.hiscore-table.players-skills
@@ -79,10 +79,10 @@ block content
             tbody
               each row in hiscores
                 tr
-                  - let hiscoresLink = server + "/hiscores?skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
+                  - let currentHiscoresLink = hiscoresLink + "?skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
                   each column, idx in row
                     if idx === 0
                       td
-                        a(class="player-page-link", href=hiscoresLink) #{column}
+                        a(class="player-page-link", href=currentHiscoresLink) #{column}
                     else
                       td= column
