@@ -1,5 +1,8 @@
 extends layout
 
+block canonical
+  link(rel="canonical", href=url + "/cabbage")
+
 block content
   div.middle-content-server
     div.logo2(role="banner")
@@ -8,7 +11,7 @@ block content
       a.button(href="/download") Download
       a.button(href="/cabbage/hiscores") Hiscores
       a.button(href="/cabbage/database") Database
-      a.button(href="../wiki") Custom
+      a.button(href="/wiki") Custom
         br
         | Features
       a.button(href="/cabbage/clans") Clans

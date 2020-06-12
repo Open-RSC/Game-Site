@@ -1,5 +1,14 @@
 extends layout
 
+block canonical
+  - let pageLink = server
+  if ironman === undefined
+    - pageLink += '/hiscores'
+  else
+    - pageLink += '/' + ironman
+  link(rel="canonical", href=url + pageLink)
+
+
 block content
   div.middle-content-hiscores
     div.title.hiscores-panel

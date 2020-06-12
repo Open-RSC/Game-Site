@@ -2,22 +2,22 @@
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://runescapeclassic.dev/</loc>
+        <loc>https://runescapeclassic.dev</loc>
     </url>
     <url>
-        <loc>https://runescapeclassic.dev/play/</loc>
+        <loc>https://runescapeclassic.dev/play</loc>
     </url>
     <url>
-        <loc>https://runescapeclassic.dev/download/</loc>
+        <loc>https://runescapeclassic.dev/download</loc>
     </url>
     <url>
-        <loc>https://runescapeclassic.dev/openrsc/</loc>
+        <loc>https://runescapeclassic.dev/openrsc</loc>
     </url>
     <url>
         <loc>https://runescapeclassic.dev/openrsc/hiscores</loc>
     </url>
     <url>
-        <loc>https://runescapeclassic.dev/cabbage/</loc>
+        <loc>https://runescapeclassic.dev/cabbage</loc>
     </url>
     <url>
         <loc>https://runescapeclassic.dev/cabbage/hiscores</loc>
@@ -35,6 +35,12 @@
         <loc>https://runescapeclassic.dev/cabbage/database</loc>
     </url>
     <url>
-        <loc>https://runescapeclassic.dev/faq/</loc>
+        <loc>https://runescapeclassic.dev/faq</loc>
+    </url>
+    <url>
+        <loc>https://runescapeclassic.dev/clans</loc>
+    </url>
+    <url>
+        <loc>https://runescapeclassic.dev/wiki</loc>
     </url>
 </urlset>
