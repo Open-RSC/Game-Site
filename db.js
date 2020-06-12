@@ -173,18 +173,29 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             rank = rankOffset;
         }
 
+        let where = {
+            banned: 0,
+            group_id: {
+                [Op.gte]: 10
+            }
+        };
+    
+        // Set up all normal and ironmen to show for "all" scores.
+        if (ironman === 0) {
+            where.iron_man = {
+                [Op.lte]: 3
+            }
+        }
+        else if (ironman < 4) {
+            where.iron_man = ironman;
+        }
+
         let combined = await players[type].findAll({
             raw: true,
             include: [
                 { model: experience[type] }
             ],
-            where: {
-                banned: 0,
-                group_id: {
-                    [Op.gte]: 10
-                },
-                iron_man: ironman
-            }
+            where: where
         });
 
         // Grab player_cache to ensure we filter out the hiscore_opt flagged players
@@ -198,6 +209,14 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             ]
         });
         cache_values = Object.values(cache_values).map(val => val.playerID);
+
+        // Calculate the total experience
+        Object.keys(combined).forEach((user) => {
+            combined[user].totals = 0;
+            constant.getSkills(type).forEach((skill) => {
+                combined[user].totals += combined[user]['experience.' + skill];
+            });
+        });
 
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
@@ -217,14 +236,6 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         pageContent.rank = rank;
 
         combined = combined.slice(rank-rankOffset,rank+rankOffset)
-        
-        // Calculate the total experience
-        Object.keys(combined).forEach((user) => {
-            combined[user].totals = 0;
-            constant.getSkills(type).forEach((skill) => {
-                combined[user].totals += combined[user]['experience.' + skill];
-            });
-        });
 
         pageContent.hiscores = [];
         let i = 1;
@@ -265,6 +276,26 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         skill: skill[0].toUpperCase() + skill.substr(1),
         rankOffset: rankOffset
     };
+
+    let where = {
+        banned: 0,
+        group_id: {
+            [Op.gte]: 10
+        }
+    };
+
+    // Set up all normal and ironmen to show for "all" scores.
+    if (ironman === 0) {
+        where.iron_man = {
+            ironman: {
+                [Op.lte]: 3
+            }
+        }
+    }
+    else if (ironman < 4) {
+        where.iron_man = ironman;
+    }
+
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
@@ -274,13 +305,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             include: [
                 { model: experience[type], attributes: [skill] }
             ],
-            where: {
-                banned: 0,
-                group_id: {
-                    [Op.gte]: 10
-                },
-                iron_man: ironman
-            }
+            where: where
         });
 
         // Grab player_cache to ensure we filter out the hiscore_opt flagged players
