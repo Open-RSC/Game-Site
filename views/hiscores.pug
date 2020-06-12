@@ -54,11 +54,14 @@ block content
               th XP
             tbody
               each row in hiscores
-                tr
+                - let rankClass = ""
+                if row.rank === rank
+                  - rankClass = "selected"
+                tr(class=rankClass)
                   each column, index in row
                     if index === 'username'
                       td
-                        a(class="player-page-link", href=server + "/player/" + column, title="User page of " + column) #{column}
+                        a(class="player-page-link " + rankClass, href=server + "/player/" + column, title="User page of " + column) #{column}
                     else
                       td= column
           - let nextLink = server + "/hiscores/"
