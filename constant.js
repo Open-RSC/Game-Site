@@ -15,6 +15,18 @@ exports.itemnames = require('./data/itemnames.json')['items'];
 exports.itemdefs = require('./data/ItemDefs.json')['item'];
 exports.itemdefscustom = require('./data/ItemDefsCustom.json')['items'];
 
+exports.GROUP = {
+    OWNER: 0,
+	ADMIN: 1,
+	SUPER_MOD: 2,
+	MOD: 3,
+	DEV: 5,
+	EVENT: 7,
+	PLAYER_MOD: 8,
+	TESTER: 9,
+	USER: 10
+}
+
 exports.possibleSkills = [
     'overall', 'attack', 'defense',
     'strength', 'hits', 'ranged',
