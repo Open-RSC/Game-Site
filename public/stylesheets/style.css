@@ -136,6 +136,33 @@ div.mid-right-border {
   background-image: url("/static/images/edge_e.jpg");
 }
 
+.patch-notes-link {
+  margin: 0;
+}
+
+.patch-notes-link a, .patch-notes a {
+  color: rgb(144, 192, 64);
+}
+
+.patch-notes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.patch-notes > div {
+  width: 90%;
+}
+
+.patch-notes ul {
+  padding-left: 10px;
+  list-style-type: "- ";
+}
+.patch-notes li {
+  margin-bottom: 2px;
+}
+
 div.middle-content, div.middle-play,
 div.middle-content-server, div.middle-content-hiscores {
   width: 519px;
