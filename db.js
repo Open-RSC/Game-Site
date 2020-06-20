@@ -176,7 +176,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         let where = {
             banned: 0,
             group_id: {
-                [Op.gte]: 10
+                [Op.gte]: constant.GROUP.PLAYER_MOD
             }
         };
     
@@ -280,7 +280,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
     let where = {
         banned: 0,
         group_id: {
-            [Op.gte]: 10
+            [Op.gte]: constant.GROUP.PLAYER_MOD
         }
     };
 
@@ -477,7 +477,7 @@ exports.getPlayerByName = async (req, type, username) => {
             },
             where: {
                 '$player.group_id$': {
-                    [Op.gte]: 10
+                    [Op.gte]: constant.GROUP.PLAYER_MOD
                 },
                 '$player.iron_man$': player.iron_man,
                 '$player.banned$': 0
@@ -601,21 +601,21 @@ exports.getData = async (req, type, itemname) => {
                     {[Op.and]: [
                         {'$bank.player.banned$': 0},
                         {'$bank.player.group_id$': {
-                            [Op.gte]: 10
+                            [Op.gte]: constant.GROUP.PLAYER_MOD
                         }},
                         {'$bank.player.iron_man$' : 0}
                     ]},
                     {[Op.and]: [
                         {'$invitem.player.banned$': 0},
                         {'$invitem.player.group_id$': {
-                            [Op.gte]: 10
+                            [Op.gte]: constant.GROUP.PLAYER_MOD
                         }},
                         {'$invitem.player.iron_man$' : 0}
                     ]},
                     {[Op.and]: [
                         {'$equipped.player.banned$': 0},
                         {'$equipped.player.group_id$': {
-                            [Op.gte]: 10
+                            [Op.gte]: constant.GROUP.PLAYER_MOD
                         }},
                         {'$equipped.player.iron_man$' : 0}
                     ]}

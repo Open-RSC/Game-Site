@@ -1,0 +1,177 @@
+{
+  "latest": "ORSC-5.2.3",
+  "notes": [
+    {
+      "title": "ORSC-5.2.3",
+      "date": "2020-06-12",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Chaos Druid now drops vial of water at an authentic 10/128 rate",
+            "Added several missing dialogs of NPCs based on RSC+ replay data",
+            "Tourist trap quest mercenary NPCs may now be directly attacked after quest completion",
+            "Added more accurate representations of Mage Arena damages during the mini game and in-game messages",
+            "Corrected the wielded battle staff appearance",
+            "The Gobin Guard will now authentically drop big bones instead of normal bones",
+            "The Shantay chest message now will only appear for the one located in Al Kharid"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Alched stacked items now multiply the gold result by counting the amount alched (instead of paying out only for a single item)",
+            "Implemented talisman crafting so that talismans are no longer obtained as items dropped by NPCs",
+            "The Ring of Wealth now toggles on tables flagged as containing rare items and should now work correctly",
+            "The Ring of Life will now be disabled if a player is dueling another player"
+          ]
+        },
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Fixed an issue where a busy npc was not being returned from getNpc()",
+            "Invariable drops are now using an iterator to avoid concurrency collisions",
+            "Added more sanity checks to force check player's busy/combat status when interacting with various UIs",
+            "Added additional checks in duel handler for items that may not exist"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ORSC-5.2.0",
+      "date": "2020-06-06",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Placed several missing dialogues from replays into the game",
+            "The barmaid and bartender will now check if the player has a barcrawl card for the miniquest",
+            "Anchovies now authentically heal 1 HP, shrimp 3 HP, manta ray and turtle heal 20 HP",
+            "Made it so that ogres cannot be attacked using ranged weapons while inside the pen",
+            "Ensured that players cannot mine rune essence if their inventory is full"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Altered the fishing cape to place turtle or manta rays into the player's bank at a 3% chance"
+          ]
+        },
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Abstracted several commands into individual functions and added documentation for each",
+            "NPCs that are dead should no longer be found using the getNpc function",
+            "Set the tutorial rat to be removed using the killedBy function instead of a plugin to avoid delays",
+            "Set items to be fully removed from the inventory when equipping them to prevent duping",
+            "Ensured items will now be properly removed on player death",
+            "Set the right-click command to be sanity checked for npc radius",
+            "AbstractShop will not allow use if the player not within 2 tiles",
+            "Player::resetAll should now reset the AH flag",
+            "Cleaned up Aubury's trade and teleport functions",
+            "Updated the launcher to point to RunescapeClassic.dev for the custom features wiki"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ORSC-5.1.0",
+      "date": "2020-03-29",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Set undeadOne aggro radius to 3",
+            "Ensured the server checks owner is not null before proceeding with dropping items",
+            "Stuck fighting NPCs should no longer occur",
+            "Added missing Runecrafting NPC, Sedridor",
+            "Fog now toggles correctly",
+            "Corrected the time till shutdown counter if the player logged in the middle of shutdown",
+            "Fixed a couple quest plugin block functions that were always returning false, preventing quest progression",
+            "Ensured following works correctly when executing a plugin",
+            "Made sure that the player walks to the opponent prior to attempting a range event",
+            "Fixed additional NPC combat glitches",
+            "The game client will remember which server port it was launched with so logging back into the correct game if the player previously had both game clients open",
+            "Android client now launches the keyboard automatically when creating a new player",
+            "Ensured deposits occur in the bank before withdrawing when using bank presets",
+            "Fixed NPC Scot Ruth which was not responding before",
+            "Shops now correctly will multiply coins by quantity",
+            "Right click on map has been disabled for Android players to prevent accidental map rotation",
+            "NPCs will now teleport to their spawn locations correctly and not immediately after they are killed",
+            "NPCs will now not attack until 5 ticks after a player logs in near them",
+            "Fixed a bank pin interface bug where the player would be stuck busy if they did not put in the right bank pin",
+            "Players are now forced to log out if they are past the idle time limit and still in combat",
+            "Crafting opal rings will now complete successfully with the correct item ID",
+            "Cannons will no longer kill enemies twice. If an enemy is dead, they are no longer a target",
+            "Fixed an issue with the block function in the Crafting class that was causing a \"Nothing interesting happens\" message",
+            "Fixed an issue with shattering items (like ring of forging)",
+            "Corrected a bug related to item dropping after player deaths",
+            "Ensured the Lost City spirit of the tree did not despawn on players while fighting",
+            "Added additional fixes for Lost City quest to block attacks",
+            "NPC drops in the random drop table have had a few changes",
+            "Animated axes will no longer drop bones",
+            "Ice queen will now always drop ice gloves",
+            "Added drop items for the jailer and keys",
+            "Fixed an issue with being able to bury Rashiliya's corpse bones",
+            "Updated the Entrana allowed items on the island",
+            "Corrected inventory removal for 3 bones to remove for Shilo Village",
+            "Corrected inventory removal for 20 limpwurt roots to remove for Temple of Ikov",
+            "Corrected inventory removal for 6 logs for Tree Gnome Village",
+            "Corrected inventory removal for all items when making dyes",
+            "Corrected inventory removal for all items when going gnome cooking",
+            "Corrected inventory removal for all items when making drinks at Blurberry's bar",
+            "Corrected inventory removal for additional quest non-stackable items",
+            "Ensured the dragonstone amulet is added back to the wielded equipment tab when the charge runs out",
+            "Added various missing dialogs based on RSC+ replays",
+            "Yohnus no longer has to be in the vicinity to use the quick pay feature",
+            "Ironman players have been set to not be able to get PK drops to bypass ironman restrictions",
+            "Set the Otherworldly Being as not aggressive",
+            "Added missing item drops for tribesman",
+            "The chicken event now spawns chickens properly in Lumbridge",
+            "Damage from Iban's chamber has been audited for authenticity",
+            "Mage arena now does less damage using a similar formula to Iban's chamber",
+            "Extended the radius of view for Iban while he is casting his explosions (player will need to leave region to stop the event)",
+            "Players can now loot the wine of Zammorak",
+            "Remove a piece of code not in the 233 client. It seems like it was mistakenly duplicated relating to player registration"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "PC client now has a wiki lookup command. Type ::wiki  and the browser will open with results",
+            "Added batch bar to dragonstone amulet enchanting",
+            "Made a custom configuration that allows high-frequency batched actions (Fletching arrows) send less packets and thus create less lag",
+            "Added a developer droptest command for NPC item drops",
+            "Added Balrog teddy bear item drop"
+          ]
+        },
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Optimized tiles and coordinate points",
+            "Ensured carried items are removed from the inventory correctly",
+            "Multiple drop table entries have been set up in the NpcDrops server class",
+            "Solved an issue where certain server events would not stop when a player logged off",
+            "Added checks for NPC over killing to check if a player is still online",
+            "If the game tick is set to less than 640ms, such as on RSC Cabbage, NPCs will take longer before they attack a recently in combat player",
+            "Connection reset network exceptions are now logged without stack traces",
+            "Added a logger for tick processed at the end of a server tick for monitoring purposes",
+            "Updated tick performance monitoring to check if the last tick went past it's allotted time",
+            "Moved MonitoringEvent to the Server class",
+            "Implemented the ability for the server to profile incoming packets by opcode ID",
+            "Player inventory/bank/equipped items now saves every 30 seconds instead of instantly, reducing database call demands",
+            "Removed the NPC drops database table",
+            "Caught an exception in the Discord service",
+            "World now stores tiles inside the RegionManager and only loads regions which are defined in the map file",
+            "Fixed an inefficiency related to loading the landscape from file",
+            "Updated regions to only load tile arrays when the region actually has tiles that vary to reduce server RAM usage",
+            "The server will no longer instantiate the AvatarGenerator when the feature is turned off to reduce server RAM usage",
+            "Server start time is now reported in milliseconds",
+            "Converted NPCDefs and ItemDefs from SQL database tables to JSON files",
+            "GameEventHandler now only appropriates threads based on the number of running servers in the process"
+          ]
+        }
+      ]
+    }
+  ]
+}

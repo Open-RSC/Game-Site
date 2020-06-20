@@ -16,6 +16,7 @@ const downloadRouter = require('./routes/download');
 const openrscRouter = require('./routes/openrsc');
 const cabbageRouter = require('./routes/cabbage');
 const faqRouter = require('./routes/faq');
+const patchnotesRouter = require('./routes/patchnotes');
 
 const app = express();
 app.use(helmet());
@@ -51,6 +52,7 @@ app.use('/download', downloadRouter);
 app.use('/openrsc', openrscRouter);
 app.use('/cabbage', cabbageRouter);
 app.use('/faq', faqRouter);
+app.use('/patchnotes', patchnotesRouter);
 
 app.get("/sitemap.xml", function(req, res, next){
   res.sendFile(__dirname + '/public/sitemap.xml'); 
