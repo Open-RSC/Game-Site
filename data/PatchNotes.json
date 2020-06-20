@@ -1,6 +1,49 @@
 {
-  "latest": "ORSC-5.2.3",
+  "latest": "ORSC-5.3.0",
   "notes": [
+    {
+      "title": "ORSC-5.3.0",
+      "date": "2020-06-19",
+      "changes": [
+        {
+          "type": "Features",
+          "details": [
+            "Runecraft has been updated to allow casting curse and enfeeble on existing talismans! When casting curse on a talisman, you will gain 2x experience from crafting runes and the talisman will crumble. When casting enfeeble on a talisman, you will gain 5x experience from crafting runes, and the talisman will explode dealing damage to you and causing your current runecraft stat to deplete.",
+            "Fish may now be ground using a pestle and mortar to create a stackable item, Fish Oil! This oil can be used to create Runecraft potions (useful for restoring your lost runecraft from enfeebled talismans), and can also be eaten. Two Runecraft potions are available, by using marrentil or by using avantoe as a base. When fish oil is eaten, it will provide a 50% chance of healing 1 hits. Different fish will provide different quantities of fish oil. Only certain fish may be ground, so be sure to experiment and see which reward fish oil."
+          ]
+        },
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Goblin Guards now drop big bones instead of normal bones.",
+            "Shantay's chest object no longer shows the shantay message on variants outside of Al Kharid.",
+            "The ::onlinelist command now properly shows other players for staff.",
+            "Auditing of many more quest-specific mob locations, timers, and behaviour.",
+            "Regular wool may now be used to entertain cats.",
+            "Tasty kebab now has a thinkbubble associated with eating it.",
+            "Mobs are now killed only once when attacked with specific circumstances.",
+            "Fix some dialog bugs introduced with the recent major audits.",
+            "Shops now handle buying and selling more efficiently, and provide the correct coin for items.",
+            "Shops now stock a maximum of 65535 of one item stack.",
+            "Plugins now only load once per class, ensuring bugs like double-shop are squashed.",
+            "Fix a bug that made the JSON library complain on computers running JDK 8."
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Fishing spots now deplete more frequently, but also respawn at a quicker rate.",
+            "Repeat times are now adjusted to a more reasonable count.",
+            "The ::onlinelist command now shows readable locations for staff.",
+            "Rune essence is now renamed to Rune stone through the code.",
+            "Unidentified herbs now have unique sprites.",
+            "Soft clay making is now batched.",
+            "Lockpicking doors will now batch until successful.",
+            "Skill guides now display additional details for harvested food and Runecraft talismans."
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.2.3",
       "date": "2020-06-12",
