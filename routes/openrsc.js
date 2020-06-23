@@ -15,6 +15,7 @@ router.get('/', async (req, res, next) => {
 router.get('/hiscores', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
     const rank = helper.validateRank(req.query.rank);
+    const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 0);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -22,6 +23,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
     result.description = "OpenRSC - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "OpenRSC";
+    result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
 
@@ -42,6 +44,7 @@ router.post('/hiscores', async (req, res, next) => {
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
     result.description = "OpenRSC - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "OpenRSC";
+    result.highlighted = result.rank;
     res.render('hiscores', result);
 });
 

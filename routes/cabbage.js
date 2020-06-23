@@ -16,6 +16,7 @@ router.get('/', async (req, res, next) => {
 router.get('/hiscores', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
     const rank = helper.validateRank(req.query.rank);
+    const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 0);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -23,6 +24,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
 
@@ -43,12 +45,14 @@ router.post('/hiscores', async (req, res, next) => {
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
+    result.highlighted = result.rank;
     res.render('hiscores', result);
 });
 
 router.get('/hiscores/ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
     const rank = helper.validateRank(req.query.rank);
+    const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 1);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -57,6 +61,7 @@ router.get('/hiscores/ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ironman";
+    result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
 
@@ -77,12 +82,14 @@ router.post('/hiscores/ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ironman";
+    result.highlighted = result.rank;
     res.render('hiscores', result);
 });
 
 router.get('/hiscores/ultimate-ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
     const rank = helper.validateRank(req.query.rank);
+    const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 2);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -90,6 +97,7 @@ router.get('/hiscores/ultimate-ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Ultimate Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ultimate-ironman";
+    result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
 
@@ -110,12 +118,14 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Ultimate Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ultimate-ironman";
+    result.highlighted = result.rank;
     res.render('hiscores', result);
 });
 
 router.get('/hiscores/hardcore-ironman', async (req, res, next) => {
     const skill = helper.validateSkill(req.query.skill);
     const rank = helper.validateRank(req.query.rank);
+    const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 3);
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
@@ -123,6 +133,7 @@ router.get('/hiscores/hardcore-ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Hardcore Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "hardcore-ironman";
+    result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
 
@@ -143,6 +154,7 @@ router.post('/hiscores/hardcore-ironman', async (req, res, next) => {
     result.description = "RSC Cabbage - Hardcore Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "hardcore-ironman";
+    result.highlighted = result.rank;
     res.render('hiscores', result);
 });
 

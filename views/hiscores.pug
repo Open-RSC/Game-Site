@@ -34,7 +34,7 @@ block content
           span Select hiscore table
         div.hiscores-panel
           each skillName in skills
-            a.hiscores-link(href='?skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
+            a.hiscores-link(href='?highlight=0skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
       div.hiscore-table
         h4 #{skill} Hiscores
         div.hiscores-panel
@@ -42,7 +42,7 @@ block content
             - let prevLink = server + "/hiscores/"
             if ironman !== undefined
               - prevLink += ironman
-            - prevLink += "?skill=" + skill.toLowerCase()
+            - prevLink += "?highlight=0skill=" + skill.toLowerCase()
             - prevRank = Math.max(rankOffset, rank - (rankOffset * 2))
             - prevLink += "&rank=" + prevRank
             a(class="page-link", href=prevLink, title="View higher ranks") &lt;
@@ -55,7 +55,7 @@ block content
             tbody
               each row in hiscores
                 - let rankClass = ""
-                if row.rank === rank
+                if row.rank === highlighted
                   - rankClass = "selected"
                 tr(class=rankClass)
                   each column, index in row
@@ -67,7 +67,7 @@ block content
           - let nextLink = server + "/hiscores/"
           if ironman !== undefined
             - nextLink += ironman
-          - nextLink += "?skill=" + skill.toLowerCase()
+          - nextLink += "?highlight=0skill=" + skill.toLowerCase()
           if !isNaN(rank)
             - nextLink += "&rank=" + (rank + (rankOffset * 2))
           else
