@@ -8,10 +8,9 @@ block content
     div.logo(role="banner")
     p.subtitle Striving for an open source replica RuneScape Classic, and more!
     hr
-    p.patch-notes-link See our latest 
-      a(href="/patchnotes") Patch Notes
-      | !
-    hr
+    if online !== ""
+      p #{online}
+      hr
     div.home-buttons
       a.button.wiki(target="_blank", href="https://classic.runescape.wiki", title="RuneScape Classic Wiki: Your source for all information about RSC") Wiki
       a.button.discord(target="_blank", href="https://discord.gg/mTBXvu2", title="Join us to chat on our Discord server") Discord
