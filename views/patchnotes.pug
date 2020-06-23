@@ -12,7 +12,7 @@ block content
       div
         for note in notes
           article
-            h3.center #{note.title} (#{note.date})
+            h3(id=note.title).center #{note.title} (#{note.date})
             for change in note.changes
               h4.center #{change.type}
               ul

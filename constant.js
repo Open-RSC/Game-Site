@@ -188,6 +188,26 @@ exports.clanPlayersDetails = {
     }
 };
 
+exports.liveFeedsDetails = {
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    message: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    time: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+};
+
 exports.getExperience = (type) => {
     let experience = {
         playerID: {

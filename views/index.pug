@@ -13,20 +13,52 @@ block content
       | !
     hr
     div.home-buttons
-      a.button.wiki(target="_blank", href="https://classic.runescape.wiki") Wiki
-      a.button.discord(target="_blank", href="https://discord.gg/mTBXvu2") Discord
-      a.button.launcher-button(href="/download") Download
-      a.large-button.play(href="/play") Server
+      a.button.wiki(target="_blank", href="https://classic.runescape.wiki", title="RuneScape Classic Wiki: Your source for all information about RSC") Wiki
+      a.button.discord(target="_blank", href="https://discord.gg/mTBXvu2", title="Join us to chat on our Discord server") Discord
+      a.button.launcher-button(href="/download", title="Download the game launcher") Download
+      a.large-button.play(href="/play", title="Select a server to play RSC") Server
         br
         | Details
-      a.button.code(target="_blank", href="https://orsc.dev/open-rsc/Game#open-runescape-classic") Source
+      a.button.code(target="_blank", href="https://orsc.dev/open-rsc/Game#open-runescape-classic", title="View the project source code") Source
         br
         | Code
-      a.button.single-player(target="_blank", href="https://orsc.dev/open-rsc/Single-Player#open-runescape-classic-single-player") Single
+      a.button.single-player(target="_blank", href="https://orsc.dev/open-rsc/Single-Player#open-runescape-classic-single-player", title="Play the single player version") Single
         br
         | Player
-      a.button.faqs(href="/faq") Rules
+      a.button.faqs(href="/faq", title="Read rules and frequently asked questions about the game") Rules
         br
         | &amp; FAQ
-      a.button.rscplus(target="_blank", href="https://rsc.plus") RSC+
+      a.button.rscplus(target="_blank", href="https://rsc.plus", title="Watch authentic gameplay through a custom replay client") RSC+
+
+    hr
+
+    div.index-middle-bottom
+      div.recent-patches
+        h4.center Recent Updates
+        ul
+          for note, index in notes
+            if index == 4
+              - break
+            li.center
+              a(href="patchnotes#" + note.title) #{note.title} (#{note.date})
+      div.live-feed
+        h4.center Live Feed
+        ul
+          for item, index in live_feed
+            li.center
+              - let link = '';
+              if item.server === 'cabbage'
+                a(href="/cabbage")
+                  img(src="/static/images/items/18.png", height="16px", alt="RSC Cabbage server", title="RSC Cabbage server")
+                a(href='/cabbage/player/' + item.username) #{item.username}
+                |  !{item.message} (
+                a(href="/cabbage") Cabbage
+                | )
+              else
+                a(href="/openrsc")
+                  img(src="/static/images/items/81.png", height="16px", alt="Open RSC server", title="RSC Cabbage server")
+                a(href='/openrsc/player/' + item.username) #{item.username}
+                |  !{item.message} (
+                a(href="/openrsc") OpenRSC
+                | )
 

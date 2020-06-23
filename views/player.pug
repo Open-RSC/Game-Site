@@ -79,7 +79,7 @@ block content
             tbody
               each row in hiscores
                 tr
-                  - let currentHiscoresLink = hiscoresLink + "?skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
+                  - let currentHiscoresLink = hiscoresLink + "?highlight=1skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
                   each column, idx in row
                     if idx === 0
                       td

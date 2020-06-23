@@ -132,6 +132,12 @@ bank.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'
 equipment.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 equipment.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
 
+// Live Feed
+const live_feeds = {
+    openrsc: openrsc.define('live_feeds', constant.liveFeedsDetails, { freezeTableName: true }),
+    cabbage: cabbage.define('live_feeds', constant.liveFeedsDetails, { freezeTableName: true })
+}
+
 const pool = {
     openrsc: openrsc,
     cabbage: cabbage
@@ -394,8 +400,8 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
 
 exports.getOnline = async () => {
     try {
-        let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
-        let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
+        let openrsc = await players[constant.OPENRSC].count({ distinct: true, col: 'creation_ip' });
+        let cabbage = await players[constant.CABBAGE].count({ distinct: true, col: 'creation_ip' });
         return {
             openrsc: openrsc,
             cabbage: cabbage
@@ -762,4 +768,41 @@ exports.getClan = async (req, clanName) => {
         console.error(err);
         return undefined;
     }
+};
+
+exports.getLiveFeeds = async () => {
+    let openrsc_feed = await live_feeds.openrsc.findAll({
+        raw: true,
+        order: [
+            ['time', 'DESC']
+        ],
+        limit: 4
+    });
+    let cabbage_feed = await live_feeds.cabbage.findAll({
+        raw: true,
+        order: [
+            ['time', 'DESC']
+        ],
+        limit: 4
+    });
+
+    openrsc_feed.forEach((ele) => {
+        ele.message = ele.message.replace(/<[^>]*>?/gm, '');
+        ele.server = 'openrsc';
+    });
+    cabbage_feed.forEach((ele) => {
+        ele.message = ele.message.replace(/<[^>]*>?/gm, '');
+        ele.server = 'cabbage';
+    });
+
+    let feed = openrsc_feed.concat(cabbage_feed);
+
+    // Limit to 4
+    feed = Object.values(feed).sort((a, b) => {
+        return b.time - a.time;
+    }).slice(0, feed.length < 4 ? feed.length : 4);
+
+    return feed;
+
+
 };
