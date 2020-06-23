@@ -1,9 +1,12 @@
+const notes = require('../data/PatchNotes.json');
+
 const express = require('express');
 const router = express.Router();
 const db = require('../db')
 
-router.get('/', (req, res, next) => {
-    const servers = db.getOnline();
+router.get('/', async (req, res, next) => {
+    const servers = await db.getOnline();
+    const feed = await db.getLiveFeeds();
     let online = 0;
     if (!isNaN(servers.openrsc) && !isNaN(servers.cabbage)) {
         online = servers.openrsc + servers.cabbage;
@@ -25,7 +28,9 @@ router.get('/', (req, res, next) => {
     }
     res.render('index', {
       page_name: "Open RuneScape Classic: Striving for a replica RSC game and more",
-      online: onlineString
+      online: onlineString,
+      notes: notes.notes,
+      live_feed: feed
     });
 });
 

@@ -118,6 +118,40 @@ div.top-right-border {
   background-image: url("/static/images/edge_d.jpg");
 }
 
+.index-middle-bottom {
+  display: flex;
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+.index-middle-bottom > div:first-child {
+  flex: 1 0 39%;
+}
+
+.index-middle-bottom > div:last-child {
+  flex: 1 0 60%;
+}
+
+.recent-patches ul, .live-feed ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.recent-patches h4, .live-feed h4 {
+  margin: 0;
+}
+.recent-patches a {
+  text-decoration: none;
+  color: rgb(144, 192, 64);
+  font-size: 0.9em;
+  line-height: 20px;
+}
+
+.live-feed ul li {
+  font-size: 0.9em;
+  line-height: 20px;
+}
+
 section.middle {
   width: 605px;
   min-height: 488px;
@@ -704,6 +738,14 @@ a.hiscores-link {
   }
   div.middle-content {
     min-height: auto;
+  }
+
+  .index-middle-bottom {
+    flex-direction: column;
+  }
+
+  .index-middle-bottom div:first-child {
+    padding-bottom: 10px;
   }
 
   .middle-content-hiscores .title {
