@@ -19,7 +19,7 @@ block content
             each item in items
               tr.center
                 td
-                  img(src="/static/images/items/" +  item.id + ".png", alt=item.description)
+                  img(src="/static/images/items/" +  item.id + ".png", alt=item.description, title=item.description)
                 td #{item.name}
                 td #{item.amount}
       else
