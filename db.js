@@ -398,6 +398,24 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
     }
 }
 
+exports.getOnline = async () => {
+    try {
+        let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
+        let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
+        return {
+            openrsc: openrsc,
+            cabbage: cabbage
+        };
+    }
+    catch (err) {
+        console.error(err);
+        return {
+            openrsc: undefined,
+            cabbage: undefined
+        };
+    }
+}
+
 exports.getPlayers = async () => {
     try {
         let openrsc = await players[constant.OPENRSC].count({ distinct: true, col: 'creation_ip' });
