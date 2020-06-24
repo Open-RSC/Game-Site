@@ -1,6 +1,48 @@
 {
-  "latest": "ORSC-5.3.0",
+  "latest": "ORSC-5.4.0",
   "notes": [
+    {
+      "title": "ORSC-5.4.0",
+      "date": "2020-06-24",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Authentic cooking now has 1 less tick to cook items.",
+            "When talking to NPCs, they will now only face you if they want to talk to you.",
+            "Staff commands now work from the online list.",
+            "Fix a bug where an exception occurred on the server when discord auction updates were disabled.",
+            "Fix issues with shop quantities when buying and selling items.",
+            "Ensure staff see proper locations when using ::onlinelist.",
+            "Ensure the player is teleported properly when caught by guards during the Tourist Trap quest.",
+            "Trufitus no longer says \"Well, just let me see the item and I'll help as much as I can.\" twice.",
+            "Find ceril properly after being teleported upstairs during the Hazeel Cult quest.",
+            "Ensure when we try to find an npc, if they are busy, we don't crash.",
+            "As per authentic play, when fatigued a pickaxe now shows above the players head.",
+            "Add two pieces of food to the \"never burn\" list.",
+            "Ensure that after Scorpion Catcher the Seer does not say \"Many greetings\" to the player.",
+            "Attempt to fix a thread deadlock in combat."
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Core delay function now uses tick timing instead of milliseconds to calculate thread pause.",
+            "Core mes function no longer calls delay.",
+            "Ensure game events are run prior to updating packets to send to the client.",
+            "Ground item locations and npc locations are now stored in JSON on the server, instead of within the database.",
+            "Use UUID object for the player's unique ID instead of a string.",
+            "Ensure when auction house is disabled it is impossible to send auction house commands to the server."
+          ]
+        },
+        {
+          "type": "Known Bugs",
+          "details": [
+            "We are working on a fix for a bug found when using 3rd party tools to interact at inhuman speeds with the auction house."
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.3.0",
       "date": "2020-06-19",
