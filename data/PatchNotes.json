@@ -1,6 +1,46 @@
 {
-  "latest": "ORSC-5.4.0",
+  "latest": "ORSC-5.4.1",
   "notes": [
+    {
+      "title": "ORSC-5.4.1",
+      "date": "2020-06-30",
+      "changes": [
+        {
+          "type": "Features",
+          "details": [
+            "Re-enable the auction house. Happy trading!",
+            "A relative of yours is looking for you in Lumbridge! (Custom content miniquest has been released)"
+          ]
+        },
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Players can now load multiple clients without the ports becoming broken for the previously loaded client.",
+            "Logging out with ::mod or ::dev active will now disable the commands.",
+            "Fix a problem with Balrog drops.",
+            "Players can no longer trade while in combat.",
+            "Fix a client crash when buying or selling X to the store.",
+            "Ensure players do not sell or buy 0.",
+            "Correct the behaviour of the bank vault gate.",
+            "Respawning NPCs now always face north.",
+            "The game will now message you if you attempt to pick up an item while in combat.",
+            "Preset loading now occurs more rapidly."
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "The auction house now requires a minimum of 100 skill total to use.",
+            "The auction house now has rate limits to avoid complications with exchanging items.",
+            "Users may not log out for 5 seconds after performing an auction interaction.",
+            "Limit packet spam to a subset of all packets.",
+            "Add additional safety checks to various packet handlers.",
+            "Adjust some of the NPC definitions to have more consistent organization.",
+            "Abstract object definitions to JSON format."
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.4.0",
       "date": "2020-06-24",
