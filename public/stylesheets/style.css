@@ -132,6 +132,14 @@ div.top-right-border {
   flex: 1 0 60%;
 }
 
+p.online-count {
+    margin: 5px 0;
+}
+
+.homepage-rule {
+  width: 95%;
+}
+
 .recent-patches ul, .live-feed ul {
   margin: 0;
   padding: 0;
@@ -261,7 +269,7 @@ p.online {
 div.home-buttons {
   display: inline-grid;
   width: 507px;
-  height: 360px;
+  height: 320px;
   grid-template-columns: repeat(39, 13px);
   grid-template-rows: repeat(9, 30px);
   align-items: center;
@@ -347,7 +355,7 @@ div.home-buttons {
 .button.rscplus {
   grid-column-start: 17;
   grid-column-end: 24;
-  grid-row-start: 7;
+  grid-row-start: 8;
   grid-row-end: 11;
   justify-self: center;
 }

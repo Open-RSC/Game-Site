@@ -549,6 +549,31 @@ exports.getPlayerByName = async (req, type, username) => {
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
             : '5x';
+
+        let login_string = "Never";
+        let time_since_login = Math.floor(Date.now() / 1000) - player.login_date;
+        if (player.online === 1) {
+            login_string = "Now";
+        }
+        else {
+            if (time_since_login < 86400) {
+                login_string = "< 1 day ago";
+            }
+            else if (time_since_login < 172800) {
+                login_string = "< 2 days ago";
+            }
+            else if (time_since_login < 604800) {
+                login_string = "< 1 week ago";
+            }
+            else if (time_since_login < 2592000) {
+                login_string = "< 30 days ago";
+            }
+            else {
+                login_string = "Long ago";
+            }
+        }
+
+
         return {
             csrfToken: req.csrfToken(),
             server: "/" + type,
@@ -564,7 +589,8 @@ exports.getPlayerByName = async (req, type, username) => {
             player_kills: player.kills,
             npc_kills: player.npc_kills,
             deaths: player.deaths,
-            arrav_gang: player['player_caches.arrav_gang'] !== null ? parseInt(player['player_caches.arrav_gang']) : undefined
+            arrav_gang: player['player_caches.arrav_gang'] !== null ? parseInt(player['player_caches.arrav_gang']) : undefined,
+            last_login: login_string
         }
     }
     catch (err) {

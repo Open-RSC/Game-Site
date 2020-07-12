@@ -81,6 +81,14 @@ exports.playerDetails = {
     deaths: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    online: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    login_date: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 };
 
