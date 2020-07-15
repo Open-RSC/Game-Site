@@ -1,6 +1,52 @@
 {
-  "latest": "ORSC-5.4.1",
+  "latest": "ORSC-5.4.2",
   "notes": [
+    {
+      "title": "ORSC-5.4.2",
+      "date": "2020-07-15",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Fixed a plugin crash caused by clicking away from Mum",
+            "Fixed a crash with NPC retreats when the opponent has been removed",
+            "Fixed a crash when clicking the Forgot Password button",
+            "Fixed an issue where hobgoblins weren't dropping limpwurt roots",
+            "Fixed a bug where the guard wouldn't catch people who were stealing cakes",
+            "Replaced missing custom scenery/objects that were lost in the migration to JSON",
+            "Quest NPCs that have death conditions (Count Draynor, Delrith, ect.) are now able to be killed properly",
+            "Added a check for a null script context, fixes some plugins crashing.",
+            "Fixed Gnome waiter menu options (trade/pickpocket)",
+            "Removed King Lathas trade option",
+            "Fixed a bug where the auction house couldn't be refreshed by some",
+            "Fixed an issue where players couldn't swap weapons while in combat.",
+            "Fixed an issue where you had to wait a long time in between attempting to cut the webs in the Wilderness",
+            "Fixed an issue where stat draining NPCs would cause an infinite loop (specifically Kolodion and Salarin)"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Fishing spots now have a lower chance to turn into a pebble",
+            "Teddy parts must be brought to the child before you can stitch them",
+            "Can no longer get stuck behind lockpick doors if fatigued.",
+            "Ensure all players show in the count when doing ::online regardless of privacy setting",
+            "Removed some naughty words from the sleep words list"
+          ]
+        },
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Synchronized game objects to ensure they cannot be accessed by multiple threads at once",
+            "Batching now checks your position to make sure you haven't moved during the batch (special checks for Firemaking also)",
+            "Plugins are now interrupted on trade initiation.",
+            "Changed the location where the 'helped_femi' cache key is removed",
+            "Removed jsoup as it was causing anti-virus programs to flag the launcher.",
+            "Removed an unneeded attribute from Demon Slayer"
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.4.1",
       "date": "2020-06-30",
