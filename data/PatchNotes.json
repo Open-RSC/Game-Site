@@ -8,6 +8,7 @@
         {
           "type": "Bug Fixes",
           "details": [
+            "Players can now swap weapons while in all types of combat",
             "Fixed a plugin crash caused by clicking away from Mum",
             "Fixed a crash with NPC retreats when the opponent has been removed",
             "Fixed a crash when clicking the Forgot Password button",
