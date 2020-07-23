@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
       }
     }
     res.render('index', {
-      page_name: "Open RuneScape Classic: Striving for a replica RSC game and more",
+      page_name: "Open RuneScape Classic - Play the replica today",
       online: onlineString,
       notes: notes.notes,
       live_feed: feed
