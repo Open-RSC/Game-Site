@@ -1,40 +1,53 @@
 doctype html
-html
+html(lang="en")
   head
     title= page_name
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(name="robots", content="index, follow")
     if description !== undefined
       meta(name="description", content=description)
     else
-      meta(name="description", content="An open source RuneScape Classic replica, developed and maintained by professionals.")
-    link(rel='stylesheet', type="text/css", href='/static/stylesheets/style.css?v=13')
+      meta(name="description", content="A RuneScape Classic replica - open source and free!")
+    link(rel='stylesheet', async, type="text/css", href='/static/stylesheets/style.css?v=14')
     link(rel="icon" type="image/ico" href="/static/images/favicon.ico" sizes="48x48")
     link(rel="icon" type="image/png" href="/static/images/favicon-16x16.png" sizes="16x16")
     link(rel="icon" type="image/png" href="/static/images/favicon-32x32.png" sizes="32x32")
-    link(rel="icon" type="image/png" href="/static/images/favicon-180x180.png" sizes="180x180")
+    link(rel="apple-touch-icon" type="image/png" href="/static/images/favicon-180x180.png" sizes="180x180")
     link(rel="icon" type="image/png" href="/static/images/favicon-192x192.png" sizes="192x192")
     link(rel="icon" type="image/png" href="/static/images/favicon-512x512.png" sizes="512x512")
+
+    meta(property="og:type", content="website")
+    meta(property="og:title", content=page_name)
+
+    if description !== undefined
+      meta(property="og:description", content=description)
+    else
+      meta(property="og:description", content="A RuneScape Classic replica - open source and free!")
+
+    meta(property="og:image", content="/static/images/logo.png")
+    meta(property="og:url", content="https://runescapeclassic.dev")
+    meta(property="og:site_name", content="Open RuneScape Classic")
 
     block canonical
   body
     header
       h1
-        a(href="/") Open RuneScape Classic
+        a(href="/", taborder="0") Open RuneScape Classic
       nav(role="navigation")
         ul
           li
-            a(href="/download") Download
+            a(href="/download", taborder="1") Play Now
           li
-            a(target="_blank", href="https://discord.gg/mTBXvu2") Discord
+            a(target="_blank", rel="noopener", href="https://discord.gg/mTBXvu2", taborder="2") Discord
           li
-            a(target="_blank", href="https://gitlab.com/open-runescape-classic") Code
+            a(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic", taborder="3") Code
           li
-            a(target="_blank", href="https://reddit.com/r/rsc") Reddit
+            a(target="_blank", rel="noopener", href="https://reddit.com/r/rsc", taborder="4") Reddit
           li
-            a(target="_blank", href="https://classic.runescape.wiki") Wiki
+            a(target="_blank", rel="noopener", href="https://classic.runescape.wiki", taborder="5") Wiki
           li
-            a(target="_blank", href="https://rsc.plus") RSC+
+            a(target="_blank", rel="noopener", href="https://rsc.plus", taborder="6") RSC+
     main
       section.top-border
         div.top-left-border

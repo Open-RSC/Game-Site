@@ -12,13 +12,14 @@ block content
       p.online-count #{online}
       hr.homepage-rule
     div.home-buttons
-      a.button.wiki(target="_blank", href="https://classic.runescape.wiki", alt="View the RuneScape Classic Wiki: Your source for all information about RSC", title="View the RuneScape Classic Wiki: Your source for all information about RSC") Wiki
-      a.button.discord(target="_blank", href="https://discord.gg/mTBXvu2", alt="Join us to chat on our Discord server", title="Join us to chat on our Discord server") Discord
-      a.button.launcher-button(href="/download", alt="Download the game launcher", title="Download the game launcher") Download
-      a.large-button.play(href="/play", alt="Select a server to play RuneScape Classic (RSC)", title="Select a server to play RSC") Server
-        br
-        | Details
-      a.button.code(target="_blank", href="https://gitlab.com/open-runescape-classic", alt="View the Open RuneScape Classic source code", title="View the Open RuneScape Classic source code") Source
+      a.large-button.play(href="/play", alt="Select a server to play RuneScape Classic (RSC)", title="Select a server to play RSC")
+        h2 Server
+          br
+          | Details
+      a.button.launcher-button(href="/download", alt="Download the game launcher", title="Download the game launcher") Play Now
+      a.button.discord(target="_blank", rel="noopener", href="https://discord.gg/mTBXvu2", alt="Join us to chat on our Discord server", title="Join us to chat on our Discord server") Discord
+      a.button.wiki(target="_blank", rel="noopener", href="https://classic.runescape.wiki", alt="View the RuneScape Classic Wiki: Your source for all information about RSC", title="View the RuneScape Classic Wiki: Your source for all information about RSC") Wiki
+      a.button.code(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic", alt="View the Open RuneScape Classic source code", title="View the Open RuneScape Classic source code") Source
         br
         | Code
       a.button.single-player(href="/patchnotes", alt="See the latest releases and updates", title="See the latest releases and updates") Patch
@@ -27,13 +28,13 @@ block content
       a.button.faqs(href="/faq", alt="Read rules and frequently asked questions about the game", title="Read rules and frequently asked questions about the game") Rules
         br
         | &amp; FAQ
-      a.button.rscplus(target="_blank", href="https://rsc.plus", alt="Watch authentic gameplay through a custom replay client", title="Watch authentic gameplay through a custom replay client") RSC+
+      a.button.rscplus(target="_blank", rel="noopener", href="https://rsc.plus", alt="Watch authentic gameplay through a custom replay client", title="Watch authentic gameplay through a custom replay client") RSC+
 
     hr.homepage-rule
 
     div.index-middle-bottom
       div.recent-patches
-        h4.center Recent Updates
+        h3.center Recent Updates
         ul
           for note, index in notes
             if index == 4
@@ -41,7 +42,7 @@ block content
             li.center
               a(href="/patchnotes#" + note.title) #{note.title} (#{note.date})
       div.live-feed
-        h4.center Live Feed
+        h3.center Live Feed
         ul
           for item, index in live_feed
             li.center

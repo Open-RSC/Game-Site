@@ -145,8 +145,8 @@ p.online-count {
   padding: 0;
   list-style: none;
 }
-.recent-patches h4, .live-feed h4 {
-  margin: 0;
+.recent-patches h3, .live-feed h3 {
+  margin: 0 0 5px;
 }
 .recent-patches a {
   text-decoration: none;
@@ -288,7 +288,7 @@ div.home-buttons {
   align-items: center;
   text-decoration: none;
   text-align: center;
-  font-size: 18px;
+  font-size: 19px;
   color: #e0d8c0;
   text-shadow: black 1px 2px 1px;
   font-weight: 500;
@@ -364,6 +364,11 @@ div.home-buttons {
   grid-column-end: 22;
   grid-row-start: 3;
   grid-row-end: 8;
+}
+
+.large-button.play h2 {
+  font-size: 36px;
+  font-weight: 500;
 }
 
 
