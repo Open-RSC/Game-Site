@@ -1,6 +1,39 @@
 {
-  "latest": "ORSC-5.4.3",
+  "latest": "ORSC-5.4.4",
   "notes": [
+    {
+      "title": "ORSC-5.4.4",
+      "date": "2020-07-28",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Force players to log out when a ping timeout occurs, after 30 seconds (players should no longer get stuck online when this occurs).",
+            "Ring of Wealth has been adjusted. It now will provide an extra roll when you initially roll 'nothing'. It no longer removes all empty drops.",
+            "Agility failure rates on the Barbarian and Wilderness courses have been adjusted to fail less frequently based on data from replays.",
+            "Allow magic to be cast while in combat with enemies that are normally not attackable (ex: Shapeshifter).",
+            "Gold drops now use the proper code, and will drop accurately.",
+            "Add Rare Drop Table to Shadow Warrior NPCs.",
+			"Shops now allow purchasing of non-stacked items up to the full inventory.",
+            "New characters are now created with 1000 hp.",
+            "The Fishing Guild shop is now a specialty shop, as it was authentically.",
+            "Add pipe and forward slash to permitted chat characters.",
+            "Force minimum client size to authentic constraints.",
+            "Fix message on gnome gliders when attempting to 'fly' them.",
+			"Skeleton NPCs around the wilderness agility course have been replicated with the correct count.",
+            "Fixed an issue where NPCs that shouldn't chase you were chasing."
+          ]
+        },
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Rate limiting on packets has been adjusted to 50 packets per second.",
+            "Added a configurable option to allow/disallow players to create characters with 'mod' in the name. This is toggled to disallow by default.",
+			"Added a command for Super Mods and Admins to change the name of characters. The target character must be logged out. Note that changing a character's name may affect things on the website and other players' friendslists."
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.4.3",
       "date": "2020-07-19",
