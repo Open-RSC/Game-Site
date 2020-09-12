@@ -1,6 +1,35 @@
 {
-  "latest": "ORSC-5.4.4",
+  "latest": "ORSC-5.4.8",
   "notes": [
+    {
+      "title": "ORSC-5.4.8",
+      "date": "2020-08-29",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Ring of Wealth message no longer triggers on a \"nothing\" drop.",
+            "Clicking the \"new captcha\" button while sleeping now works properly on all screen sizes and mobile.",
+            "Added base prices to all custom tradable items (this fixes a dupe glitch that was occurring within shops).",
+            "Cursed and enfeebled talismans are no longer tradeable.",
+            "Made some small tweaks to leather armor.",
+            "Level up achievements will now be logged at level 80 and above for 1x accounts/worlds. These levels ups will show on the website homepage.",
+          ]
+        },
+		{
+		  "type": "Enhancements",
+		  "details": [
+			"Added new chainmail legs for all metal tiers. Boots can be worn while wearing chain legs."
+		  ]
+		},
+        {
+          "type": "Core Improvements",
+          "details": [
+            "Reverted the mod command structure to re-enable aliases.",
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.4.4",
       "date": "2020-07-28",
