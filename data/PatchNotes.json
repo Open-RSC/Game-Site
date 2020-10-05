@@ -13,7 +13,7 @@
             "Added base prices to all custom tradable items (this fixes a dupe glitch that was occurring within shops).",
             "Cursed and enfeebled talismans are no longer tradeable.",
             "Made some small tweaks to leather armor.",
-            "Level up achievements will now be logged at level 80 and above for 1x accounts/worlds. These levels ups will show on the website homepage.",
+            "Level up achievements will now be logged at level 80 and above for 1x accounts/worlds. These levels ups will show on the website homepage."
           ]
         },
 		{
@@ -25,7 +25,7 @@
         {
           "type": "Core Improvements",
           "details": [
-            "Reverted the mod command structure to re-enable aliases.",
+            "Reverted the mod command structure to re-enable aliases."
           ]
         }
       ]
