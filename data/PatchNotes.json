@@ -1,6 +1,51 @@
 {
-  "latest": "ORSC-5.4.8",
+  "latest": "ORSC-5.5.0",
   "notes": [
+    {
+      "title": "ORSC-5.5.0",
+      "date": "2020-10-06",
+      "changes": [
+        {
+          "type":"RSC235 Compatibility",
+          "details": [
+            "The OpenRSC server is now compatible with the RSC235 protocol, meaning that you can now use RSC+ to connect and play! (Thanks, Logg!) The Cabbage world is custom, and therefore not currently supported."
+          ]
+        },
+        {
+          "type": "Android Client Updates",
+          "details": [
+            "When an update is needed, the app will now redirect you to the website to download the new APK instead of trying to update itself.",
+            "The ::wiki command will now work on mobile! For example, if you type \"::wiki rune pickaxe\" in the chat, the Rune pickaxe wiki page will open in your default browser.",
+            "The side menu on Cabbage will now disappear when you open the keyboard and reappear when you close it (if you had it showing in the first place).",
+            "On phones that allow it, the navigation bar will now be hidden until you swipe from the side to reveal it. (This is an experimental feature, let us know if you encounter any bugs with it.)"
+          ]
+        },
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Removed the trade option from Shantay Pass guards",
+            "Fixed an inauthentic timing on flax spinning",
+            "Players can now teleport while ranging",
+            "Fixed a bug where you could only uncert from your inventory in the bank UI once per client lifetime",
+            "Fixed an issue where the Withdraw options would always show on the authentic bank menu, even if there was nothing in the bank to withdraw.",
+            "Fixed some peculiar mage arena behavior",
+            "Fixed an issue where you could use noted tools while harvesting or fishing",
+            "Fixed an issue where your client would crash if you tried to add a friend with a name that begins with the \"-\" or \"_\" characters",
+            "Runecraft skillguide now shows correct level requirements for cursed and enfeebled talismans",
+            "Removed a duplicate item spawn in a house in Brimhaven"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "The bank limit has been increased to 240 items on Cabbage.",
+            "The apothecary will now empty potion vials or fill empty vials with water. Either service costs 50 gp per vial, and works on noted potions/vials.",
+            "You can now provide an argument to the ::kills command to show how many kills you have on a specific NPC (e.g. \"::kills King Black Dragon\"). The formatting of the original menu has also been changed to look nicer.",
+            "Pretty much every edible/drinkable item that heals you has been added to the Hits skillguide."
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.4.8",
       "date": "2020-08-29",
@@ -16,12 +61,12 @@
             "Level up achievements will now be logged at level 80 and above for 1x accounts/worlds. These levels ups will show on the website homepage."
           ]
         },
-		{
-		  "type": "Enhancements",
-		  "details": [
-			"Added new chainmail legs for all metal tiers. Boots can be worn while wearing chain legs."
-		  ]
-		},
+		    {
+		      "type": "Enhancements",
+		      "details": [
+			      "Added new chainmail legs for all metal tiers. Boots can be worn while wearing chain legs."
+		      ]
+		    },
         {
           "type": "Core Improvements",
           "details": [
@@ -43,13 +88,13 @@
             "Allow magic to be cast while in combat with enemies that are normally not attackable (ex: Shapeshifter).",
             "Gold drops now use the proper code, and will drop accurately.",
             "Add Rare Drop Table to Shadow Warrior NPCs.",
-			"Shops now allow purchasing of non-stacked items up to the full inventory.",
+			      "Shops now allow purchasing of non-stacked items up to the full inventory.",
             "New characters are now created with 1000 hp.",
             "The Fishing Guild shop is now a specialty shop, as it was authentically.",
             "Add pipe and forward slash to permitted chat characters.",
             "Force minimum client size to authentic constraints.",
             "Fix message on gnome gliders when attempting to 'fly' them.",
-			"Skeleton NPCs around the wilderness agility course have been replicated with the correct count.",
+			      "Skeleton NPCs around the wilderness agility course have been replicated with the correct count.",
             "Fixed an issue where NPCs that shouldn't chase you were chasing."
           ]
         },
@@ -58,7 +103,7 @@
           "details": [
             "Rate limiting on packets has been adjusted to 50 packets per second.",
             "Added a configurable option to allow/disallow players to create characters with 'mod' in the name. This is toggled to disallow by default.",
-			"Added a command for Super Mods and Admins to change the name of characters. The target character must be logged out. Note that changing a character's name may affect things on the website and other players' friendslists."
+			      "Added a command for Super Mods and Admins to change the name of characters. The target character must be logged out. Note that changing a character's name may affect things on the website and other players' friendslists."
           ]
         }
       ]
