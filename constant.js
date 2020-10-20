@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 
-exports.host = 'localhost';
+exports.host = 'mariadb'; // Change to localhost if not using Docker for database server
 exports.port = 3306;
 exports.username = 'root';
 exports.password = 'root';
