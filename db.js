@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const {Sequelize, DataTypes, Op} = require('sequelize');
 const constant = require('./constant');
 const helper = require('./helper');
 
@@ -20,8 +20,7 @@ const openrsc = new Sequelize(
     try {
         await openrsc.authenticate();
         console.log("Connected to database: " + constant.OPENRSC);
-    }
-    catch (err) {
+    } catch (err) {
         console.error("Failed to connect to database: " + constant.OPENRSC);
         console.error(err);
     }
@@ -43,8 +42,7 @@ const cabbage = new Sequelize(
     try {
         await cabbage.authenticate();
         console.log("Connected to database: " + constant.CABBAGE);
-    }
-    catch (err) {
+    } catch (err) {
         console.error("Failed to connect to database: " + constant.CABBAGE);
         console.error(err);
     }
@@ -56,23 +54,23 @@ const cabbage = new Sequelize(
 const experience = {
     openrsc: openrsc.define('experience',
         constant.getExperience(constant.OPENRSC),
-        { freezeTableName: true }
+        {freezeTableName: true}
     ),
     cabbage: cabbage.define('experience',
         constant.getExperience(constant.CABBAGE),
-        { freezeTableName: true }
+        {freezeTableName: true}
     )
 }
 
 // Set up Player model(s) for querying
 const players = {
-    openrsc: openrsc.define('players', constant.playerDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('players', constant.playerDetails, { freezeTableName: true })
+    openrsc: openrsc.define('players', constant.playerDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('players', constant.playerDetails, {freezeTableName: true})
 }
 
 const player_cache = {
-    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, { freezeTableName: true })
+    openrsc: openrsc.define('player_cache', constant.playerCacheDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true})
 }
 
 // Set up relationships.
@@ -85,8 +83,8 @@ players.cabbage.hasMany(player_cache.cabbage, {foreignKey: 'playerID'});
 
 
 /* Clans */
-const clans = cabbage.define('clan', constant.clanDetails, { freezeTableName: true })
-const clan_players = cabbage.define('clan_players', constant.clanPlayersDetails, { freezeTableName: true });
+const clans = cabbage.define('clan', constant.clanDetails, {freezeTableName: true})
+const clan_players = cabbage.define('clan_players', constant.clanPlayersDetails, {freezeTableName: true});
 
 players.cabbage.belongsTo(clan_players, {foreignKey: 'username', targetKey: 'username'});
 clan_players.belongsTo(clans, {foreignKey: 'clan_id', targetKey: 'id'});
@@ -95,23 +93,23 @@ clan_players.belongsTo(clans, {foreignKey: 'clan_id', targetKey: 'id'});
 /* Item Specific Model Initialization */
 
 const inventory = {
-    openrsc: openrsc.define('invitems', constant.inventoryItemDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, { freezeTableName: true })
+    openrsc: openrsc.define('invitems', constant.inventoryItemDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, {freezeTableName: true})
 };
 
 const bank = {
-    openrsc: openrsc.define('bank', constant.bankItemDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('bank', constant.bankItemDetails, { freezeTableName: true })
+    openrsc: openrsc.define('bank', constant.bankItemDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('bank', constant.bankItemDetails, {freezeTableName: true})
 };
 
 const equipment = {
-    openrsc: openrsc.define('equipped', constant.equipmentDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('equipped', constant.equipmentDetails, { freezeTableName: true })
+    openrsc: openrsc.define('equipped', constant.equipmentDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('equipped', constant.equipmentDetails, {freezeTableName: true})
 };
 
 const itemstatuses = {
-    openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, { freezeTableName: true })
+    openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true})
 };
 
 itemstatuses.openrsc.belongsTo(inventory.openrsc, {foreignKey: 'itemID'});
@@ -134,8 +132,8 @@ equipment.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey:
 
 // Live Feed
 const live_feeds = {
-    openrsc: openrsc.define('live_feeds', constant.liveFeedsDetails, { freezeTableName: true }),
-    cabbage: cabbage.define('live_feeds', constant.liveFeedsDetails, { freezeTableName: true })
+    openrsc: openrsc.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true}),
+    cabbage: cabbage.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true})
 }
 
 const pool = {
@@ -146,15 +144,14 @@ const pool = {
 exports.homepageStatistics = async (res, type) => {
     try {
         let result = {
-            online: await players[type].count({ where: { online: 1 } }),
-            created: await players[type].count({ where: { creation_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 86400) } } }),
-            last: await players[type].count({ where: { login_date: { [Op.gt]: (Math.round(Date.now() / 1000) - 172800) } } }),
-            unique: await players[type].count({ distinct: true, col: 'creation_ip' }),
+            online: await players[type].count({where: {online: 1}}),
+            created: await players[type].count({where: {creation_date: {[Op.gt]: (Math.round(Date.now() / 1000) - 86400)}}}),
+            last: await players[type].count({where: {login_date: {[Op.gt]: (Math.round(Date.now() / 1000) - 172800)}}}),
+            unique: await players[type].count({distinct: true, col: 'creation_ip'}),
             total: await players[type].count()
         };
         return result;
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return {
             online: undefined,
@@ -185,21 +182,20 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 [Op.gte]: constant.GROUP.PLAYER_MOD
             }
         };
-    
+
         // Set up all normal and ironmen to show for "all" scores.
         if (ironman === 0) {
             where.iron_man = {
                 [Op.lte]: 3
             }
-        }
-        else if (ironman < 4) {
+        } else if (ironman < 4) {
             where.iron_man = ironman;
         }
 
         let combined = await players[type].findAll({
             raw: true,
             include: [
-                { model: experience[type] }
+                {model: experience[type]}
             ],
             where: where
         });
@@ -227,8 +223,8 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         combined = Object.keys(combined).sort((a, b) => {
             return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
         })
-        .map(key => combined[key])
-        .filter(value => !cache_values.includes(value.id));
+            .map(key => combined[key])
+            .filter(value => !cache_values.includes(value.id));
 
         // Find the rank
         if (name !== undefined) {
@@ -241,7 +237,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         }
         pageContent.rank = rank;
 
-        combined = combined.slice(rank-rankOffset,rank+rankOffset)
+        combined = combined.slice(rank - rankOffset, rank + rankOffset)
 
         pageContent.hiscores = [];
         let i = 1;
@@ -258,8 +254,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             pageContent.hiscores.push(thisHiscore);
             i++;
         });
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         pageContent.hiscores = [
             {
@@ -297,8 +292,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
                 [Op.lte]: 3
             }
         }
-    }
-    else if (ironman < 4) {
+    } else if (ironman < 4) {
         where.iron_man = ironman;
     }
 
@@ -309,7 +303,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         let combined = await players[type].findAll({
             raw: true,
             include: [
-                { model: experience[type], attributes: [skill] }
+                {model: experience[type], attributes: [skill]}
             ],
             where: where
         });
@@ -328,14 +322,15 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
 
         combined = Object.keys(combined).sort((a, b) => {
             return constant.experienceToLevel(combined[b]['experience.' + skill]) - constant.experienceToLevel(combined[a]['experience.' + skill])
-                || combined[b]['experience.' + skill] - combined[a]['experience.' + skill]; })
-        .map(key => combined[key])
-        .filter(value => !cache_values.includes(value.id));
+                || combined[b]['experience.' + skill] - combined[a]['experience.' + skill];
+        })
+            .map(key => combined[key])
+            .filter(value => !cache_values.includes(value.id));
 
         // Find the rank.
         if (name !== undefined) {
             for (let x in combined) {
-                if(combined[x].username.toLowerCase() === name.toLowerCase()) {
+                if (combined[x].username.toLowerCase() === name.toLowerCase()) {
                     rank = parseInt(x) + 1;
                     break;
                 }
@@ -343,7 +338,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         }
         pageContent.rank = rank;
 
-        combined = combined.slice(rank-rankOffset,rank+rankOffset)
+        combined = combined.slice(rank - rankOffset, rank + rankOffset)
 
         pageContent.hiscores = [];
         let i = 1;
@@ -360,8 +355,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
             pageContent.hiscores.push(thisHiscore);
             i++;
         });
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         pageContent.hiscores = [
             {
@@ -387,12 +381,10 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
         }
         if (skill === undefined || skill === '' || skill === 'overall') {
             return await getOverall(req, res, type, rank, name, ironman);
-        }
-        else {
+        } else {
             return await getSkill(req, res, type, skill, rank, name, ironman);
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(404).send("Unable to find result.");
     }
@@ -400,14 +392,13 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
 
 exports.getOnline = async () => {
     try {
-        let openrsc = await players[constant.OPENRSC].count({ where: { online: 1 } });
-        let cabbage = await players[constant.CABBAGE].count({ where: { online: 1 } });
+        let openrsc = await players[constant.OPENRSC].count({where: {online: 1}});
+        let cabbage = await players[constant.CABBAGE].count({where: {online: 1}});
         return {
             openrsc: openrsc,
             cabbage: cabbage
         };
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return {
             openrsc: undefined,
@@ -418,14 +409,13 @@ exports.getOnline = async () => {
 
 exports.getPlayers = async () => {
     try {
-        let openrsc = await players[constant.OPENRSC].count({ distinct: true, col: 'creation_ip' });
-        let cabbage = await players[constant.CABBAGE].count({ distinct: true, col: 'creation_ip' });
+        let openrsc = await players[constant.OPENRSC].count({distinct: true, col: 'creation_ip'});
+        let cabbage = await players[constant.CABBAGE].count({distinct: true, col: 'creation_ip'});
         return {
             openrsc: openrsc,
             cabbage: cabbage
         };
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return {
             openrsc: undefined,
@@ -469,7 +459,7 @@ exports.getPlayerByName = async (req, type, username) => {
         }
 
         let xp_mode;
-        if(type === constant.CABBAGE) {
+        if (type === constant.CABBAGE) {
             xp_mode = await player_cache[type].findOne({
                 attributes: [['value', 'xp_mode']],
                 where: {
@@ -516,8 +506,7 @@ exports.getPlayerByName = async (req, type, username) => {
             const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
             if (currSkillTotal > player.skill_total) {
                 totalRank++;
-            }
-            else if (currTotalExp > total && currSkillTotal > player.skill_total) {
+            } else if (currTotalExp > total && currSkillTotal > player.skill_total) {
                 totalRank++;
             }
         }
@@ -528,9 +517,9 @@ exports.getPlayerByName = async (req, type, username) => {
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];
             })
-            .map(key => exps[key]);
+                .map(key => exps[key]);
             for (let x in exps) {
-                if(exps[x].playerID === player.id) {
+                if (exps[x].playerID === player.id) {
                     rank = parseInt(x) + 1;
                     break;
                 }
@@ -545,30 +534,25 @@ exports.getPlayerByName = async (req, type, username) => {
 
         const ironman = player.iron_man === 1 ? "Normal"
             : player.iron_man === 2 ? "Ultimate"
-            : player.iron_man === 3 ? "Hardcore" : undefined;
+                : player.iron_man === 3 ? "Hardcore" : undefined;
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
-            : '5x';
+                : '5x';
 
         let login_string = "Never";
         let time_since_login = Math.floor(Date.now() / 1000) - player.login_date;
         if (player.online === 1) {
             login_string = "Now";
-        }
-        else {
+        } else {
             if (time_since_login < 86400) {
                 login_string = "< 1 day ago";
-            }
-            else if (time_since_login < 172800) {
+            } else if (time_since_login < 172800) {
                 login_string = "< 2 days ago";
-            }
-            else if (time_since_login < 604800) {
+            } else if (time_since_login < 604800) {
                 login_string = "< 1 week ago";
-            }
-            else if (time_since_login < 2592000) {
+            } else if (time_since_login < 2592000) {
                 login_string = "< 30 days ago";
-            }
-            else {
+            } else {
                 login_string = "Long ago";
             }
         }
@@ -585,15 +569,14 @@ exports.getPlayerByName = async (req, type, username) => {
             clan: player['clan_player.clan.name'] !== null ? player['clan_player.clan.name'] : undefined,
             clan_tag: player['clan_player.clan.tag'] !== null ? player['clan_player.clan.tag'] : undefined,
             clan_rank: player['clan_player.rank'] !== null ? player['clan_player.rank'] : undefined,
-            experience_rate:  experience_rate,
+            experience_rate: experience_rate,
             player_kills: player.kills,
             npc_kills: player.npc_kills,
             deaths: player.deaths,
             arrav_gang: player['player_caches.arrav_gang'] !== null ? parseInt(player['player_caches.arrav_gang']) : undefined,
             last_login: login_string
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return {
             csrfToken: req.csrfToken(),
@@ -648,27 +631,39 @@ exports.getData = async (req, type, itemname) => {
                     [Op.in]: Object.values(namesAndIds).map(def => def.id)
                 },
                 [Op.or]: [
-                    {[Op.and]: [
-                        {'$bank.player.banned$': 0},
-                        {'$bank.player.group_id$': {
-                            [Op.gte]: constant.GROUP.PLAYER_MOD
-                        }},
-                        {'$bank.player.iron_man$' : 0}
-                    ]},
-                    {[Op.and]: [
-                        {'$invitem.player.banned$': 0},
-                        {'$invitem.player.group_id$': {
-                            [Op.gte]: constant.GROUP.PLAYER_MOD
-                        }},
-                        {'$invitem.player.iron_man$' : 0}
-                    ]},
-                    {[Op.and]: [
-                        {'$equipped.player.banned$': 0},
-                        {'$equipped.player.group_id$': {
-                            [Op.gte]: constant.GROUP.PLAYER_MOD
-                        }},
-                        {'$equipped.player.iron_man$' : 0}
-                    ]}
+                    {
+                        [Op.and]: [
+                            {'$bank.player.banned$': 0},
+                            {
+                                '$bank.player.group_id$': {
+                                    [Op.gte]: constant.GROUP.PLAYER_MOD
+                                }
+                            },
+                            {'$bank.player.iron_man$': 0}
+                        ]
+                    },
+                    {
+                        [Op.and]: [
+                            {'$invitem.player.banned$': 0},
+                            {
+                                '$invitem.player.group_id$': {
+                                    [Op.gte]: constant.GROUP.PLAYER_MOD
+                                }
+                            },
+                            {'$invitem.player.iron_man$': 0}
+                        ]
+                    },
+                    {
+                        [Op.and]: [
+                            {'$equipped.player.banned$': 0},
+                            {
+                                '$equipped.player.group_id$': {
+                                    [Op.gte]: constant.GROUP.PLAYER_MOD
+                                }
+                            },
+                            {'$equipped.player.iron_man$': 0}
+                        ]
+                    }
                 ]
             }
         });
@@ -684,8 +679,7 @@ exports.getData = async (req, type, itemname) => {
             return b.amount - a.amount;
         });
         return namesAndIds;
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return undefined;
     }
@@ -697,7 +691,7 @@ exports.getClans = async (req, rank) => {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
             rank = rankOffset;
         }
-        
+
         const clan = await clans.findAll({
             raw: true
         });
@@ -710,7 +704,7 @@ exports.getClans = async (req, rank) => {
             attributes: [['clan_id', 'id'], [Sequelize.fn("COUNT", Sequelize.col("clan_id")), 'count']],
             group: 'clan_id'
         });
-        
+
         if (clanPlayers.length < 1) {
             return undefined;
         }
@@ -724,15 +718,14 @@ exports.getClans = async (req, rank) => {
                 val.count
             ]
         }).sort((a, b) => b[3] - a[3])
-        .slice(rank-rankOffset,rank+rankOffset);
+            .slice(rank - rankOffset, rank + rankOffset);
 
         return {
             clans: combined,
             rank: rank,
             rankOffset: rankOffset
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return undefined;
     }
@@ -781,16 +774,14 @@ exports.getClan = async (req, clanName) => {
                     value.skill_total,
                     value.combat,
                 ];
-            }
-            else if (value['clan_player.rank'] === 2) {
+            } else if (value['clan_player.rank'] === 2) {
                 generals.push([
                     'General',
                     value.username,
                     value.skill_total,
                     value.combat,
                 ])
-            }
-            else {
+            } else {
                 members.push([
                     'Member',
                     value.username,
@@ -807,8 +798,7 @@ exports.getClan = async (req, clanName) => {
             generals: generals,
             members: members
         }
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         return undefined;
     }

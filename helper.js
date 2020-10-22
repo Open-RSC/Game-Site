@@ -1,6 +1,6 @@
 const v = require('validator');
 const fuzzysort = require('fuzzysort');
-const { itemnames, itemdefs, itemdefscustom } = require('./constant');
+const {itemnames, itemdefs, itemdefscustom} = require('./constant');
 
 exports.validateSkill = skill => {
     if (skill !== undefined) {
@@ -42,11 +42,11 @@ exports.validateItem = item => {
     return item;
 };
 
-exports.joinById = ( ...lists ) => {
+exports.joinById = (...lists) => {
     return Object.values(lists.reduce((idx, list) => {
-        list.forEach( (record) => {
-            if( idx[record.id] )
-                idx[record.id] = Object.assign( idx[record.id], record )
+        list.forEach((record) => {
+            if (idx[record.id])
+                idx[record.id] = Object.assign(idx[record.id], record)
             else
                 idx[record.id] = record
         })

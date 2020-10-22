@@ -1,31 +1,31 @@
 extends layout
 
 block canonical
-  link(rel="canonical", href=url + "/openrsc")
+    link(rel="canonical", href=url + "/openrsc")
 
 block content
-  div.middle-content-server
-    div.logo(role="banner")
-    p.subtitle An authentic client with minor quality of life features.
-    div.orsc-buttons
-      a.button(href="/download") Download
-      a.button(href="/openrsc/hiscores") Hiscores
-      a.button(href="/faq") Rules
-        br
-        | &amp; FAQ
+    div.middle-content-server
+        div.logo(role="banner")
+        p.subtitle An authentic client with minor quality of life features.
+        div.orsc-buttons
+            a.button(href="/download") Download
+            a.button(href="/openrsc/hiscores") Hiscores
+            a.button(href="/faq") Rules
+                br
+                | &amp; FAQ
 
-    hr
+        hr
 
-    div.statistics
-      h3 Statistics
-      div
-        dl
-          if last !== undefined
-            dt Online Last 48 Hours:
-            dd #{last}
-          if unique !== undefined
-            dt Unique Players:
-            dd #{unique}
-          if total !== undefined
-            dt Total Players:
-            dd #{total}
+        div.statistics
+            h3 Statistics
+            div
+                dl
+                    if last !== undefined
+                        dt Online Last 48 Hours:
+                        dd #{last}
+                    if unique !== undefined
+                        dt Unique Players:
+                        dd #{unique}
+                    if total !== undefined
+                        dt Total Players:
+                        dd #{total}

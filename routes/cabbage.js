@@ -8,8 +8,8 @@ const server = constant.CABBAGE;
 
 router.get('/', async (req, res, next) => {
     let result = await db.homepageStatistics(res, server);
-    result.page_name = "RSC Cabbage - Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Runescape Classic with custom content and QoL additions.";
+    result.page_name = "RSC Cabbage - RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - RuneScape Classic with custom content and QoL additions.";
     res.render(constant.CABBAGE, result);
 });
 
@@ -23,7 +23,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.rank = rank;
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
-    result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Hiscores | RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
 });
@@ -43,7 +43,7 @@ router.post('/hiscores', async (req, res, next) => {
     result.skills.unshift('overall');
     result.rank = rank;
     result.page_name = "RSC Cabbage - Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Hiscores | RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.highlighted = result.rank;
     res.render('hiscores', result);
@@ -58,7 +58,7 @@ router.get('/hiscores/ironman', async (req, res, next) => {
     result.skills.unshift('overall');
     result.rank = rank;
     result.page_name = "RSC Cabbage - Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Ironman Hiscores | RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ironman";
     result.highlighted = highlight ? result.rank : -1;
@@ -79,7 +79,7 @@ router.post('/hiscores/ironman', async (req, res, next) => {
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Ironman Hiscores | RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ironman";
     result.highlighted = result.rank;
@@ -94,7 +94,7 @@ router.get('/hiscores/ultimate-ironman', async (req, res, next) => {
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Ultimate Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Ultimate Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Ultimate Ironman Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ultimate-ironman";
     result.highlighted = highlight ? result.rank : -1;
@@ -115,7 +115,7 @@ router.post('/hiscores/ultimate-ironman', async (req, res, next) => {
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Ultimate Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Ultimate Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Ultimate Ironman Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "ultimate-ironman";
     result.highlighted = result.rank;
@@ -130,7 +130,7 @@ router.get('/hiscores/hardcore-ironman', async (req, res, next) => {
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Hardcore Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Hardcore Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Hardcore Ironman Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "hardcore-ironman";
     result.highlighted = highlight ? result.rank : -1;
@@ -151,7 +151,7 @@ router.post('/hiscores/hardcore-ironman', async (req, res, next) => {
     result.skills = constant.getSkills(server);
     result.skills.unshift('overall');
     result.page_name = "RSC Cabbage - Hardcore Ironman Hiscores | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Hardcore Ironman Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Hardcore Ironman Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "RSC Cabbage";
     result.ironman = "hardcore-ironman";
     result.highlighted = result.rank;
@@ -166,7 +166,7 @@ router.get('/player/:username', async (req, res, next) => {
     }
     result.server = '/cabbage';
     result.page_name = "RSC Cabbage - Players | " + result.username + " | Open RuneScape Classic";
-    result.description = "RSC Cabbage - Players | " + result.username + " | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "RSC Cabbage - Players | " + result.username + " |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     res.render('player', result);
 });
 
@@ -188,7 +188,7 @@ router.post('/database', async (req, res, next) => {
     if (result === undefined) {
         return res.redirect('.');
     }
-    
+
     res.render('database', {
         csrfToken: req.csrfToken(),
         placeholder_item: constant.itemnames[Math.floor(Math.random() * constant.itemnames.length)],

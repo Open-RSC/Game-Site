@@ -1,22 +1,22 @@
 extends layout
 
 block canonical
-  link(rel="canonical", href=url)
+    link(rel="canonical", href=url)
 
 block content
-  div.middle-content
-    div.patch-notes
-      h2.center Patch Notes
-      a(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic/core/-/tags") View all patch notes
-      hr
-      div
-        for note in notes
-          article
-            h3(id=note.title).center #{note.title} (#{note.date})
-            for change in note.changes
-              h4.center #{change.type}
-              ul
-                for detail in change.details
-                  li #{detail}
-          hr
-      a(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic/core/-/tags") View all patch notes
+    div.middle-content
+        div.patch-notes
+            h2.center Patch Notes
+            a(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic/core/-/tags") View all patch notes
+            hr
+            div
+                for note in notes
+                    article
+                        h3(id=note.title).center #{note.title} (#{note.date})
+                        for change in note.changes
+                            h4.center #{change.type}
+                            ul
+                                for detail in change.details
+                                    li #{detail}
+                    hr
+            a(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic/core/-/tags") View all patch notes

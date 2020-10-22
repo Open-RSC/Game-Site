@@ -1,29 +1,29 @@
 extends layout
 
 block canonical
-  link(rel="canonical", href=url + "/play")
+    link(rel="canonical", href=url + "/play")
 
 block content
-  div.middle-play
-    h2 Select a server
-    div.buttons
-      div.server
-        a.large-button(href="/openrsc" title="1x, authentic") OpenRSC
-        p #{openrsc} unique players!
-        div.features
-          p Features:
-          ul
-            li 1x
-            li Authentic gameplay
-            li
-              a(href="/wiki") Minor QoL
-      div.server
-        a.large-button(href="/cabbage" title="5x, custom") Cabbage
-        p #{cabbage} unique players!
-        div.features
-          p Features:
-          ul
-            li 1x or 5x experience
-            li Faster game speed
-            li 
-              a(href="/wiki") Custom content
+    div.middle-play
+        h2 Select a server
+        div.buttons
+            div.server
+                a.large-button(href="/openrsc" title="1x, authentic") OpenRSC
+                p #{openrsc} unique players!
+                div.features
+                    p Features:
+                    ul
+                        li 1x
+                        li Authentic gameplay
+                        li
+                            a(href="/wiki") Minor QoL
+            div.server
+                a.large-button(href="/cabbage" title="5x, custom") Cabbage
+                p #{cabbage} unique players!
+                div.features
+                    p Features:
+                    ul
+                        li 1x or 5x experience
+                        li Faster game speed
+                        li
+                            a(href="/wiki") Custom content

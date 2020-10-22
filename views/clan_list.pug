@@ -1,39 +1,39 @@
 extends layout
 
 block canonical
-  link(rel="canonical", href=url + "/cabbage/clans")
+    link(rel="canonical", href=url + "/cabbage/clans")
 
 block content
-  div.middle-content-hiscores
-    div.title.hiscores-panel
-      h2.hiscores-title List of Clans
-      a.hiscores-link(href=server) Return to main menu
+    div.middle-content-hiscores
+        div.title.hiscores-panel
+            h2.hiscores-title List of Clans
+            a.hiscores-link(href=server) Return to main menu
 
-    div.hiscores
-      div.hiscore-table.players-skills
-        div.hiscores-panel.clan-list
-          if !isNaN(rank) && (rank - rankOffset) > 0
-            - let prevRank = "/cabbage/clans?rank=" + Math.max(rankOffset, rank - (rankOffset * 2))
-            a(class="page-link", href=prevRank, title="View higher ranks") &lt;
-          table
-            thead
-              th Name
-              th Tag
-              th Leader
-              th Members
-            tbody
-              each row in clans
-                tr
-                  each column, index in row
-                    if index === 0
-                      td
-                        a(class="clan-page-link", href=server + "/clans/" + column, title="Clan page for " + column) #{column}
+        div.hiscores
+            div.hiscore-table.players-skills
+                div.hiscores-panel.clan-list
+                    if !isNaN(rank) && (rank - rankOffset) > 0
+                        - let prevRank = "/cabbage/clans?rank=" + Math.max(rankOffset, rank - (rankOffset * 2))
+                        a(class="page-link", href=prevRank, title="View higher ranks") &lt;
+                    table
+                        thead
+                            th Name
+                            th Tag
+                            th Leader
+                            th Members
+                        tbody
+                            each row in clans
+                                tr
+                                    each column, index in row
+                                        if index === 0
+                                            td
+                                                a(class="clan-page-link", href=server + "/clans/" + column, title="Clan page for " + column) #{column}
+                                        else
+                                            td= column
+                    - let nextLink = "";
+                    if !isNaN(rank)
+                        - nextLink += "/cabbage/clans?rank=" + (rank + (rankOffset * 2))
                     else
-                      td= column
-          - let nextLink = "";
-          if !isNaN(rank)
-            - nextLink += "/cabbage/clans?rank=" + (rank + (rankOffset * 2))
-          else
-            - nextLink += "/cabbage/clans?rank=" + (rankOffset * 3)
-          a(class="page-link", href=nextLink, title="View lower ranks") &gt;
+                        - nextLink += "/cabbage/clans?rank=" + (rankOffset * 3)
+                    a(class="page-link", href=nextLink, title="View lower ranks") &gt;
 

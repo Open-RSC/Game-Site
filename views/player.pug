@@ -1,90 +1,90 @@
 extends layout
 
 block content
-  - let hiscoresLink = server + "/hiscores"
-  if ironman === "Normal"
-    - hiscoresLink += "/ironman"
-  else if ironman === "Ultimate"
-    - hiscoresLink += "/ultimate-ironman"
-  else if ironman === "Hardcore"
-    - hiscoresLink += "/hardcore-ironman"
+    - let hiscoresLink = server + "/hiscores"
+    if ironman === "Normal"
+        - hiscoresLink += "/ironman"
+    else if ironman === "Ultimate"
+        - hiscoresLink += "/ultimate-ironman"
+    else if ironman === "Hardcore"
+        - hiscoresLink += "/hardcore-ironman"
 
-  div.middle-content-hiscores
-    div.title.hiscores-panel
-      h2.hiscores-title
-        if clan_tag !== undefined
-          | &lt; #{clan_tag} &gt; #{username}
-        else
-          | #{username}
-      a.hiscores-link(href=server) Return to main menu
-    
-    div.hiscores.player
-      div.hiscore-links.players-info
-        h4
-          span Player Info
-        div.hiscores-panel.players-nav
-          dl.space-above
-            dt Name:
-            dd #{username}
-            dt Combat:
-            dd #{combat}
+    div.middle-content-hiscores
+        div.title.hiscores-panel
+            h2.hiscores-title
+                if clan_tag !== undefined
+                    | &lt; #{clan_tag} &gt; #{username}
+                else
+                    | #{username}
+            a.hiscores-link(href=server) Return to main menu
 
-            if clan !== undefined
-              dt.space-above Clan Name:
-              dd.space-above
-                a(class="clan-page-link", href=server + "/clans/" + clan, title=clan_tag) #{clan}
-              dt Clan Rank:
-              if clan_rank === 1
-                dd Leader
-              else if clan_rank === 2
-                dd General
-              else
-                dd Member
+        div.hiscores.player
+            div.hiscore-links.players-info
+                h4
+                    span Player Info
+                div.hiscores-panel.players-nav
+                    dl.space-above
+                        dt Name:
+                        dd #{username}
+                        dt Combat:
+                        dd #{combat}
 
-            dt.space-above Last Seen:
-            dd.space-above #{last_login}
-            dt.space-above Quest Points:
-            dd.space-above #{quest_points}
-            if ironman !== undefined
-              dt Ironman:
-              dd #{ironman}
+                        if clan !== undefined
+                            dt.space-above Clan Name:
+                            dd.space-above
+                                a(class="clan-page-link", href=server + "/clans/" + clan, title=clan_tag) #{clan}
+                            dt Clan Rank:
+                            if clan_rank === 1
+                                dd Leader
+                            else if clan_rank === 2
+                                dd General
+                            else
+                                dd Member
 
-            dt Player Kills:
-            dd #{player_kills}
-            if npc_kills !== 0
-              dt NPC Kills:
-              dd #{npc_kills}
-            dt Deaths:
-            dd #{deaths}        
-            if experience_rate !== undefined
-              dt Exp Rate:
-              dd #{experience_rate}
-            dt Arrav Gang:
-            if arrav_gang === 0
-              dd Black Arm
-            else if arrav_gang === 1
-              dd Phoenix
-            else
-              dd None
+                        dt.space-above Last Seen:
+                        dd.space-above #{last_login}
+                        dt.space-above Quest Points:
+                        dd.space-above #{quest_points}
+                        if ironman !== undefined
+                            dt Ironman:
+                            dd #{ironman}
 
-          a.hiscores-link(href=hiscoresLink) Back to all scores
+                        dt Player Kills:
+                        dd #{player_kills}
+                        if npc_kills !== 0
+                            dt NPC Kills:
+                            dd #{npc_kills}
+                        dt Deaths:
+                        dd #{deaths}
+                        if experience_rate !== undefined
+                            dt Exp Rate:
+                            dd #{experience_rate}
+                        dt Arrav Gang:
+                        if arrav_gang === 0
+                            dd Black Arm
+                        else if arrav_gang === 1
+                            dd Phoenix
+                        else
+                            dd None
 
-      div.hiscore-table.players-skills
-        h4 Skills
-        div.hiscores-panel
-          table
-            thead
-              th Skill
-              th Level
-              th XP
-              th Rank
-            tbody
-              each row in hiscores
-                tr
-                  - let currentHiscoresLink = hiscoresLink + "?highlight=1&skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
-                  each column, idx in row
-                    if idx === 0
-                      td
-                        a(class="player-page-link", href=currentHiscoresLink) #{column}
-                    else
-                      td= column
+                    a.hiscores-link(href=hiscoresLink) Back to all scores
+
+            div.hiscore-table.players-skills
+                h4 Skills
+                div.hiscores-panel
+                    table
+                        thead
+                            th Skill
+                            th Level
+                            th XP
+                            th Rank
+                        tbody
+                            each row in hiscores
+                                tr
+                                    - let currentHiscoresLink = hiscoresLink + "?highlight=1&skill=" + (row[0] === "Skill Total" ? "overall" : row[0].toLowerCase()) + "&rank=" + row[3];
+                                    each column, idx in row
+                                        if idx === 0
+                                            td
+                                                a(class="player-page-link", href=currentHiscoresLink) #{column}
+                                        else
+                                            td= column

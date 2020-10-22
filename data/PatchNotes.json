@@ -6,7 +6,7 @@
       "date": "2020-10-06",
       "changes": [
         {
-          "type":"RSC235 Compatibility",
+          "type": "RSC235 Compatibility",
           "details": [
             "The OpenRSC server is now compatible with the RSC235 protocol, meaning that you can now use RSC+ to connect and play! (Thanks, Logg!) The Cabbage world is custom, and therefore not currently supported."
           ]
@@ -61,12 +61,12 @@
             "Level up achievements will now be logged at level 80 and above for 1x accounts/worlds. These levels ups will show on the website homepage."
           ]
         },
-		    {
-		      "type": "Enhancements",
-		      "details": [
-			      "Added new chainmail legs for all metal tiers. Boots can be worn while wearing chain legs."
-		      ]
-		    },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Added new chainmail legs for all metal tiers. Boots can be worn while wearing chain legs."
+          ]
+        },
         {
           "type": "Core Improvements",
           "details": [
@@ -88,13 +88,13 @@
             "Allow magic to be cast while in combat with enemies that are normally not attackable (ex: Shapeshifter).",
             "Gold drops now use the proper code, and will drop accurately.",
             "Add Rare Drop Table to Shadow Warrior NPCs.",
-			      "Shops now allow purchasing of non-stacked items up to the full inventory.",
+            "Shops now allow purchasing of non-stacked items up to the full inventory.",
             "New characters are now created with 1000 hp.",
             "The Fishing Guild shop is now a specialty shop, as it was authentically.",
             "Add pipe and forward slash to permitted chat characters.",
             "Force minimum client size to authentic constraints.",
             "Fix message on gnome gliders when attempting to 'fly' them.",
-			      "Skeleton NPCs around the wilderness agility course have been replicated with the correct count.",
+            "Skeleton NPCs around the wilderness agility course have been replicated with the correct count.",
             "Fixed an issue where NPCs that shouldn't chase you were chasing."
           ]
         },
@@ -103,7 +103,7 @@
           "details": [
             "Rate limiting on packets has been adjusted to 50 packets per second.",
             "Added a configurable option to allow/disallow players to create characters with 'mod' in the name. This is toggled to disallow by default.",
-			      "Added a command for Super Mods and Admins to change the name of characters. The target character must be logged out. Note that changing a character's name may affect things on the website and other players' friendslists."
+            "Added a command for Super Mods and Admins to change the name of characters. The target character must be logged out. Note that changing a character's name may affect things on the website and other players' friendslists."
           ]
         }
       ]

@@ -1,90 +1,90 @@
 extends layout
 
 block canonical
-  - let pageLink = server
-  if ironman === undefined
-    - pageLink += '/hiscores'
-  else
-    - pageLink += '/' + ironman
-  link(rel="canonical", href=url + pageLink)
+    - let pageLink = server
+    if ironman === undefined
+        - pageLink += '/hiscores'
+    else
+        - pageLink += '/' + ironman
+    link(rel="canonical", href=url + pageLink)
 
 
 block content
-  div.middle-content-hiscores
-    div.title.hiscores-panel
-      h2.hiscores-title #{server_name} #{ironman !== undefined ? ironman[0].toUpperCase() + ironman.substr(1) : ""} Hiscores
-      ul
-        li
-          a.hiscores-link(href=server) Return to main menu
-        if server === '/cabbage'
-          if ironman === undefined
-            li
-              a.hiscores-link(href=server + '/hiscores/ironman') Ironman hiscores
-            li
-              a.hiscores-link(href=server + '/hiscores/ultimate-ironman') Ultimate ironman hiscores
-            li
-              a.hiscores-link(href=server + '/hiscores/hardcore-ironman') Hardcore ironman hiscores
-          else
-            li
-              a.hiscores-link(href=server + '/hiscores') Back to all hiscores
-
-    div.hiscores
-      div.hiscore-links
-        h4
-          span Select hiscore table
-        div.hiscores-panel
-          each skillName in skills
-            a.hiscores-link(href='?highlight=0&skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
-      div.hiscore-table
-        h4 #{skill} Hiscores
-        div.hiscores-panel
-          if !isNaN(rank) && (rank - rankOffset) > 0
-            - let prevLink = server + "/hiscores/"
-            if ironman !== undefined
-              - prevLink += ironman
-            - prevLink += "?highlight=0&skill=" + skill.toLowerCase()
-            - prevRank = Math.max(rankOffset, rank - (rankOffset * 2))
-            - prevLink += "&rank=" + prevRank
-            a(class="page-link", href=prevLink, title="View higher ranks") &lt;
-          table
-            thead
-              th Rank
-              th Name
-              th Level
-              th XP
-            tbody
-              each row in hiscores
-                - let rankClass = ""
-                if row.rank === highlighted
-                  - rankClass = "selected"
-                tr(class=rankClass)
-                  each column, index in row
-                    if index === 'username'
-                      td
-                        a(class="player-page-link " + rankClass, href=server + "/player/" + column, title="User page of " + column) #{column}
+    div.middle-content-hiscores
+        div.title.hiscores-panel
+            h2.hiscores-title #{server_name} #{ironman !== undefined ? ironman[0].toUpperCase() + ironman.substr(1) : ""} Hiscores
+            ul
+                li
+                    a.hiscores-link(href=server) Return to main menu
+                if server === '/cabbage'
+                    if ironman === undefined
+                        li
+                            a.hiscores-link(href=server + '/hiscores/ironman') Ironman hiscores
+                        li
+                            a.hiscores-link(href=server + '/hiscores/ultimate-ironman') Ultimate ironman hiscores
+                        li
+                            a.hiscores-link(href=server + '/hiscores/hardcore-ironman') Hardcore ironman hiscores
                     else
-                      td= column
-          - let nextLink = server + "/hiscores/"
-          if ironman !== undefined
-            - nextLink += ironman
-          - nextLink += "?highlight=0&skill=" + skill.toLowerCase()
-          if !isNaN(rank)
-            - nextLink += "&rank=" + (rank + (rankOffset * 2))
-          else
-            - nextLink += "&rank=" + (rankOffset * 3)
-          a(class="page-link", href=nextLink, title="View lower ranks") &gt;
-    div.hiscore-search
-      div.search-box.search-rank
-        - let actionTextRank = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
-        form(method="POST", action=actionTextRank, role="search")
-          input(type="hidden", name="_csrf", value=csrfToken)
-          label(for="rank") Search by rank
-          input#rank(name="rank", type="text", required="required")
-          input(type="submit", value="Search", aria-label="Search by rank")
-      div.search-box.search-name
-        - let actionTextName = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
-        form(method="POST", action=actionTextName, role="search")
-          input(type="hidden", name="_csrf", value=csrfToken)
-          label(for="name") Search by name
-          input#name(name="name", type="text", required="required")
-          input(type="submit", value="Search", aria-label="Search by username")
+                        li
+                            a.hiscores-link(href=server + '/hiscores') Back to all hiscores
+
+        div.hiscores
+            div.hiscore-links
+                h4
+                    span Select hiscore table
+                div.hiscores-panel
+                    each skillName in skills
+                        a.hiscores-link(href='?highlight=0&skill=' + skillName) #{skillName[0].toUpperCase() + skillName.substr(1)}
+            div.hiscore-table
+                h4 #{skill} Hiscores
+                div.hiscores-panel
+                    if !isNaN(rank) && (rank - rankOffset) > 0
+                        - let prevLink = server + "/hiscores/"
+                        if ironman !== undefined
+                            - prevLink += ironman
+                        - prevLink += "?highlight=0&skill=" + skill.toLowerCase()
+                        - prevRank = Math.max(rankOffset, rank - (rankOffset * 2))
+                        - prevLink += "&rank=" + prevRank
+                        a(class="page-link", href=prevLink, title="View higher ranks") &lt;
+                    table
+                        thead
+                            th Rank
+                            th Name
+                            th Level
+                            th XP
+                        tbody
+                            each row in hiscores
+                                - let rankClass = ""
+                                if row.rank === highlighted
+                                    - rankClass = "selected"
+                                tr(class=rankClass)
+                                    each column, index in row
+                                        if index === 'username'
+                                            td
+                                                a(class="player-page-link " + rankClass, href=server + "/player/" + column, title="User page of " + column) #{column}
+                                        else
+                                            td= column
+                    - let nextLink = server + "/hiscores/"
+                    if ironman !== undefined
+                        - nextLink += ironman
+                    - nextLink += "?highlight=0&skill=" + skill.toLowerCase()
+                    if !isNaN(rank)
+                        - nextLink += "&rank=" + (rank + (rankOffset * 2))
+                    else
+                        - nextLink += "&rank=" + (rankOffset * 3)
+                    a(class="page-link", href=nextLink, title="View lower ranks") &gt;
+        div.hiscore-search
+            div.search-box.search-rank
+                - let actionTextRank = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
+                form(method="POST", action=actionTextRank, role="search")
+                    input(type="hidden", name="_csrf", value=csrfToken)
+                    label(for="rank") Search by rank
+                    input#rank(name="rank", type="text", required="required")
+                    input(type="submit", value="Search", aria-label="Search by rank")
+            div.search-box.search-name
+                - let actionTextName = "hiscores" + ironman !== undefined ? ironman : "" + "?skill=" + skill.toLowerCase();
+                form(method="POST", action=actionTextName, role="search")
+                    input(type="hidden", name="_csrf", value=csrfToken)
+                    label(for="name") Search by name
+                    input#name(name="name", type="text", required="required")
+                    input(type="submit", value="Search", aria-label="Search by username")

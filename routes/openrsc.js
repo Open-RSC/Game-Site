@@ -21,7 +21,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
-    result.description = "OpenRSC - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "OpenRSC - Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "OpenRSC";
     result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);
@@ -42,7 +42,7 @@ router.post('/hiscores', async (req, res, next) => {
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
-    result.description = "OpenRSC - Hiscores | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "OpenRSC - Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     result.server_name = "OpenRSC";
     result.highlighted = result.rank;
     res.render('hiscores', result);
@@ -56,7 +56,7 @@ router.get('/player/:username', async (req, res, next) => {
     }
     result.server = '/openrsc';
     result.page_name = "OpenRSC - Players | " + result.username + " | Open RuneScape Classic";
-    result.description = "OpenRSC - Players | " + result.username + " | Runescape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "OpenRSC - Players | " + result.username + " |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
     res.render('player', result);
 });
 
