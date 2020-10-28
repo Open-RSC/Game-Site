@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+const nodemailer = require('nodemailer');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -17,6 +18,8 @@ const openrscRouter = require('./routes/openrsc');
 const cabbageRouter = require('./routes/cabbage');
 const faqRouter = require('./routes/faq');
 const patchnotesRouter = require('./routes/patchnotes');
+const codeRouter = require('./routes/code');
+const bugRouter = require('./routes/bugreport');
 
 const app = express();
 app.use(helmet());
@@ -33,7 +36,8 @@ app.use((req, res, next) => {
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(csrf({cookie: true}));
 app.use('/static', express.static(
@@ -53,6 +57,8 @@ app.use('/openrsc', openrscRouter);
 app.use('/cabbage', cabbageRouter);
 app.use('/faq', faqRouter);
 app.use('/patchnotes', patchnotesRouter);
+app.use('/code', codeRouter);
+app.use('/bug-report', bugRouter);
 
 app.get("/sitemap.xml", function (req, res, next) {
     res.sendFile(__dirname + '/public/sitemap.xml');

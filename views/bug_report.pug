@@ -1,0 +1,50 @@
+extends layout
+
+block canonical
+  link(rel="canonical", href=url + "/bug-report")
+  script(src='https://www.hcaptcha.com/1/api.js')
+
+block content
+  div.middle-content
+    div.guidelines
+        h2 Report an Issue
+        
+        h3 Before submitting report consider taking a look at current 
+            a(target="_blank", rel="noopener", href="https://gitlab.com/groups/open-runescape-classic/-/issues") issues
+
+    div.tracker
+        h2 Submit new bug
+
+        h3 #{message}
+        
+        form(action='/bug-report', method='POST')
+            input(type="hidden", name="_csrf", value=csrfToken)
+            table(width='100%')
+                thead
+                    tr
+                        th(width="20%")
+                        th(width="80%")
+                tbody
+                    tr
+                    td
+                        font(size='-1' face='Helvetica, Arial, Verdana' color='white') User:
+                    td
+                        input(id='user' name='user' type='text' placeholder='Discord or Username')
+                    tr
+                    td
+                        font(size='-1' face='Helvetica, Arial, Verdana' color='white') Title:
+                    td
+                        input(id='title' name='title' type='text' placeholder='A title for what the issue is about')
+                    tr
+                    td
+                        font(size='-1' face='Helvetica, Arial, Verdana' color='white') Description:
+                    td
+                        textarea(id='description' name='description' rows='5' placeholder='Describe as precise as possible the issue')
+                    tr
+                    td
+                    td
+                        div.h-captcha(data-sitekey=sitekey)
+                    tr
+                    td(colspan='2' align='right')
+                        input(type='submit' value='Submit')
+                    
