@@ -4,31 +4,31 @@ block canonical
     link(rel="canonical", href=url)
 
 block content
-    div.middle-content
-        div.logo(role="banner")
-        p.subtitle Striving for an open source replica RuneScape Classic, and more!
-        hr.homepage-rule
-        if online !== ""
-            p.online-count #{online}
-            hr.homepage-rule
-        div.home-buttons
-            a.large-button.play(href="/play", alt="Select a server to play Open RuneScape Classic (RSC)", title="Select a server to play RSC")
-                h2 Server
-                    br
-                    | Details
-            a.button.launcher-button(href="/download", alt="Download the game launcher", title="Download the game launcher") Play Now
-            a.button.discord(target="_blank", rel="noopener", href="https://discord.gg/mTBXvu2", alt="Join us to chat on our Discord server", title="Join us to chat on our Discord server") Discord
-            a.button.wiki(target="_blank", rel="noopener", href="https://rsc.wiki", alt="View the RuneScape Classic Wiki: Your source for all information about RSC", title="View the RuneScape Classic Wiki: Your source for all information about RSC") Wiki
-            a.button.code(target="_blank", rel="noopener", href="https://gitlab.com/open-runescape-classic", alt="View the Open RuneScape Classic source code", title="View the Open RuneScape Classic source code") Source
-                br
-                | Code
-            a.button.single-player(href="/patchnotes", alt="See the latest releases and updates", title="See the latest releases and updates") Patch
-                br
-                | Notes
-            a.button.faqs(href="/faq", alt="Read rules and frequently asked questions about the game", title="Read rules and frequently asked questions about the game") Rules
-                br
-                | &amp; FAQ
-            a.button.rscplus(target="_blank", rel="noopener", href="https://rsc.plus", alt="Watch authentic gameplay through a custom replay client", title="Watch authentic gameplay through a custom replay client") RSC+
+  div.middle-content
+    div.logo(role="banner")
+    p.subtitle Striving for an open source replica RuneScape Classic, and more!
+    hr.homepage-rule
+    if online !== ""
+      p.online-count #{online}
+      hr.homepage-rule
+    div.home-buttons
+      a.large-button.play(href="/play", alt="Select a server to play RuneScape Classic (RSC)", title="Select a server to play RSC")
+        h2 Server
+          br
+          | Details
+      a.button.launcher-button(href="/download", alt="Download the game launcher", title="Download the game launcher") Play Now
+      a.button.discord(target="_blank", rel="noopener", href="https://discord.gg/mTBXvu2", alt="Join us to chat on our Discord server", title="Join us to chat on our Discord server") Discord
+      a.button.wiki(target="_blank", rel="noopener", href="https://rsc.wiki", alt="View the RuneScape Classic Wiki: Your source for all information about RSC", title="View the RuneScape Classic Wiki: Your source for all information about RSC") Wiki
+      a.button.code(href="/code", alt="View the Open RuneScape Classic source code", title="View the Open RuneScape Classic source code") Code
+        br
+        | &amp; Bug Report
+      a.button.single-player(href="/patchnotes", alt="See the latest releases and updates", title="See the latest releases and updates") Patch
+        br
+        | Notes
+      a.button.faqs(href="/faq", alt="Read rules and frequently asked questions about the game", title="Read rules and frequently asked questions about the game") Rules
+        br
+        | &amp; FAQ
+      a.button.rscplus(target="_blank", rel="noopener", href="https://rsc.plus", alt="Watch authentic gameplay through a custom replay client", title="Watch authentic gameplay through a custom replay client") RSC+
 
         hr.homepage-rule
 

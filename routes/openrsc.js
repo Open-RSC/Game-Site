@@ -8,7 +8,7 @@ const server = constant.OPENRSC;
 
 router.get('/', async (req, res, next) => {
     let result = await db.homepageStatistics(res, server);
-    result.page_name = "OpenRSC - An authentic client with minor quality of life features. | Open RuneScape Classic";
+    result.page_name = "OpenRSC - An authentic Runescape Classic with minor quality of life features. | Open RuneScape Classic";
     res.render(constant.OPENRSC, result);
 });
 
@@ -21,7 +21,7 @@ router.get('/hiscores', async (req, res, next) => {
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
-    result.description = "OpenRSC - Hiscores |RuneScape Classic with custom content and QoL additions. | Open RuneScape Classic";
+    result.description = "OpenRSC - Hiscores | An authentic Runescape Classic with minor quality of life features. | Open RuneScape Classic";
     result.server_name = "OpenRSC";
     result.highlighted = highlight ? result.rank : -1;
     res.render('hiscores', result);

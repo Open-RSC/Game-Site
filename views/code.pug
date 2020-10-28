@@ -1,0 +1,14 @@
+extends layout
+
+block canonical
+  link(rel="canonical", href=url + "/code")
+
+block content
+  div.middle-play
+    h2 Source code and Bug Reporting
+    p Explore through the code that makes available RuneScape Classic or quickly submit an issue to improve it!
+    div.buttons
+      div.server
+        a.large-button(href="https://gitlab.com/open-runescape-classic" title="View the Open RuneScape Classic source code") Source Code
+      div.server
+        a.large-button(href="/bug-report" title="Quick Bug Report") Bug Report

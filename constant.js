@@ -15,6 +15,15 @@ exports.itemnames = require('./data/itemnames.json')['items'];
 exports.itemdefs = require('./data/ItemDefs.json')['item'];
 exports.itemdefscustom = require('./data/ItemDefsCustom.json')['items'];
 
+exports.mailhost = 'mailprovider';
+exports.mailport = 587;
+exports.mailuser = 'mailuser';
+exports.mailpass = 'mailpass';
+exports.servicedesk = 'service.desk@email';
+
+exports.sitekey = 'sitekey';
+exports.secret = 'secret';
+
 exports.GROUP = {
     OWNER: 0,
     ADMIN: 1,
