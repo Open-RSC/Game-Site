@@ -17,7 +17,7 @@ block content
 
         h3 #{message}
         
-        form(action='/bug-report', method='POST')
+        form(action='/bug-report', method='POST' onsubmit='submit.disabled = true; return true;')
             input(type="hidden", name="_csrf", value=csrfToken)
             table(width='100%')
                 thead
@@ -46,5 +46,5 @@ block content
                         div.h-captcha(data-sitekey=sitekey)
                     tr
                     td(colspan='2' align='right')
-                        input(type='submit' value='Submit')
+                        input(type='submit' name='submit' value='Submit')
                     
