@@ -1,20 +1,34 @@
+const createError = require('http-errors');
 const nodemailer = require('nodemailer');
 const express = require('express');
 const router = express.Router();
 const { verify } = require('hcaptcha');
+const rateLimit = require("express-rate-limit");
 const { mailhost, mailport, mailuser, mailpass, servicedesk, sitekey, secret } = require('../constant');
+
+const pageProps = {
+  sitekey: sitekey,
+  page_name: "Open RuneScape Classic | Quick Bug Report Form",
+  description: "Submit an issue or bug explored with the game.",
+};
+
+const formPostLimiter = rateLimit({
+  windowMs: 30 * 1000, // 30 second window
+  max: 1, // start blocking after 1 requests,
+  handler: (req, res, next) => res.status(429).render('error', {
+    message: "We're sorry but you have sent many requests recently. Please try again later."
+  })
+});
 
 router.get('/', (req, res, next) => {
   res.render('bug_report', {
+    ...pageProps,
     csrfToken: req.csrfToken(),
-    sitekey: sitekey,
-    page_name: "Open RuneScape Classic | Quick Bug Report Form",
-    description: "Submit an issue or bug explored with the game."
   });
 });
 
-// POST route from contact form
-router.post('/', async (req, res, next) => {
+// POST route from bug form
+router.post('/', formPostLimiter, async (req, res, next) => {
 
   const token = req.body['g-recaptcha-response'] ? `${req.body['g-recaptcha-response']}`
     : (req.body['h-captcha-response'] ? `${req.body['h-captcha-response']}` : 'token');
@@ -43,10 +57,8 @@ router.post('/', async (req, res, next) => {
 
   if (missingFields) {
     res.render('bug_report', {
+      ...pageProps,
       csrfToken: req.csrfToken(),
-      sitekey: sitekey,
-      page_name: "Open RuneScape Classic | Quick Bug Report Form",
-      description: "Submit an issue or bug explored with the game.",
       message: 'Please fill out the title and description for the issue'
     });
   } else {
@@ -62,10 +74,8 @@ router.post('/', async (req, res, next) => {
             message = 'Bug successfully sent!';
           }
           res.render('bug_report', {
+            ...pageProps,
             csrfToken: req.csrfToken(),
-            sitekey: sitekey,
-            page_name: "Open RuneScape Classic | Quick Bug Report Form",
-            description: "Submit an issue or bug explored with the game.",
             message: message
           });
         });
