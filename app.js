@@ -80,7 +80,9 @@ app.use((err, req, res, next) => {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     // render the error page
     //console.error(err);
-    res.status(err.status || 500).render('error');
+    res.status(err.status || 500).render('error', {
+        message: "This page doesn't seem to exist... If you think it should, let us know on Discord!"
+    });
 });
 
 module.exports = app;
