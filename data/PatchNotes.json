@@ -1,6 +1,94 @@
 {
-  "latest": "ORSC-5.5.0",
+  "latest": "ORSC-5.5.2",
   "notes": [
+    {
+      "title": "ORSC-5.5.2",
+      "date": "2020-11-01",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Tweaked accuracy bonus for lower level range items. Should be more forgiving.",
+            "Fixed an issue where XP drops weren't always showing on RSC Cabbage",
+            "Fixed poison to support wilderness poison PKing",
+            "Tweaked agility to be more strict after a certain point",
+            "Fixed \"Bury All\" batching to not include noted bones in the total count of bones to bury,",
+            "Corrected the dragon slayer quest complete text",
+            "Fixed Melzar's Maze escape doors",
+            "Fixed the Charge spell. It was implemented backwards.",
+            "Fixed poisoning to be more authentic",
+            "Added a \"Nothing interesting happens\" message when you try to use a noted item on a scenery object",
+            "Corrected the Thessalia NPC to work with scythes and bunny ears authentically",
+            "Changed herbs from muddy to undefined",
+            "Fixed an issue where Chaos Druids weren't dropping two herbs",
+            "Removed raw rat meat from the Witch's Potion rats' drop table",
+            "Players should no longer be blocked from speaking to one of the NPCs if they are standing outside of the store",
+            "Corrected admin command for spawning multiple items to players"
+          ]
+        },
+        {
+          "type": "RSC235 Compatibility",
+          "details": [
+            "Added a method detect bad incoming data and re-sync ISAAC",
+            "Added a \"stayin\" command for mods that will keep mods from being auto logged out while on an authentic client",
+            "Trying to talk on tutorial island will no longer crash authentic clients",
+            "Fixed handling of doors and webs",
+            "Fixed the length of opcode 111c"
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Changed the ::tp command so that you no longer appear right on top of the player you are teleporting to",
+            "The \"Dropping X/Y\" message will no longer show on servers without batching or when dropping a stack",
+            "Updated the Halloween cracker to include the pestilence and fox masks",
+            "Added an admin command to perform Halloween world drops supporting scythes and Halloween crackers as well as updated command documentation",
+            "Added the ability to completely opt out of Global friend feature"
+          ]
+        },
+        {
+          "type": "Core Framework",
+          "details": [
+            "Added a QoL opt-out feature so that players can chose to disable quality of life features and play more authentically"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ORSC-5.5.1",
+      "date": "2020-10-22",
+      "changes": [
+        {
+          "type": "Bug Fixes",
+          "details": [
+            "Fixes the logout timer so that you can no longer be stuck in combat indefinitely. Players should always be logged about by the 5 (or 10 if on Cabbage) minute movement timer no matter what.",
+            "Updated the Entrana item list to be more accurate to original RSC",
+            "Tightened up some NPC and item spawns",
+            "Fixed Witch's House",
+            "Fixed up timing and packet order on thieving",
+            "Fixed up timing on mining",
+            "Retreat sound effect now plays when you run away from an NPC",
+            "Fixes an issue where dying to \"nothing\" would cause you to enter a zombie state",
+            "Players can now cook Ugthanki meat"
+          ]
+        },
+        {
+          "type": "RSC235 Compatibility",
+          "details": [
+            "Began utilizing the sendExperience opcode instead of only the sendStat one."
+          ]
+        },
+        {
+          "type": "Enhancements",
+          "details": [
+            "Added a button for Items Kept on Death (can be found in the equipment screen) and removed the text button from the settings menu",
+            "Restored the \"Dropping x/y\" message that was removed forever ago. This will show when you click \"Drop All\" or \"Drop X.\"",
+            "Added \"Arrow Shafts\" tab to the fletching skill guide and added how many shafts you get when fletching a type of log. Also added the name of each skill cape to the guide (instead of just \"Cape\") and fixed a typo in the Thieving guide.",
+            "Brimhaven cart can only be ridden if you complete Shilo Village"
+          ]
+        }
+      ]
+    },
     {
       "title": "ORSC-5.5.0",
       "date": "2020-10-06",
