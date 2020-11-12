@@ -502,9 +502,9 @@ exports.getPlayerByName = async (req, type, username) => {
         let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            const currSkillTotal = displaySkills.map(sk => constant.experienceToLevel(exps[x][sk]))
+            const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
                 .reduce((a, b) => a + b);
-            const currTotalExp = displaySkills.reduce((a, b) => a + exps[x][b], 0);
+            const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
             if (currSkillTotal > player.skill_total) {
                 totalRank++;
             } else if (currTotalExp > total && currSkillTotal > player.skill_total) {
