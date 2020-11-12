@@ -481,6 +481,7 @@ exports.getPlayerByName = async (req, type, username) => {
         });
         cache_values = Object.values(cache_values).map(val => val.playerID);
 
+        let displaySkills = constant.getDisplaySkills(type);
         let skills = constant.getSkills(type);
         let total = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
         let exps = await experience[type].findAll({
@@ -501,9 +502,9 @@ exports.getPlayerByName = async (req, type, username) => {
         let totalRank = 1;
         for (let x in exps) {
             delete exps[x].playerId;
-            const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
+            const currSkillTotal = displaySkills.map(sk => constant.experienceToLevel(exps[x][sk]))
                 .reduce((a, b) => a + b);
-            const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
+            const currTotalExp = displaySkills.reduce((a, b) => a + exps[x][b], 0);
             if (currSkillTotal > player.skill_total) {
                 totalRank++;
             } else if (currTotalExp > total && currSkillTotal > player.skill_total) {
@@ -512,7 +513,7 @@ exports.getPlayerByName = async (req, type, username) => {
         }
 
         let hiscores = [['Skill Total', player.skill_total, Math.floor(total / 4), totalRank]];
-        Object.values(skills).forEach((element) => {
+        Object.values(displaySkills).forEach((element) => {
             let rank = 1;
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];

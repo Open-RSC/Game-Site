@@ -256,13 +256,27 @@ exports.getExperience = (type) => {
     return experience;
 }
 
+// skills to display for hiscores
+exports.getDisplaySkills = (type) => {
+    let listOfSkills;
+    if (type === exports.CABBAGE) {
+        listOfSkills = exports.possibleSkills.slice(1)
+            .concat(['runecraft', 'harvesting']);
+    } else {
+        // attack, strength and defense originally not shown
+        listOfSkills = exports.possibleSkills.slice(4);
+    }
+    return listOfSkills;
+}
+
+// all available skills
 exports.getSkills = (type) => {
     let listOfSkills;
     if (type === exports.CABBAGE) {
         listOfSkills = exports.possibleSkills.slice(1)
             .concat(['runecraft', 'harvesting']);
     } else {
-        listOfSkills = exports.possibleSkills.slice(4);
+        listOfSkills = exports.possibleSkills.slice(1);
     }
     return listOfSkills;
 }

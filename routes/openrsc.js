@@ -17,7 +17,7 @@ router.get('/hiscores', async (req, res, next) => {
     const rank = helper.validateRank(req.query.rank);
     const highlight = parseInt(req.query.highlight) === 1;
     const result = await db.getHiscores(req, res, server, skill, rank, undefined, 0);
-    result.skills = constant.getSkills(server);
+    result.skills = constant.getDisplaySkills(server);
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
@@ -38,7 +38,7 @@ router.post('/hiscores', async (req, res, next) => {
     if (result.hiscores === []) {
         return res.redirect('/hiscores');
     }
-    result.skills = constant.getSkills(server);
+    result.skills = constant.getDisplaySkills(server);
     result.skills.unshift('overall');
     result.skills[1] = 'fighting';
     result.page_name = "OpenRSC - Hiscores | Open RuneScape Classic";
