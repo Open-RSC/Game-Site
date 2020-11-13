@@ -509,7 +509,9 @@ exports.getPlayerByName = async (req, type, username) => {
         }).filter(value => !cache_values.includes(value.playerID));
 
         let totalRank = 1;
+        let currPlayerId;
         for (let x in exps) {
+            currPlayerId = exps[x].playerId;
             delete exps[x].playerId;
             const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
                 .reduce((a, b) => a + b);
@@ -517,6 +519,8 @@ exports.getPlayerByName = async (req, type, username) => {
             if (currSkillTotal > totalLevel) {
                 totalRank++;
             } else if (currTotalExp > totalXp && currSkillTotal == totalLevel) {
+                totalRank++;
+            } else if (currPlayerId < player.id && currTotalExp == totalXp && currSkillTotal == totalLevel) {
                 totalRank++;
             }
         }
