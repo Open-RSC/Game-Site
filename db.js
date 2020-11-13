@@ -511,7 +511,7 @@ exports.getPlayerByName = async (req, type, username) => {
         let totalRank = 1;
         let currPlayerId;
         for (let x in exps) {
-            currPlayerId = exps[x].playerId;
+            currPlayerId = exps[x].playerID;
             delete exps[x].playerId;
             const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
                 .reduce((a, b) => a + b);
