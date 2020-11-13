@@ -219,9 +219,17 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 combined[user].totals += combined[user]['experience.' + skill];
             });
         });
+        
+        // Calculate the total level, since one in db may be outdated
+        Object.keys(combined).forEach((user) => {
+            combined[user].total_level = 0;
+            constant.getSkills(type).forEach((skill) => {
+                combined[user].total_level += constant.experienceToLevel(combined[user]['experience.' + skill]);
+            });
+        });
 
         combined = Object.keys(combined).sort((a, b) => {
-            return combined[b].skill_total - combined[a].skill_total || combined[b].totals - combined[a].totals;
+            return combined[b].total_level - combined[a].total_level || combined[b].totals - combined[a].totals;
         })
             .map(key => combined[key])
             .filter(value => !cache_values.includes(value.id));
@@ -248,7 +256,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
             thisHiscore = {
                 rank: i,
                 username: element.username,
-                skill: element.skill_total,
+                skill: element.total_level,
                 experience: Math.floor(element.totals / 4)
             }
             pageContent.hiscores.push(thisHiscore);
@@ -483,7 +491,8 @@ exports.getPlayerByName = async (req, type, username) => {
 
         let displaySkills = constant.getDisplaySkills(type);
         let skills = constant.getSkills(type);
-        let total = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
+        let totalXp = Object.values(skills).reduce((a, b) => a + player['experience.' + b], 0);
+        let totalLevel = Object.values(skills).reduce((a, b) => a + constant.experienceToLevel(player['experience.' + b]), 0);
         let exps = await experience[type].findAll({
             raw: true,
             include: {
@@ -505,14 +514,14 @@ exports.getPlayerByName = async (req, type, username) => {
             const currSkillTotal = skills.map(sk => constant.experienceToLevel(exps[x][sk]))
                 .reduce((a, b) => a + b);
             const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
-            if (currSkillTotal > player.skill_total) {
+            if (currSkillTotal > totalLevel) {
                 totalRank++;
-            } else if (currTotalExp > total && currSkillTotal > player.skill_total) {
+            } else if (currTotalExp > totalXp && currSkillTotal > totalLevel) {
                 totalRank++;
             }
         }
 
-        let hiscores = [['Skill Total', player.skill_total, Math.floor(total / 4), totalRank]];
+        let hiscores = [['Skill Total', totalLevel, Math.floor(totalXp / 4), totalRank]];
         Object.values(displaySkills).forEach((element) => {
             let rank = 1;
             exps = Object.keys(exps).sort((a, b) => {
