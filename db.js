@@ -507,7 +507,7 @@ exports.getPlayerByName = async (req, type, username) => {
             const currTotalExp = skills.reduce((a, b) => a + exps[x][b], 0);
             if (currSkillTotal > player.skill_total) {
                 totalRank++;
-            } else if (currTotalExp > total && currSkillTotal > player.skill_total) {
+            } else if (currTotalExp > total/* && currSkillTotal > player.skill_total*/) {
                 totalRank++;
             }
         }
