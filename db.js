@@ -279,10 +279,11 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
 
 const getSkill = async (req, res, type, skill, rank, name, ironman) => {
     const rankOffset = type === constant.CABBAGE ? 10 : 8;
+    const displaySkill = skill.toLowerCase() === 'hits' && type == constant.OPENRSC ? "fighting" : skill;
     let pageContent = {
         csrfToken: req.csrfToken(),
         server: "/" + type,
-        skill: skill[0].toUpperCase() + skill.substr(1),
+        skill: displaySkill[0].toUpperCase() + displaySkill.substr(1),
         rankOffset: rankOffset
     };
 
@@ -525,9 +526,10 @@ exports.getPlayerByName = async (req, type, username) => {
             }
         }
 
-        let hiscores = [['Skill Total', totalLevel, Math.floor(totalXp / 4), totalRank]];
+        let hiscores = [['Overall', totalLevel, Math.floor(totalXp / 4), totalRank]];
         Object.values(displaySkills).forEach((element) => {
             let rank = 1;
+            let display = element.toLowerCase() === 'hits' && type == constant.OPENRSC ? "fighting" : element;
             exps = Object.keys(exps).sort((a, b) => {
                 return exps[b][element] - exps[a][element];
             })
@@ -539,7 +541,7 @@ exports.getPlayerByName = async (req, type, username) => {
                 }
             }
             hiscores.push([
-                element[0].toUpperCase() + element.substr(1),
+                display[0].toUpperCase() + display.substr(1),
                 constant.experienceToLevel(player['experience.' + element]),
                 Math.floor(parseInt(player['experience.' + element]) / 4),
                 rank
