@@ -34,14 +34,14 @@ block content
         hr.homepage-rule
 
         div.index-middle-bottom
-            div.recent-patches
+            //-div.recent-patches
                 h3.center Recent Updates
                 ul
                     for note, index in notes
                         if index === 4
                             - break
                         li.center
-                            a(href="/news#" + note.title) #{note.title} (#{note.date})
+                            a(href="/news#" + note.title) #{note.title} (#{note.date})//
             div.live-feed
                 h3.center Live Feed
                 ul
@@ -52,14 +52,16 @@ block content
                                 a(href="/cabbage")
                                     img(src="/static/images/items/18.png", height="16px", alt="RSC Cabbage server", title="RSC Cabbage server")
                                 a(href='/cabbage/player/' + item.username) #{item.username}
-                                |  !{item.message} (
-                                a(href="/cabbage") Cabbage
-                                | )
+                                |  !{item.message}
+                                //(
+                                //a(href="/cabbage") Cabbage
+                                //| )
                             else
                                 a(href="/openrsc")
                                     img(src="/static/images/items/81.png", height="16px", alt="Open RSC server", title="Open RSC server")
                                 a(href='/openrsc/player/' + item.username) #{item.username}
-                                |  !{item.message} (
-                                a(href="/openrsc") OpenRSC
-                                | )
-
+                                |  !{item.message}
+                                //(
+                                //a(href="/openrsc") OpenRSC
+                                //| )
+                hr

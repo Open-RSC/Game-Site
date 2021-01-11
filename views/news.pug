@@ -5,242 +5,255 @@ block canonical
 
 block content
     div.middle-content
-        div.news
-            article
-                h2.center(id='Latest')
-                    | 2020 Year in Review and
-                    br
-                    | The Future of Open RSC
-                h4.center (2021-01-01)
-                h3 Happy Near Year 2021 from the Open RSC staff!
-                | We ended last year with the release of&nbsp;
-                a(href='https://old.reddit.com/r/rsc/comments/ei9rnm/openrsc_400_has_been_released/') Open RSC 4.0.0
-                | .
-                br
-                | We are now up to version 5.6.1, with each intermediate version bringing important and noticeable enhancements and bug fixes.
-                br
-                br
-                | On the RSC Cabbage server, 2020 saw the release of the Harvesting skill, improvements to Runecrafting, the Dragon 2-Hander, Dragon Scale Armour, the Dwarf Rescue miniquest, Pizza bagels, Skill capes, and numerous QoL improvements.
-                br
-                br
-                | Overall though this year, development has been mostly focused on providing continued bug fixes to bring the base server more in-line with the authentic 2018 RSC server.
-                br
-                br
-                | The most exciting advance in this direction has been (in my biased opinion), support for the server to communicate using the RSC235 protocol. This has allowed us to use RSC+ to connect to the Open RSC server, which means that the full suite of tools used to preserve the original game are now available to be used in examination of the Open RSC server. As well as this, the RSC+ client has improved the gameplay experience for players by reverting some of the inauthentic client changes that were made back when the pre-Open RSC private server base was designed.
-                br
-                br
-                | As a consequence of this, we have seen more authentic sleepwords enter the base, and we have begun fixing timing issues with various actions such as firemaking, thieving, jewelry crafting, and even with issues deep in the framework. We also noticed that various objects/scenery were misplaced in Open RSC, and have since fixed them.
-                br
-                h3 But...
-                | As we continue bringing Open RSC more in line with the authentic server, there&rsquo;s one sore spot that makes Open RSC look like an uninspired RS2 influenced private server. And that&rsquo;s bank notes.
-                br
-                br
-                | As long as bank notes are supported, we are making a conscious decision to purposely allow inauthentic content on the server. This conflicts with our stated goal of providing the most authentic RSC experience that we can. It also deters people from playing on our server, because bank notes are aesthetically an ugly blatant marker of willful disregard of the mechanics of actual RSC. We wish to avoid this (perhaps accurate) perception in the future.
-                br
-                h3 New &quot;RSC Preservation&quot; server fixes everything?
-                | Initially, we intended to resolve this with the RSC Preservation server, a new server that should only be released once we are confident that all XP gaining actions in the game are as authentic as can be known with the data that we have.
-                br
-                br
-                | However, the process of preparing RSCP has dragged on for years, and despite the great strides we&rsquo;ve made this year, RSCP does not seem to be near completion, pending individual assessments of all timings related to skilling actions, more engine fixes, analysis of NPC pathing behaviour, analysis of collected data regarding skilling success rates, drop table audits, and the implementation of a login server.
-                br
-                br
-                | Releasing the RSC Preservation server before making absolutely certain that all XP/hr actions are kosher would be a mistake, since it will split our community, and not accomplish the goal of providing a fresh start to our database, one without data from players who benefitted or were hindered by past bugs.
-                br
-                br
-                | In the meantime, we only offer the RSC Cabbage server (a type of God-Mode re-imagining of RSC that makes the game faster to play, as well as adding numerous QoL and custom content) and the Open RSC server. The Open RSC server currently implements Bank Notes, Quick Bank, and Quick Trade, but there has been no other willful custom content/QoL in that game.
-                br
-                br
-                | Despite the Quality of Life updates being very limited, Bank Notes have been ugly enough to deter large swaths of people from joining our community. This is unfortunate. Additionally, we have no idea when RSC Preservation could be considered ready. To resolve this,
-                i
-                    | we are going to start transitioning the Open RSC server into what was originally conceived as the RSC Preservation server.
-                br
-                h3 Challenges in transitioning
-                | A major motivator for NOT doing this was in order to have a hiscores list untainted by previous inauthenticities in the base. However, we can accomplish the same thing
-                i without splitting the community
-                |  by simply considering all accounts created before the &ldquo;RSC Preservation&rdquo; release date as &ldquo;Veteran Accounts&rdquo;.
-                br
-                br
-                | Non-veteran accounts will have their own separate hiscores as previously imagined, but an additional &ldquo;Veterans&rdquo; hiscores will be separate and include all accounts. Functionally, this is not different from having an RSCP server with their own separate hiscores with the knowledge that all accounts in the hiscores have gained their XP with integrity using authentic actions only. It has the advantage though, that it will boost server population &amp; it will prevent an unnecessary split within our already small community.
-                br
-                br
-                | Other than scuffed hiscores from ancient bugs, there is actually very little separating the concept of RSCP from Open RSC, but there are differences that we would have to overcome:
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 1)
-                    br
-                    |  The Open RSC server only has one world. The RSCP server is planned to have at least 5 worlds. Having more worlds may devalue previous accomplishments, since respawn rates of various resources are increased linearly with how many worlds there are, which in turn increases XP/hr.
-                br
-                br
-                span
-                    | Solution 1)
-                    br
-                    |  We therefore would offer the option to prevent your account from switching worlds until the player has been logged out for at least 12 minutes. This limitation could be removed at any time, but would mark your account as a &ldquo;Veteran World Hopper&rdquo; instead of just a &ldquo;Veteran&rdquo; account. Veteran World Hoppers would be on the same Veterans hiscores but with that marker applied.
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 2)
-                    br
-                    |  The Open RSC server implements Bank Notes. Bank Notes are ugly and inauthentic for an RSC server, but the certificate system was described by JaGeX themselves in 2004 as &ldquo;Tedious&rdquo; and &ldquo;Horrible&rdquo; (see&nbsp;
-                    a(href='https://runescape.wiki/w/Update:Bank_Notes!') https://runescape.wiki/w/Update:Bank_Notes!
-                    | )
-                br
-                br
-                span
-                    | Solution 2)
-                    br
-                    |  If Open RSC is to be merged with RSCP, Bank Notes must go. The sooner this can be done, the better, in order to repair our server&rsquo;s perception of being an uninspired RS2 clone. This may upset some veteran players, since they are used to the system, but we will instead offer a system that is more thematically correct for an RSC server: the ability to withdraw and deposit certificates from the bank. More information on this is below.
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 3)
-                    br
-                    |  Quick Bank &amp; Quick Trade are enabled, but these are not authentic.
-                br
-                br
-                span
-                    | Solution 3)
-                    br
-                    |  This is not nearly as big of a deal as Bank Notes, since Quick Bank &amp; Quick Trade do not affect interactions with other players. We can simply allow veterans accounts to continue Quick Banking &amp; Quick Trading. There already exists a &ldquo;QoL opt-out&rdquo; mode if players would like to restrict their own ability to Quick Bank and Quick Trade. Accounts created after the release of &quot;RSCP&quot; would be opted out of this ability by default, but could possibly be allowed to opt into it, voiding their eligibility to be on the non-veteran&apos;s hiscores.
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 4)
-                    br
-                    |  Bank pins are enabled, but this is not authentic.
-                br
-                br
-                span
-                    | Solution 4)
-                    br
-                    |  We can disable the ability to create bank pins per-user if truly desired. This would be enabled by going to the banker &amp; saying &ldquo;I&rsquo;d like to talk about bank pin&rdquo; then &ldquo;I never want to talk about bank pin again ever&rdquo;. This would trigger a dialogue wherein the player explains that they really prefer not to have inauthentic banker dialogue presented to them.
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 5)
-                    br
-                    |  Global chat is enabled, but this is not authentic.
-                br
-                br
-                span
-                    | Solution 5)
-                    br
-                    |  We already offer the ability to completely opt-out of global chat, by removing the &ldquo;Global$&rdquo; friend from your friends list. Global chat if used offers no gameplay related benefits. Additionally, a type of &quot;Clan chat&quot; is already implemented entirely client side with RSC+, through the use of Twitch chat integration. Global chat (for all RSC+ users) was implemented in 2016,
-                    sup
-                        a(style='text-decoration: none' href='https://github.com/OrN/rscplus/pull/32') [1]
-                    |  but not released due to concerns that it could not be moderated effectively.
-                br
-                br
-                span(style='color: #FF9999;')
-                    | Problem 6)
-                    br
-                    |  We have introduced Presents, which are a usually unobtainable holiday item.
-                br
-                br
-                span
-                    | Solution 6)
-                    br
-                    |  We will continue dropping and deleting Presents each year until such time as it is deemed impermissible, which would be when RSC Preservation is considered &ldquo;ready&rdquo;, and non-veteran accounts start being created. Luckily, pretty much everyone around when Presents were voted on seemed to agree that deleting Presents after the winter event has passed is a good idea, so they won&rsquo;t really actually affect the concept of the RSC Preservation server. It will continue to just be a &ldquo;fun event&rdquo;, unlike traditional rares, until RSC Preservation is ready.
-                br
-                h3 Bank Notes vs Certificates
-                | To begin addressing Problem 2 above, first of all, what are the differences between Notes and Certificates?
-                br
-                ol
-                    li
-                        | Certificates can only represent items in multiples of 5. If you had 14 of an item e.g., the best you could compress it to is 2 certs and 4 additional items.
-                    br
-                    li
-                        | You can only interact with certificates by talking to a &ldquo;certer&rdquo;, who is usually located near a bank, but not directly inside of it.
-                    br
-                    li
-                        | Notes can be applied to nearly every item in the game, with few exceptions. Certificates however, are limited to only the following items. If the item is not in the list below, it cannot be made into a certificate. This will not change when bank notes are removed.
-                ul(style='margin-left:45px;')
-                    li Swordfish
-                    li Raw swordfish
-                    li Lobsters
-                    li Raw lobsters
-                    li Bass
-                    li Raw bass
-                    li Sharks
-                    li Raw sharks
-                    li Iron ore
-                    li Coal
-                    li Silver ore
-                    li Gold ore
-                    li Mithril ore
-                    li Iron bar
-                    li Silver bar
-                    li Steel bar
-                    li Gold bar
-                    li Mithril bar
-                    li Willow logs
-                    li Maple logs
-                    li Yew logs
-                    li Super attack potion
-                    li Super defense potion
-                    li Super strength potion
-                    li Restore prayer potion
-                    li Dragon bones
-                    li Limpwurt roots
-                | When Jagex said that Certificates were &ldquo;Horrible&rdquo; and &ldquo;Tedious&rdquo;, they were not wrong. In the later years of RuneScape Classic, it became very common to see a &ldquo;certer bot&rdquo; traveling between Miles/Niles/Giles and undertaking the hours long process of converting raw materials into tradable resources. Players were able to use a &ldquo;certing bot&rdquo; to remove the tediousness of certificates.
-                br
-                br
-                | I imagined that we might similarly support a type of &ldquo;fake player&rdquo; that would travel between the bank and the certing NPCs that would do the &ldquo;dirty work&rdquo; of &ldquo;botting certs&rdquo; as an officially supported option on the RSC Preservation Server, so that the player would not have to actually run a botting client in order to make certificates into a usable system. Another possibility was to force the player to stand inside the bank as certificates very very slowly get withdrawn from the bank.
-                br
-                br
-                | However, I think those kinds of system are hacky, tedious, and unnecessary. We will instead offer&nbsp;
-                a(href='https://web.archive.org/web/20201204025622/https://twitter.com/RsHistoryJuly/status/1047191285600272386') this kind of system
-                |  (shown in the image below), as originally conceived of by Rab very early in RSC&rsquo;s development, at the same time as Andrew&rsquo;s certificate system, in 2001.
-                br
-                h3 Rab&apos;s Certificate concept
-                img(src='/static/images/Concept_Certificate_Bank.jpg')
-                br
-                br
-                | Rab&rsquo;s system allows the user to directly withdraw &amp; deposit certificates from the player&rsquo;s bank. This should completely remove the &ldquo;Tedious&rdquo; and &ldquo;Horribleness&rdquo; of certificates. I believe this inauthentic addition to Open RSC is permissible since a similar effect was already possible on the authentic RSC servers by simply running a bot client over-night to automatically cert/decert, an action which was never punished post-2006.
-                br
-                br
-                | The objectionable part of Notes in Open RSC isn&rsquo;t that they made trading large quantities of items possible, it is that they did it with an aesthetically incorrect method that also allowed
-                i every item in the game
-                |  to be mass-traded. Mass-trades are authentically possible through the use of certing bots, which is the primary justification behind this (conceptually authentic) system being implemented.
-                br
-                h4 &quot;I enjoyed using Notes to sort my bank&quot;
-                | Even though we will still allow these limited number of items to be quickly converted to a mass-tradable form, there is an additional use for Notes in Open RSC: They allow your bank to be sorted.
-                br
-                br
-                | Now, RSC+ actually already has a method to SEARCH your bank, and it was even used on the authentic server. But we could additionally add the ability to SORT your bank entirely client side. Players who care about a clean bank would be able to use the RSC+ client and sort their banks from there.
-                br
-                br
-                | This leaves only one limitation, which is that it is possible in RSC to accumulate huge amounts of items in your bank and then at a later date, you might decide that you no longer desire that item anymore. We would offer an inauthentic
-                pre(style='display: inline;').
-                    \n::delete
-                |  command, which allows you to delete an entire stack of a specific item from your bank, if the stack is infeasibly large. This addition should be seen as harmless, since it is an opt-in feature that mostly
-                i hurts
-                |  the player in my opinion, and it is completely transparent to users who don&rsquo;t want to think about this feature existing. Other players should not be affected by someone deleting their own bank items.
-                br
-                h4 Afterword on Rab&apos;s Certs
-                | To provide the most authentic 2018-era RSC server possible, it is obvious to not include Rab Certificates. Realistically though, Certs were a flawed system only used as a stopgap for a couple of years until bank notes could be created in RS2. They were used at a time when most players did not know what they were doing. The Open RSC server does not allow botting and never will, but authentically, the user would have been able to create certs without much effort in 2018, if they chose to. Even if a player didn&apos;t choose to bot, they would still benefit from people who did bot if they chose to trade.
-                br
-                br
-                | This system is being offered with these facts in mind, as a compromise between authenticity and usability. If players would not like to benefit from users who can make lots of certificates very quickly, they will have to make their own choice not to receive certs from other players, the same as in 2018 RSC when trading with potential botters. The only difference is that this system is officially endorsed by the server owners, instead of being tacitly allowed by inaction.
-                br
-                br
-                | It is considered to be not a great sacrifice to authenticity to me to implement this system for these reasons, but I still do wish that members of the Open RSC server will some day be able to embrace not having this system. The code for not having the system will of course continue to exist in the project, but it seems like there is currently no strong justification for an official strict RSCP server &mdash; without Rab certs &mdash; hosted by us to exist, since it does split our userbase.
-                br
-                h3 What will happen to existing notes? What will the transition period look like?
-                | We will treat existing Notes as untradable items. You will not be able to create new notes or trade them with other players, but if you have existing notes in your inventory, you will be able to deposit them into your bank. Notes as a concept will continue to exist in the Open RSC codebase, so they can be expected to function correctly indefinitely; it will just not be possible to create new notes.
-                br
-                br
-                | When Rab&rsquo;s certing system is ready and implemented in Open RSC, we will create an announcement that you have 1 month remaining to get your affairs in order (trade between accounts, organize your bank server-side, etc), after which we will stop players from creating new notes on the Open RSC server.
-                br
-                br
-                | After a period of 2 years, if we discover that Notes still exist in some player&rsquo;s inventory, those items will be removed, possibly by manually depositing the items into players banks, or we might just delete them, depending on the circumstance. We would not like accounts holding unobtainable items to become somehow rare &amp; desired.
-                br
-                h3 Comments?
-                | While it should be considered a matter of game integrity to remove the notes, make Open RSC more authentic, improve perceptions of the server as not being an RS2 clone, &amp; avoid needlessly splitting our community by launching a separate RSC Preservation server, we are accepting feedback from the community in the&nbsp;
-                a(href='https://discord.gg/mTBXvu2') #orsc-general
-                |  channel of the Open RSC discord regarding this matter.
-                br
-                br
-                div(style='text-align: right')
-                    i &mdash; Logg
-                br
+        div.rules
+            h2.center(id='Latest')
+                | 2020 Year in Review and
+                br
+                | The Future of Open RSC
+            h4.center (2021-01-01)
+            h3 Happy Near Year 2021 from the Open RSC staff!
+            | We ended last year with the release of&nbsp;
+            a(href='https://old.reddit.com/r/rsc/comments/ei9rnm/openrsc_400_has_been_released/') Open RSC 4.0.0
+            | .
+            br
+            | We are now up to version 5.6.1, with each intermediate version bringing important and noticeable enhancements and bug fixes.
+            br
+            br
+            | On the RSC Cabbage server, 2020 saw the release of the Harvesting skill, improvements to Runecrafting, the Dragon 2-Hander, Dragon Scale Armour, the Dwarf Rescue miniquest, Pizza bagels, Skill capes, and numerous QoL improvements.
+            br
+            br
+            | Overall though this year, development has been mostly focused on providing continued bug fixes to bring the base server more in-line with the authentic 2018 RSC server.
+            br
+            br
+            | The most exciting advance in this direction has been (in my biased opinion), support for the server to communicate using the RSC235 protocol. This has allowed us to use RSC+ to connect to the Open RSC server, which means that the full suite of tools used to preserve the original game are now available to be used in examination of the Open RSC server. As well as this, the RSC+ client has improved the gameplay experience for players by reverting some of the inauthentic client changes that were made back when the pre-Open RSC private server base was designed.
+            br
+            br
+            | As a consequence of this, we have seen more authentic sleepwords enter the base, and we have begun fixing timing issues with various actions such as firemaking, thieving, jewelry crafting, and even with issues deep in the framework. We also noticed that various objects/scenery were misplaced in Open RSC, and have since fixed them.
+            br
+            br
+            h3 But...
+            br
+            | As we continue bringing Open RSC more in line with the authentic server, there&rsquo;s one sore spot that makes Open RSC look like an uninspired RS2 influenced private server. And that&rsquo;s bank notes.
+            br
+            br
+            | As long as bank notes are supported, we are making a conscious decision to purposely allow inauthentic content on the server. This conflicts with our stated goal of providing the most authentic RSC experience that we can. It also deters people from playing on our server, because bank notes are aesthetically an ugly blatant marker of willful disregard of the mechanics of actual RSC. We wish to avoid this (perhaps accurate) perception in the future.
+            br
+            br
+            h3 New &quot;RSC Preservation&quot; server fixes everything?
+            br
+            | Initially, we intended to resolve this with the RSC Preservation server, a new server that should only be released once we are confident that all XP gaining actions in the game are as authentic as can be known with the data that we have.
+            br
+            br
+            | However, the process of preparing RSCP has dragged on for years, and despite the great strides we&rsquo;ve made this year, RSCP does not seem to be near completion, pending individual assessments of all timings related to skilling actions, more engine fixes, analysis of NPC pathing behaviour, analysis of collected data regarding skilling success rates, drop table audits, and the implementation of a login server.
+            br
+            br
+            | Releasing the RSC Preservation server before making absolutely certain that all XP/hr actions are kosher would be a mistake, since it will split our community, and not accomplish the goal of providing a fresh start to our database, one without data from players who benefitted or were hindered by past bugs.
+            br
+            br
+            | In the meantime, we only offer the RSC Cabbage server (a type of God-Mode re-imagining of RSC that makes the game faster to play, as well as adding numerous QoL and custom content) and the Open RSC server. The Open RSC server currently implements Bank Notes, Quick Bank, and Quick Trade, but there has been no other willful custom content/QoL in that game.
+            br
+            br
+            | Despite the Quality of Life updates being very limited, Bank Notes have been ugly enough to deter large swaths of people from joining our community. This is unfortunate. Additionally, we have no idea when RSC Preservation could be considered ready. To resolve this,
+            i
+                | we are going to start transitioning the Open RSC server into what was originally conceived as the RSC Preservation server.
+            br
+            br
+            h3 Challenges in transitioning
+            br
+            | A major motivator for NOT doing this was in order to have a hiscores list untainted by previous inauthenticities in the base. However, we can accomplish the same thing
+            i without splitting the community
+            |  by simply considering all accounts created before the &ldquo;RSC Preservation&rdquo; release date as &ldquo;Veteran Accounts&rdquo;.
+            br
+            br
+            | Non-veteran accounts will have their own separate hiscores as previously imagined, but an additional &ldquo;Veterans&rdquo; hiscores will be separate and include all accounts. Functionally, this is not different from having an RSCP server with their own separate hiscores with the knowledge that all accounts in the hiscores have gained their XP with integrity using authentic actions only. It has the advantage though, that it will boost server population &amp; it will prevent an unnecessary split within our already small community.
+            br
+            br
+            | Other than scuffed hiscores from ancient bugs, there is actually very little separating the concept of RSCP from Open RSC, but there are differences that we would have to overcome:
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 1)
+                br
+                |  The Open RSC server only has one world. The RSCP server is planned to have at least 5 worlds. Having more worlds may devalue previous accomplishments, since respawn rates of various resources are increased linearly with how many worlds there are, which in turn increases XP/hr.
+            br
+            br
+            span
+                | Solution 1)
+                br
+                |  We therefore would offer the option to prevent your account from switching worlds until the player has been logged out for at least 12 minutes. This limitation could be removed at any time, but would mark your account as a &ldquo;Veteran World Hopper&rdquo; instead of just a &ldquo;Veteran&rdquo; account. Veteran World Hoppers would be on the same Veterans hiscores but with that marker applied.
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 2)
+                br
+                |  The Open RSC server implements Bank Notes. Bank Notes are ugly and inauthentic for an RSC server, but the certificate system was described by JaGeX themselves in 2004 as &ldquo;Tedious&rdquo; and &ldquo;Horrible&rdquo; (see&nbsp;
+                a(href='https://runescape.wiki/w/Update:Bank_Notes!') https://runescape.wiki/w/Update:Bank_Notes!
+                | )
+            br
+            br
+            span
+                | Solution 2)
+                br
+                |  If Open RSC is to be merged with RSCP, Bank Notes must go. The sooner this can be done, the better, in order to repair our server&rsquo;s perception of being an uninspired RS2 clone. This may upset some veteran players, since they are used to the system, but we will instead offer a system that is more thematically correct for an RSC server: the ability to withdraw and deposit certificates from the bank. More information on this is below.
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 3)
+                br
+                |  Quick Bank &amp; Quick Trade are enabled, but these are not authentic.
+            br
+            br
+            span
+                | Solution 3)
+                br
+                |  This is not nearly as big of a deal as Bank Notes, since Quick Bank &amp; Quick Trade do not affect interactions with other players. We can simply allow veterans accounts to continue Quick Banking &amp; Quick Trading. There already exists a &ldquo;QoL opt-out&rdquo; mode if players would like to restrict their own ability to Quick Bank and Quick Trade. Accounts created after the release of &quot;RSCP&quot; would be opted out of this ability by default, but could possibly be allowed to opt into it, voiding their eligibility to be on the non-veteran&apos;s hiscores.
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 4)
+                br
+                |  Bank pins are enabled, but this is not authentic.
+            br
+            br
+            span
+                | Solution 4)
+                br
+                |  We can disable the ability to create bank pins per-user if truly desired. This would be enabled by going to the banker &amp; saying &ldquo;I&rsquo;d like to talk about bank pin&rdquo; then &ldquo;I never want to talk about bank pin again ever&rdquo;. This would trigger a dialogue wherein the player explains that they really prefer not to have inauthentic banker dialogue presented to them.
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 5)
+                br
+                |  Global chat is enabled, but this is not authentic.
+            br
+            br
+            span
+                | Solution 5)
+                br
+                |  We already offer the ability to completely opt-out of global chat, by removing the &ldquo;Global$&rdquo; friend from your friends list. Global chat if used offers no gameplay related benefits. Additionally, a type of &quot;Clan chat&quot; is already implemented entirely client side with RSC+, through the use of Twitch chat integration. Global chat (for all RSC+ users) was implemented in 2016,
+                sup
+                    a(style='text-decoration: none' href='https://github.com/OrN/rscplus/pull/32') [1]
+                |  but not released due to concerns that it could not be moderated effectively.
+            br
+            br
+            span(style='color: #FF9999;')
+                | Problem 6)
+                br
+                |  We have introduced Presents, which are a usually unobtainable holiday item.
+            br
+            br
+            span
+                | Solution 6)
+                br
+                |  We will continue dropping and deleting Presents each year until such time as it is deemed impermissible, which would be when RSC Preservation is considered &ldquo;ready&rdquo;, and non-veteran accounts start being created. Luckily, pretty much everyone around when Presents were voted on seemed to agree that deleting Presents after the winter event has passed is a good idea, so they won&rsquo;t really actually affect the concept of the RSC Preservation server. It will continue to just be a &ldquo;fun event&rdquo;, unlike traditional rares, until RSC Preservation is ready.
+            br
+            h3 Bank Notes vs Certificates
+            | To begin addressing Problem 2 above, first of all, what are the differences between Notes and Certificates?
+            br
+            ol
+                li
+                    | Certificates can only represent items in multiples of 5. If you had 14 of an item e.g., the best you could compress it to is 2 certs and 4 additional items.
+                br
+                li
+                    | You can only interact with certificates by talking to a &ldquo;certer&rdquo;, who is usually located near a bank, but not directly inside of it.
+                br
+                li
+                    | Notes can be applied to nearly every item in the game, with few exceptions. Certificates however, are limited to only the following items. If the item is not in the list below, it cannot be made into a certificate. This will not change when bank notes are removed.
+            ul(style='margin-left:45px;')
+                li Swordfish
+                li Raw swordfish
+                li Lobsters
+                li Raw lobsters
+                li Bass
+                li Raw bass
+                li Sharks
+                li Raw sharks
+                li Iron ore
+                li Coal
+                li Silver ore
+                li Gold ore
+                li Mithril ore
+                li Iron bar
+                li Silver bar
+                li Steel bar
+                li Gold bar
+                li Mithril bar
+                li Willow logs
+                li Maple logs
+                li Yew logs
+                li Super attack potion
+                li Super defense potion
+                li Super strength potion
+                li Restore prayer potion
+                li Dragon bones
+                li Limpwurt roots
+            br
+            br
+            | When Jagex said that Certificates were &ldquo;Horrible&rdquo; and &ldquo;Tedious&rdquo;, they were not wrong. In the later years of RuneScape Classic, it became very common to see a &ldquo;certer bot&rdquo; traveling between Miles/Niles/Giles and undertaking the hours long process of converting raw materials into tradable resources. Players were able to use a &ldquo;certing bot&rdquo; to remove the tediousness of certificates.
+            br
+            br
+            | I imagined that we might similarly support a type of &ldquo;fake player&rdquo; that would travel between the bank and the certing NPCs that would do the &ldquo;dirty work&rdquo; of &ldquo;botting certs&rdquo; as an officially supported option on the RSC Preservation Server, so that the player would not have to actually run a botting client in order to make certificates into a usable system. Another possibility was to force the player to stand inside the bank as certificates very very slowly get withdrawn from the bank.
+            br
+            br
+            | However, I think those kinds of system are hacky, tedious, and unnecessary. We will instead offer&nbsp;
+            a(href='https://web.archive.org/web/20201204025622/https://twitter.com/RsHistoryJuly/status/1047191285600272386') this kind of system
+            |  (shown in the image below), as originally conceived of by Rab very early in RSC&rsquo;s development, at the same time as Andrew&rsquo;s certificate system, in 2001.
+            br
+            br
+            h3 Rab&apos;s Certificate concept
+            br
+            img(src='/static/images/Concept_Certificate_Bank.jpg')
+            br
+            br
+            | Rab&rsquo;s system allows the user to directly withdraw &amp; deposit certificates from the player&rsquo;s bank. This should completely remove the &ldquo;Tedious&rdquo; and &ldquo;Horribleness&rdquo; of certificates. I believe this inauthentic addition to Open RSC is permissible since a similar effect was already possible on the authentic RSC servers by simply running a bot client over-night to automatically cert/decert, an action which was never punished post-2006.
+            br
+            br
+            | The objectionable part of Notes in Open RSC isn&rsquo;t that they made trading large quantities of items possible, it is that they did it with an aesthetically incorrect method that also allowed
+            i every item in the game
+            |  to be mass-traded. Mass-trades are authentically possible through the use of certing bots, which is the primary justification behind this (conceptually authentic) system being implemented.
+            br
+            h4 &quot;I enjoyed using Notes to sort my bank&quot;
+            | Even though we will still allow these limited number of items to be quickly converted to a mass-tradable form, there is an additional use for Notes in Open RSC: They allow your bank to be sorted.
+            br
+            br
+            | Now, RSC+ actually already has a method to SEARCH your bank, and it was even used on the authentic server. But we could additionally add the ability to SORT your bank entirely client side. Players who care about a clean bank would be able to use the RSC+ client and sort their banks from there.
+            br
+            br
+            | This leaves only one limitation, which is that it is possible in RSC to accumulate huge amounts of items in your bank and then at a later date, you might decide that you no longer desire that item anymore. We would offer an inauthentic
+            pre(style='display: inline;').
+                \n::delete
+            |  command, which allows you to delete an entire stack of a specific item from your bank, if the stack is infeasibly large. This addition should be seen as harmless, since it is an opt-in feature that mostly
+            i hurts
+            |  the player in my opinion, and it is completely transparent to users who don&rsquo;t want to think about this feature existing. Other players should not be affected by someone deleting their own bank items.
+            br
+            h4 Afterword on Rab&apos;s Certs
+            | To provide the most authentic 2018-era RSC server possible, it is obvious to not include Rab Certificates. Realistically though, Certs were a flawed system only used as a stopgap for a couple of years until bank notes could be created in RS2. They were used at a time when most players did not know what they were doing. The Open RSC server does not allow botting and never will, but authentically, the user would have been able to create certs without much effort in 2018, if they chose to. Even if a player didn&apos;t choose to bot, they would still benefit from people who did bot if they chose to trade.
+            br
+            br
+            | This system is being offered with these facts in mind, as a compromise between authenticity and usability. If players would not like to benefit from users who can make lots of certificates very quickly, they will have to make their own choice not to receive certs from other players, the same as in 2018 RSC when trading with potential botters. The only difference is that this system is officially endorsed by the server owners, instead of being tacitly allowed by inaction.
+            br
+            br
+            | It is considered to be not a great sacrifice to authenticity to me to implement this system for these reasons, but I still do wish that members of the Open RSC server will some day be able to embrace not having this system. The code for not having the system will of course continue to exist in the project, but it seems like there is currently no strong justification for an official strict RSCP server &mdash; without Rab certs &mdash; hosted by us to exist, since it does split our userbase.
+            br
+            br
+            h3 What will happen to existing notes? What will the transition period look like?
+            br
+            | We will treat existing Notes as untradable items. You will not be able to create new notes or trade them with other players, but if you have existing notes in your inventory, you will be able to deposit them into your bank. Notes as a concept will continue to exist in the Open RSC codebase, so they can be expected to function correctly indefinitely; it will just not be possible to create new notes.
+            br
+            br
+            | When Rab&rsquo;s certing system is ready and implemented in Open RSC, we will create an announcement that you have 1 month remaining to get your affairs in order (trade between accounts, organize your bank server-side, etc), after which we will stop players from creating new notes on the Open RSC server.
+            br
+            br
+            | After a period of 2 years, if we discover that Notes still exist in some player&rsquo;s inventory, those items will be removed, possibly by manually depositing the items into players banks, or we might just delete them, depending on the circumstance. We would not like accounts holding unobtainable items to become somehow rare &amp; desired.
+            br
+            br
+            h3 Comments?
+            br
+            | While it should be considered a matter of game integrity to remove the notes, make Open RSC more authentic, improve perceptions of the server as not being an RS2 clone, &amp; avoid needlessly splitting our community by launching a separate RSC Preservation server, we are accepting feedback from the community in the&nbsp;
+            a(href='https://discord.gg/mTBXvu2') #orsc-general
+            |  channel of the Open RSC discord regarding this matter.
+            br
+            br
+            div(style='text-align: right')
+                i &mdash; Logg
+            br
