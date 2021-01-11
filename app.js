@@ -20,6 +20,7 @@ const faqRouter = require('./routes/faq');
 const patchnotesRouter = require('./routes/patchnotes');
 const codeRouter = require('./routes/code');
 const bugRouter = require('./routes/bugreport');
+const newsRouter = require('./routes/news');
 
 const app = express();
 app.use(helmet());
@@ -59,6 +60,7 @@ app.use('/faq', faqRouter);
 app.use('/patchnotes', patchnotesRouter);
 app.use('/code', codeRouter);
 app.use('/bug-report', bugRouter);
+app.use('/news', newsRouter);
 
 app.get("/sitemap.xml", function (req, res, next) {
     res.sendFile(__dirname + '/public/sitemap.xml');

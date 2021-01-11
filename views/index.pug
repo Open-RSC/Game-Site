@@ -23,9 +23,9 @@ block content
                 br
                 | &amp; Bug Report
 
-            a.button.single-player(href="/patchnotes", alt="See the latest releases and updates", title="See the latest releases and updates") Patch
+            a.button.single-player(href="/news", alt="See the latest newsposts, releases, and updates", title="See the latest newsposts, releases, and updates") Latest
                 br
-                | Notes
+                | News
             a.button.faqs(href="/faq", alt="Read rules and frequently asked questions about the game", title="Read rules and frequently asked questions about the game") Rules
                 br
                 | &amp; FAQ
@@ -41,7 +41,7 @@ block content
                         if index === 4
                             - break
                         li.center
-                            a(href="/patchnotes#" + note.title) #{note.title} (#{note.date})
+                            a(href="/news#" + note.title) #{note.title} (#{note.date})
             div.live-feed
                 h3.center Live Feed
                 ul
