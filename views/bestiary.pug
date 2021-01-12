@@ -1,0 +1,73 @@
+extends layout
+
+block canonical
+    link(rel="canonical", href=url)
+
+block content
+    div.middle-content-hiscores
+        div.title.hiscores-panel
+            h2.center Bestiary
+            a.hiscores-link(href="/") Main menu
+
+        table(cellspacing='0' cellpadding='0' width='493' border='0')
+            tbody
+                tr
+                    td
+                    td
+                        img(src='/static/images/gifs/scrollsplittop.gif' height='34' width='493' style='margin-bottom:-5px;')
+                tr
+                    td(width='10')
+                    td(valign='top' background='/static/images/gifs/scrollingscroll2.gif')
+                        img(src='/static/images/gifs/scrollsplitbottom.gif' height='30' width='493')
+                        table(width='370' align='center')
+                            tbody
+                                tr
+                                    td
+                                        for note in notes
+                                            h3 &nbsp;&nbsp;#{note.name}
+                                            table(border='0')
+                                                tbody
+                                                    tr
+                                                        td(valign='top' width='80') Height:
+                                                        td(valign='top' width='100') #{note.height}
+                                                        td(align='right' width='150' rowspan='3')
+                                                            img(height='150' src='/static/images/gifs/' + note.name + '.gif' width='150' border='0')
+                                                    tr
+                                                        td(valign='top' width='80') Weight:
+                                                        td(valign='top' width='100')
+                                                            | #{note.weight}
+                                                    tr
+                                                        td(valign='top' width='80') Varieties:
+                                                        td(valign='top' width='100') Level #{note.levels}
+                                            table(width='355' border='0')
+                                                tbody
+                                                    tr
+                                                        td(valign='top' width='80') Locations:
+                                                        td
+                                                            | #{note.locations}
+                                                    tr
+                                                        td(valign='top' width='80') Appearance:
+                                                        td
+                                                            | #{note.appearance}
+                                                            br
+                                                    tr
+                                                        td(valign='top' width='80') Way of Life:
+                                                        td
+                                                            | #{note.description}
+                                                    tr
+                                                        td(valign='top' width='80') Likes:
+                                                        td #{note.likes}
+                                                    tr
+                                                        td(valign='top' width='80') Dislikes:
+                                                        td #{note.dislikes}
+                                            p
+                                                hr
+                                            p
+                        img(height='34' src='/static/images/gifs/scrollsplittop.gif' width='493' style='margin-bottom:-5px;')
+                    td(width='10')
+                tr
+                    td
+                    td
+                        img(height='30' src='/static/images/gifs/scrollsplitbottom.gif' width='493')
+                    td
+        hr
