@@ -49,6 +49,8 @@ router.get('/', async (req, res, next) => {
         } else {
             preservationonlineString = preservationonline + " players";
         }
+    } else {
+        preservationonlineString = "0 players";
     }
 
     let cabbageonlineString = "";
@@ -61,6 +63,8 @@ router.get('/', async (req, res, next) => {
         } else {
             cabbageonlineString = cabbageonline + " players";
         }
+    } else {
+        cabbageonlineString = "0 players";
     }
 
     if (uraniumonline !== 0) {
@@ -72,6 +76,8 @@ router.get('/', async (req, res, next) => {
         } else {
             uraniumonlineString = uraniumonline + " cyborgs";
         }
+    } else {
+        uraniumonlineString = "0 cyborgs";
     }
 
     if (coleslawonline !== 0) {
@@ -83,6 +89,8 @@ router.get('/', async (req, res, next) => {
         } else {
             coleslawonlineString = coleslawonline + " cyborgs";
         }
+    } else {
+        coleslawonlineString = "0 cyborgs";
     }
 
     res.render('index', {
