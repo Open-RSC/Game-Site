@@ -14,25 +14,83 @@ const db = require('../db')
 router.get('/', async (req, res, next) => {
     const servers = await db.getOnline();
     const feed = await db.getLiveFeeds();
-    let online = 0;
-    if (!isNaN(servers.openrsc) && !isNaN(servers.cabbage)) {
-        online = servers.openrsc + servers.cabbage;
-    } else if (!isNaN(servers.openrsc)) {
-        online = servers.openrsc;
-    } else if (!isNaN(servers.cabbage)) {
-        online = servers.cabbage;
+
+    // Preservation
+    let preservationonline = 0;
+    if (!isNaN(servers.openrsc)) {
+        preservationonline = servers.openrsc;
     }
-    let onlineString = "";
-    if (online !== 0) {
-        if (online === 1) {
-            onlineString = "There is currently " + online + " person playing!";
+
+    // Cabbage
+    let cabbageonline = 0;
+    if (!isNaN(servers.cabbage)) {
+        cabbageonline = servers.cabbage;
+    }
+
+    // Uranium
+    let uraniumonline = 0;
+    if (!isNaN(servers.uranium)) {
+        uraniumonline = servers.uranium;
+    }
+
+    // Coleslaw
+    let coleslawonline = 0;
+    if (!isNaN(servers.coleslaw)) {
+        coleslawonline = servers.coleslaw;
+    }
+
+    let preservationonlineString = "";
+    if (preservationonline !== 0) {
+        if (preservationonline === 1) {
+            preservationonlineString = preservationonline + " player";
+        }
+        if (preservationonline === 2000) {
+            preservationonlineString = "FULL";
         } else {
-            onlineString = "There are currently " + online + " people playing!";
+            preservationonlineString = preservationonline + " players";
         }
     }
+
+    let cabbageonlineString = "";
+    if (cabbageonline !== 0) {
+        if (cabbageonline === 1) {
+            cabbageonlineString = cabbageonline + " player";
+        }
+        if (cabbageonline === 2000) {
+            cabbageonlineString = "FULL";
+        } else {
+            cabbageonlineString = cabbageonline + " players";
+        }
+    }
+
+    if (uraniumonline !== 0) {
+        if (uraniumonline === 1) {
+            uraniumonlineString = uraniumonline + " cyborg";
+        }
+        if (uraniumonline === 2000) {
+            uraniumonlineString = "FULL";
+        } else {
+            uraniumonlineString = uraniumonline + " cyborgs";
+        }
+    }
+
+    if (coleslawonline !== 0) {
+        if (coleslawonline === 1) {
+            coleslawonlineString = coleslawonline + " cyborg";
+        }
+        if (coleslawonline === 2000) {
+            coleslawonlineString = "FULL";
+        } else {
+            coleslawonlineString = coleslawonline + " cyborgs";
+        }
+    }
+
     res.render('index', {
         page_name: "Open RuneScape Classic - Play the replica today",
-        online: onlineString,
+        preservationonline: preservationonlineString,
+        cabbageonline: cabbageonlineString,
+        uraniumonline: uraniumonlineString,
+        coleslawonline: coleslawonlineString,
         notes: notes ? notes.notes : [],
         live_feed: feed
     });

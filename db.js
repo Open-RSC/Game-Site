@@ -48,6 +48,50 @@ const cabbage = new Sequelize(
     }
 })();
 
+const uranium = new Sequelize(
+    constant.URANIUM, constant.username, constant.password,
+    {
+        host: constant.host,
+        port: constant.port,
+        dialect: constant.architecture,
+        define: {
+            timestamps: false
+        },
+        logging: false
+    }
+);
+(async () => {
+    try {
+        await uranium.authenticate();
+        console.log("Connected to database: " + constant.URANIUM);
+    } catch (err) {
+        console.error("Failed to connect to database: " + constant.URANIUM);
+        console.error(err);
+    }
+})();
+
+const coleslaw = new Sequelize(
+    constant.COLESLAW, constant.username, constant.password,
+    {
+        host: constant.host,
+        port: constant.port,
+        dialect: constant.architecture,
+        define: {
+            timestamps: false
+        },
+        logging: false
+    }
+);
+(async () => {
+    try {
+        await coleslaw.authenticate();
+        console.log("Connected to database: " + constant.COLESLAW);
+    } catch (err) {
+        console.error("Failed to connect to database: " + constant.COLESLAW);
+        console.error(err);
+    }
+})();
+
 /* Player Specific Model Initialization */
 
 // Set up experience models for querying
@@ -59,18 +103,30 @@ const experience = {
     cabbage: cabbage.define('experience',
         constant.getExperience(constant.CABBAGE),
         {freezeTableName: true}
+    ),
+    uranium: uranium.define('experience',
+        constant.getExperience(constant.URANIUM),
+        {freezeTableName: true}
+    ),
+    coleslaw: coleslaw.define('experience',
+        constant.getExperience(constant.COLESLAW),
+        {freezeTableName: true}
     )
 }
 
 // Set up Player model(s) for querying
 const players = {
     openrsc: openrsc.define('players', constant.playerDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('players', constant.playerDetails, {freezeTableName: true})
+    cabbage: cabbage.define('players', constant.playerDetails, {freezeTableName: true}),
+    uranium: uranium.define('players', constant.playerDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('players', constant.playerDetails, {freezeTableName: true})
 }
 
 const player_cache = {
     openrsc: openrsc.define('player_cache', constant.playerCacheDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true})
+    cabbage: cabbage.define('player_cache', constant.playerCacheDetails, {freezeTableName: true}),
+    uranium: uranium.define('player_cache', constant.playerCacheDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('player_cache', constant.playerCacheDetails, {freezeTableName: true})
 }
 
 // Set up relationships.
@@ -94,51 +150,75 @@ clan_players.belongsTo(clans, {foreignKey: 'clan_id', targetKey: 'id'});
 
 const inventory = {
     openrsc: openrsc.define('invitems', constant.inventoryItemDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, {freezeTableName: true})
+    cabbage: cabbage.define('invitems', constant.inventoryItemDetails, {freezeTableName: true}),
+    uranium: uranium.define('invitems', constant.inventoryItemDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('invitems', constant.inventoryItemDetails, {freezeTableName: true})
 };
 
 const bank = {
     openrsc: openrsc.define('bank', constant.bankItemDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('bank', constant.bankItemDetails, {freezeTableName: true})
+    cabbage: cabbage.define('bank', constant.bankItemDetails, {freezeTableName: true}),
+    uranium: uranium.define('bank', constant.bankItemDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('bank', constant.bankItemDetails, {freezeTableName: true})
 };
 
 const equipment = {
     openrsc: openrsc.define('equipped', constant.equipmentDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('equipped', constant.equipmentDetails, {freezeTableName: true})
+    cabbage: cabbage.define('equipped', constant.equipmentDetails, {freezeTableName: true}),
+    uranium: uranium.define('equipped', constant.equipmentDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('equipped', constant.equipmentDetails, {freezeTableName: true})
 };
 
 const itemstatuses = {
     openrsc: openrsc.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true})
+    cabbage: cabbage.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true}),
+    uranium: uranium.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('itemstatuses', constant.itemStatusesDetails, {freezeTableName: true})
 };
 
 itemstatuses.openrsc.belongsTo(inventory.openrsc, {foreignKey: 'itemID'});
 itemstatuses.cabbage.belongsTo(inventory.cabbage, {foreignKey: 'itemID'});
+itemstatuses.uranium.belongsTo(inventory.uranium, {foreignKey: 'itemID'});
+itemstatuses.coleslaw.belongsTo(inventory.coleslaw, {foreignKey: 'itemID'});
 
 itemstatuses.openrsc.belongsTo(bank.openrsc, {foreignKey: 'itemID'});
 itemstatuses.cabbage.belongsTo(bank.cabbage, {foreignKey: 'itemID'});
+itemstatuses.uranium.belongsTo(bank.uranium, {foreignKey: 'itemID'});
+itemstatuses.coleslaw.belongsTo(bank.coleslaw, {foreignKey: 'itemID'});
 
 itemstatuses.openrsc.belongsTo(equipment.openrsc, {foreignKey: 'itemID'});
 itemstatuses.cabbage.belongsTo(equipment.cabbage, {foreignKey: 'itemID'});
+itemstatuses.uranium.belongsTo(equipment.uranium, {foreignKey: 'itemID'});
+itemstatuses.coleslaw.belongsTo(equipment.coleslaw, {foreignKey: 'itemID'});
 
 inventory.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 inventory.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+inventory.uranium.belongsTo(players.uranium, {foreignKey: 'playerID', targetKey: 'id'});
+inventory.coleslaw.belongsTo(players.coleslaw, {foreignKey: 'playerID', targetKey: 'id'});
 
 bank.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 bank.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+bank.uranium.belongsTo(players.uranium, {foreignKey: 'playerID', targetKey: 'id'});
+bank.coleslaw.belongsTo(players.coleslaw, {foreignKey: 'playerID', targetKey: 'id'});
 
 equipment.openrsc.belongsTo(players.openrsc, {foreignKey: 'playerID', targetKey: 'id'});
 equipment.cabbage.belongsTo(players.cabbage, {foreignKey: 'playerID', targetKey: 'id'});
+equipment.uranium.belongsTo(players.uranium, {foreignKey: 'playerID', targetKey: 'id'});
+equipment.coleslaw.belongsTo(players.coleslaw, {foreignKey: 'playerID', targetKey: 'id'});
 
 // Live Feed
 const live_feeds = {
     openrsc: openrsc.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true}),
-    cabbage: cabbage.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true})
+    cabbage: cabbage.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true}),
+    uranium: uranium.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true}),
+    coleslaw: coleslaw.define('live_feeds', constant.liveFeedsDetails, {freezeTableName: true})
 }
 
 const pool = {
     openrsc: openrsc,
-    cabbage: cabbage
+    cabbage: cabbage,
+    uranium: uranium,
+    coleslaw: coleslaw
 }
 
 exports.homepageStatistics = async (res, type) => {
@@ -219,7 +299,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
                 combined[user].totals += combined[user]['experience.' + skill];
             });
         });
-        
+
         // Calculate the total level, since one in db may be outdated
         Object.keys(combined).forEach((user) => {
             combined[user].total_level = 0;
@@ -403,15 +483,21 @@ exports.getOnline = async () => {
     try {
         let openrsc = await players[constant.OPENRSC].count({where: {online: 1}});
         let cabbage = await players[constant.CABBAGE].count({where: {online: 1}});
+        let uranium = await players[constant.URANIUM].count({where: {online: 1}});
+        let coleslaw = await players[constant.COLESLAW].count({where: {online: 1}});
         return {
             openrsc: openrsc,
-            cabbage: cabbage
+            cabbage: cabbage,
+            uranium: uranium,
+            coleslaw: coleslaw
         };
     } catch (err) {
         console.error(err);
         return {
             openrsc: undefined,
-            cabbage: undefined
+            cabbage: undefined,
+            uranium: undefined,
+            coleslaw: undefined
         };
     }
 }
@@ -420,15 +506,21 @@ exports.getPlayers = async () => {
     try {
         let openrsc = await players[constant.OPENRSC].count({distinct: true, col: 'creation_ip'});
         let cabbage = await players[constant.CABBAGE].count({distinct: true, col: 'creation_ip'});
+        let uranium = await players[constant.URANIUM].count({distinct: true, col: 'creation_ip'});
+        let coleslaw = await players[constant.COLESLAW].count({distinct: true, col: 'creation_ip'});
         return {
             openrsc: openrsc,
-            cabbage: cabbage
+            cabbage: cabbage,
+            uranium: uranium,
+            coleslaw: coleslaw
         };
     } catch (err) {
         console.error(err);
         return {
             openrsc: undefined,
-            cabbage: undefined
+            cabbage: undefined,
+            uranium: undefined,
+            coleslaw: undefined
         };
     }
 }
@@ -455,6 +547,26 @@ exports.getPlayerByName = async (req, type, username) => {
                 }
             }]);
         }
+        if (type === constant.URANIUM) {
+            include = include.concat([{
+                model: clan_players,
+                include: {
+                    model: clans,
+                    attributes: ['name', 'tag'],
+                    required: false
+                }
+            }]);
+        }
+        if (type === constant.COLESLAW) {
+            include = include.concat([{
+                model: clan_players,
+                include: {
+                    model: clans,
+                    attributes: ['name', 'tag'],
+                    required: false
+                }
+            }]);
+        }
 
         let player = await players[type].findOne({
             raw: true,
@@ -469,6 +581,24 @@ exports.getPlayerByName = async (req, type, username) => {
 
         let xp_mode;
         if (type === constant.CABBAGE) {
+            xp_mode = await player_cache[type].findOne({
+                attributes: [['value', 'xp_mode']],
+                where: {
+                    playerID: player.id,
+                    'key': 'onexp_mode'
+                }
+            });
+        }
+        if (type === constant.URANIUM) {
+            xp_mode = await player_cache[type].findOne({
+                attributes: [['value', 'xp_mode']],
+                where: {
+                    playerID: player.id,
+                    'key': 'onexp_mode'
+                }
+            });
+        }
+        if (type === constant.COLESLAW) {
             xp_mode = await player_cache[type].findOne({
                 attributes: [['value', 'xp_mode']],
                 where: {
@@ -826,14 +956,28 @@ exports.getLiveFeeds = async () => {
         order: [
             ['time', 'DESC']
         ],
-        limit: 4
+        limit: 2
     });
     let cabbage_feed = await live_feeds.cabbage.findAll({
         raw: true,
         order: [
             ['time', 'DESC']
         ],
-        limit: 4
+        limit: 2
+    });
+    let uranium_feed = await live_feeds.uranium.findAll({
+        raw: true,
+        order: [
+            ['time', 'DESC']
+        ],
+        limit: 2
+    });
+    let coleslaw_feed = await live_feeds.coleslaw.findAll({
+        raw: true,
+        order: [
+            ['time', 'DESC']
+        ],
+        limit: 2
     });
 
     openrsc_feed.forEach((ele) => {
@@ -844,15 +988,21 @@ exports.getLiveFeeds = async () => {
         ele.message = ele.message.replace(/<[^>]*>?/gm, '');
         ele.server = 'cabbage';
     });
+    uranium_feed.forEach((ele) => {
+        ele.message = ele.message.replace(/<[^>]*>?/gm, '');
+        ele.server = 'uranium';
+    });
+    coleslaw_feed.forEach((ele) => {
+        ele.message = ele.message.replace(/<[^>]*>?/gm, '');
+        ele.server = 'coleslaw';
+    });
 
-    let feed = openrsc_feed.concat(cabbage_feed);
+    let feed = openrsc_feed.concat(cabbage_feed).concat(uranium_feed).concat(coleslaw_feed);
 
-    // Limit to 4
+    // Limit to 10
     feed = Object.values(feed).sort((a, b) => {
         return b.time - a.time;
-    }).slice(0, feed.length < 4 ? feed.length : 4);
+    }).slice(0, feed.length < 8 ? feed.length : 8);
 
     return feed;
-
-
 };

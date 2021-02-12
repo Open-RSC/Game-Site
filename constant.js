@@ -7,6 +7,8 @@ exports.password = 'root';
 exports.architecture = 'mysql';
 exports.OPENRSC = 'openrsc';
 exports.CABBAGE = 'cabbage';
+exports.URANIUM = 'uranium';
+exports.COLESLAW = 'coleslaw';
 
 exports.protocol = 'https';
 exports.website = 'runescapeclassic.dev';

@@ -8,8 +8,48 @@ block content
         div.logo(role="banner")
         p.subtitle Striving for an open source replica RuneScape Classic, and more!
         hr.homepage-rule
-        if online !== ""
-            p.online-count #{online}
+        center
+            table(width='500' bgcolor='black' cellpadding='4' border='0' style='font-size: 14px; font-family: Arial,Helvetica,sans-serif;')
+                tr
+                    td.e
+                        center
+                            b Anyone can play on the Worlds below
+                            br
+                            | Each world can hold up to 2000 players
+                            br
+                            br
+                            table(style='font-size: 12px; font-family: Arial,Helvetica,sans-serif;')
+                                tr(valign='top')
+                                    td(align='center' width='300')
+                                        table
+                                            tr
+                                                td(colspan='2')
+                                                    img(align='absmiddle' src='/static/images/usflag.gif' width='30' height='15' border='0')
+                                                    |  Raleigh
+                                            tr
+                                                td(valign='center')
+                                                    a(style='color: rgb(144, 192, 64) !important; TEXT-DECORATION: none;' href='/download') RSC Preservation
+                                                td(align='right')
+                                                    if preservationonline !== ""
+                                                        | #{preservationonline}
+                                            tr
+                                                td(valign='center')
+                                                    a(style='color: rgb(144, 192, 64) !important; TEXT-DECORATION: none;' href='/download') RSC Cabbage
+                                                td(align='right')
+                                                    if cabbageonline !== ""
+                                                        | #{cabbageonline}
+                                            tr
+                                                td(valign='center')
+                                                    a(style='color: rgb(144, 192, 64) !important; TEXT-DECORATION: none;' href='/download') RSC Uranium
+                                                td(align='right')
+                                                    if uraniumonline !== ""
+                                                        | #{uraniumonline}
+                                            tr
+                                                td(valign='center')
+                                                    a(style='color: rgb(144, 192, 64) !important; TEXT-DECORATION: none;' href='/download') RSC Coleslaw
+                                                td(align='right')
+                                                    if coleslawonline !== ""
+                                                        | #{coleslawonline}
             hr.homepage-rule
         div.home-buttons
             a.large-button.play(href="/play", alt="Select a server to play Open RuneScape Classic (RSC)", title="Select a server to play RSC")
@@ -53,15 +93,19 @@ block content
                                     img(src="/static/images/items/18.png", height="16px", alt="RSC Cabbage server", title="RSC Cabbage server")
                                 a(href='/cabbage/player/' + item.username) #{item.username}
                                 |  !{item.message}
-                                //(
-                                //a(href="/cabbage") Cabbage
-                                //| )
-                            else
+                            else if item.server === 'openrsc'
                                 a(href="/openrsc")
-                                    img(src="/static/images/items/81.png", height="16px", alt="Open RSC server", title="Open RSC server")
+                                    img(src="/static/images/items/81.png", height="16px", alt="RSC Preservation server", title="RSC Preservation server")
                                 a(href='/openrsc/player/' + item.username) #{item.username}
                                 |  !{item.message}
-                                //(
-                                //a(href="/openrsc") OpenRSC
-                                //| )
+                            else if item.server === 'uranium'
+                                a(href = "/uranium")
+                                    img(src="/static/images/uranium_logo_hover.png", height="16px", alt="RSC Uranium server", title="RSC Uranium server")
+                                a(href='/uranium/player/' + item.username) #{item.username}
+                                |  !{item.message}
+                            else if item.server === 'coleslaw'
+                                a(href = "/coleslaw")
+                                    img(src="/static/images/coleslaw_logo_hover.png", height="16px", alt="RSC Coleslaw server", title="RSC Coleslaw server")
+                                a(href='/coleslaw/player/' + item.username) #{item.username}
+                                |  !{item.message}
                 hr
