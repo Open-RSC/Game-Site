@@ -243,7 +243,7 @@ exports.homepageStatistics = async (res, type) => {
     }
 }
 
-const getOverall = async (req, res, type, rank, name, ironman) => {
+const getOverall = async (req, res, type, rank, name) => {
     const rankOffset = type === constant.CABBAGE ? 10 : 8;
     let pageContent = {
         csrfToken: req.csrfToken(),
@@ -264,13 +264,13 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
         };
 
         // Set up all normal and ironmen to show for "all" scores.
-        if (ironman === 0) {
+        /*if (ironman === 0) {
             where.iron_man = {
                 [Op.lte]: 3
             }
         } else if (ironman < 4) {
             where.iron_man = ironman;
-        }
+        }*/
 
         let combined = await players[type].findAll({
             raw: true,
@@ -357,7 +357,7 @@ const getOverall = async (req, res, type, rank, name, ironman) => {
     return pageContent;
 }
 
-const getSkill = async (req, res, type, skill, rank, name, ironman) => {
+const getSkill = async (req, res, type, skill, rank, name) => {
     const rankOffset = type === constant.CABBAGE ? 10 : 8;
     const displaySkill = skill.toLowerCase() === 'hits' && type == constant.OPENRSC ? "fighting" : skill;
     let pageContent = {
@@ -375,7 +375,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
     };
 
     // Set up all normal and ironmen to show for "all" scores.
-    if (ironman === 0) {
+    /*if (ironman === 0) {
         where.iron_man = {
             ironman: {
                 [Op.lte]: 3
@@ -383,7 +383,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
         }
     } else if (ironman < 4) {
         where.iron_man = ironman;
-    }
+    }*/
 
     try {
         if (rank === undefined || isNaN(rank) || rank < rankOffset) {
@@ -459,7 +459,7 @@ const getSkill = async (req, res, type, skill, rank, name, ironman) => {
     return pageContent;
 }
 
-exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
+exports.getHiscores = async (req, res, type, skill, rank, name) => {
     try {
         let skills = constant.getSkills(type);
         if (skill === 'fighting') {
@@ -469,9 +469,9 @@ exports.getHiscores = async (req, res, type, skill, rank, name, ironman) => {
             skill = 'overall';
         }
         if (skill === undefined || skill === '' || skill === 'overall') {
-            return await getOverall(req, res, type, rank, name, ironman);
+            return await getOverall(req, res, type, rank, name);
         } else {
-            return await getSkill(req, res, type, skill, rank, name, ironman);
+            return await getSkill(req, res, type, skill, rank, name);
         }
     } catch (err) {
         console.error(err);
@@ -634,7 +634,7 @@ exports.getPlayerByName = async (req, type, username) => {
                 '$player.group_id$': {
                     [Op.gte]: constant.GROUP.PLAYER_MOD
                 },
-                '$player.iron_man$': player.iron_man,
+                //'$player.iron_man$': player.iron_man,
                 '$player.banned$': 0
             }
         }).filter(value => !cache_values.includes(value.playerID));
@@ -678,9 +678,10 @@ exports.getPlayerByName = async (req, type, username) => {
             ]);
         });
 
-        const ironman = player.iron_man === 1 ? "Normal"
+        /*const ironman = player.iron_man === 1 ? "Normal"
             : player.iron_man === 2 ? "Ultimate"
                 : player.iron_man === 3 ? "Hardcore" : undefined;
+         */
         const experience_rate = type !== constant.CABBAGE ? undefined
             : xp_mode !== null ? '1x'
                 : '5x';
@@ -711,7 +712,7 @@ exports.getPlayerByName = async (req, type, username) => {
             hiscores: hiscores,
             combat: player.combat,
             quest_points: player.quest_points,
-            ironman: ironman,
+            //ironman: ironman,
             clan: player['clan_player.clan.name'] !== null ? player['clan_player.clan.name'] : undefined,
             clan_tag: player['clan_player.clan.tag'] !== null ? player['clan_player.clan.tag'] : undefined,
             clan_rank: player['clan_player.rank'] !== null ? player['clan_player.rank'] : undefined,
@@ -785,7 +786,7 @@ exports.getData = async (req, type, itemname) => {
                                     [Op.gte]: constant.GROUP.PLAYER_MOD
                                 }
                             },
-                            {'$bank.player.iron_man$': 0}
+                            //{'$bank.player.iron_man$': 0}
                         ]
                     },
                     {
@@ -796,7 +797,7 @@ exports.getData = async (req, type, itemname) => {
                                     [Op.gte]: constant.GROUP.PLAYER_MOD
                                 }
                             },
-                            {'$invitem.player.iron_man$': 0}
+                            //{'$invitem.player.iron_man$': 0}
                         ]
                     },
                     {
@@ -807,7 +808,7 @@ exports.getData = async (req, type, itemname) => {
                                     [Op.gte]: constant.GROUP.PLAYER_MOD
                                 }
                             },
-                            {'$equipped.player.iron_man$': 0}
+                            //{'$equipped.player.iron_man$': 0}
                         ]
                     }
                 ]

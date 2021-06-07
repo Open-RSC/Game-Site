@@ -69,10 +69,10 @@ exports.playerDetails = {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    iron_man: {
+    /*iron_man: {
         type: DataTypes.TINYINT,
         allowNull: false
-    },
+    },*/
     quest_points: {
         type: DataTypes.INTEGER,
         allowNull: false
